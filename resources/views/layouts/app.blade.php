@@ -22,9 +22,10 @@
         <div class="container">
             <div class="row">
                 @include('layouts.left_aside')
-                <main>
+                <main class="col-lg-6 col-12">
                     @yield('content')
                 </main>
+                @include('layouts.right_aside')
             </div>
         </div>
 {{--        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">--}}
