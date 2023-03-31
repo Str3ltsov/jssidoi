@@ -19,9 +19,14 @@
 <body>
     <div id="app">
         @include('layouts.header')
-        <main>
-            @yield('content')
-        </main>
+        <div class="container">
+            <div class="row">
+                @include('layouts.left_aside')
+                <main>
+                    @yield('content')
+                </main>
+            </div>
+        </div>
 {{--        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">--}}
 {{--            <div class="container">--}}
 {{--                <a class="navbar-brand" href="{{ url('/') }}">--}}
