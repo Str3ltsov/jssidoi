@@ -7,9 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Title -->
     <title>{{ config('app.name', 'Journal of Security and Sustainability Issues') }}</title>
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('fontawesome/css/all.min.css') }}" rel="stylesheet">
     @stack('styles')
@@ -21,6 +18,7 @@
 </head>
 <body>
     <div id="app">
+        @include('layouts.header')
         <main>
             @yield('content')
         </main>
