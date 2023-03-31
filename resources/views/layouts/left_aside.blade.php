@@ -1,4 +1,4 @@
-<aside class="col-lg-3 col-md-6 col-12">
+<aside class="col-lg-3 col-md-6 col-12 order-lg-0 order-md-1 order-1">
     <div class="d-flex flex-column gap-3 mt-4">
         <a href="#" class="btn btn-primary btn-block">
             Enter to ENTREPRENEURSHIP AND<br>SUSTAINABILITY CENTER page

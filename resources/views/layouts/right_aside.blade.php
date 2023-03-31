@@ -1,4 +1,4 @@
-<aside class="col-lg-3 col-md-6 col-12">
+<aside class="col-lg-3 col-md-6 col-12 order-lg-2 order-md-2 order-2">
     <div class="input-group mt-4">
         <div class="form-outline col-10">
             <input type="search" id="form1" class="form-control bg-white" placeholder="Search in papers"/>

@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row">
                 @include('layouts.left_aside')
-                <main class="col-lg-6 col-12">
+                <main class="col-lg-6 col-12 order-lg-1 order-md-0 order-0">
                     @yield('content')
                 </main>
                 @include('layouts.right_aside')
