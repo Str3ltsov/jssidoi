@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\JssiIssuesController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+ * Default
+ */
+Route::get('/', fn() => view('welcome'));
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*
+ * Jssi routes
+ */
+Route::prefix('jssi')->group(function() {
+    Route::get('/', fn() => redirect()->route('jssiIssues'));
+    Route::get('/papers/journals', [JssiIssuesController::class, 'index'])->name('jssiIssues');
+});
