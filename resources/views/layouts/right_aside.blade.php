@@ -21,8 +21,8 @@
                         Papers
                     </a>
                 </li>
-                <li class="right-aside-li">
-                    <a href="#" class="text-decoration-none">
+                <li class="right-aside-li @if (url()->current() === route('jssiAuthors')) active @endif">
+                    <a href="{{ route('jssiAuthors') }}" class="text-decoration-none">
                         Authors
                     </a>
                 </li>

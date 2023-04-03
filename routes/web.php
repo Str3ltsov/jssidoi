@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JssiIssuesController;
 use App\Http\Controllers\JssiPapersController;
+use App\Http\Controllers\JssiAuthorsController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,6 @@ Route::prefix('jssi')->group(function() {
     // Papers
     Route::get('/papers', [JssiPapersController::class, 'index'])->name('jssiPapers');
     Route::get('/papers/{id}', [JssiPapersController::class, 'show'])->name('jssiPaper');
+    // Authors
+    Route::get('/authors', [JssiAuthorsController::class, 'index'])->name('jssiAuthors');
 });
