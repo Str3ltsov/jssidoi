@@ -10,4 +10,10 @@ class JssiIssuesController extends Controller
     {
         return view('jssi.issues.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.issues.show')
+            ->with('id', $id);
+    }
 }

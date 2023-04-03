@@ -30,5 +30,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
  */
 Route::prefix('jssi')->group(function() {
     Route::get('/', fn() => redirect()->route('jssiIssues'));
-    Route::get('/papers/journals', [JssiIssuesController::class, 'index'])->name('jssiIssues');
+    Route::get('/papers/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
+    Route::get('/papers/issue/{id}', [JssiIssuesController::class, 'show'])->name('jssiIssue');
 });

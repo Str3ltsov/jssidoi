@@ -12,28 +12,28 @@
         <div>
             <ul class="list-unstyled fw-bold">
 
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
+                <li class="right-aside-li @if (url()->current() === route('jssiIssues')) active @endif">
+                    <a href="{{ route('jssiIssues') }}" class="text-decoration-none">
                         Issues
                     </a>
                 </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
+                <li class="right-aside-li">
+                    <a href="#" class="text-decoration-none">
                         Papers
                     </a>
                 </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
+                <li class="right-aside-li">
+                    <a href="#" class="text-decoration-none">
                         Authors
                     </a>
                 </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
+                <li class="right-aside-li">
+                    <a href="#" class="text-decoration-none">
                         Institutions
                     </a>
                 </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
+                <li class="right-aside-li">
+                    <a href="#" class="text-decoration-none">
                         Keywords
                     </a>
                 </li>
@@ -107,6 +107,20 @@
 
     .right-aside-li a {
         display: block;
+        color: #222;
+    }
+
+    .active {
+        background: none repeat scroll 0 0 #0d6efd;
+    }
+
+    .active:hover,
+    .active:focus {
+        background: none repeat scroll 0 0 #0d6efd;
+    }
+
+    .active a {
+        color: #fff;
     }
 
     .jqcloud {

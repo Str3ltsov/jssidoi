@@ -5,13 +5,13 @@
         <h2 class="mb-3">Issues</h2>
         <table class="table table-striped table-responsive">
             <tbody>
-                @for ($i = 0; $i < 20; $i++)
+                @for ($i = 1; $i <= 20; $i++)
                     <tr>
-                        <td>Volume {{ $i + 1 }}&nbsp;</td>
+                        <td>Volume {{ $i }}&nbsp;</td>
                         <td>Number {{ strtoupper(Str::random(1)) }}&nbsp;</td>
                         <td>December 2020&nbsp;</td>
                         <td>
-                            <a href="#">Content ({{ rand(1, 50) }})</a>
+                            <a href="{{ route('jssiIssue', $i) }}">Content ({{ rand(1, 50) }})</a>
                         </td>
                         <td>
                             <a href="#" target="_blank">Print version</a>
