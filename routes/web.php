@@ -34,10 +34,11 @@ Route::prefix('jssi')->group(function() {
     // Issues
     Route::get('/', fn() => redirect()->route('jssiIssues'));
     Route::get('/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
-    Route::get('/issues/{id}', [JssiIssuesController::class, 'show'])->name('jssiIssue');
+    Route::get('/issues/{id}/papers', [JssiIssuesController::class, 'show'])->name('jssiIssue');
     // Papers
     Route::get('/papers', [JssiPapersController::class, 'index'])->name('jssiPapers');
     Route::get('/papers/{id}', [JssiPapersController::class, 'show'])->name('jssiPaper');
     // Authors
     Route::get('/authors', [JssiAuthorsController::class, 'index'])->name('jssiAuthors');
+    Route::get('/authors/{id}/papers', [JssiAuthorsController::class, 'show'])->name('jssiAuthor');
 });

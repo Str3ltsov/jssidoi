@@ -10,4 +10,10 @@ class JssiAuthorsController extends Controller
     {
         return view('jssi.authors.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.authors.show')
+            ->with('id', $id);
+    }
 }

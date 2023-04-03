@@ -66,14 +66,14 @@
             <thead>
             <tr>
                 <th>
-                    <a href="/jssi/papers/authors/index/sort:first_name/direction:asc" class="text-decoration-none">First Name</a>
+                    <a href="#" class="text-decoration-none">First Name</a>
                 </th>
                 <th>
-                    <a href="/jssi/papers/authors/index/sort:last_name/direction:desc" class="asc text-decoration-none">Last Name</a>
+                    <a href="#" class="asc text-decoration-none">Last Name</a>
                 </th>
                 <th>Institutions</th>
                 <th>
-                    <a href="/jssi/papers/authors/index/sort:papers_count/direction:asc" class="text-decoration-none">Papers</a>
+                    <a href="#" class="text-decoration-none">Papers</a>
                 </th>
             </tr>
             </thead>
@@ -84,7 +84,7 @@
                     <td>Abrhám</td>
                     <td>Airlangga University</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ rand(1, 24) }}</a>
+                        <a href="{{ route('jssiAuthor', $i) }}" class="text-decoration-none">{{ rand(1, 24) }}</a>
                     </td>
                 </tr>
             @endfor
