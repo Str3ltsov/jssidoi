@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JssiIssuesController;
+use App\Http\Controllers\JssiPapersController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
  * Jssi routes
  */
 Route::prefix('jssi')->group(function() {
+    // Issues
     Route::get('/', fn() => redirect()->route('jssiIssues'));
     Route::get('/papers/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
     Route::get('/papers/issue/{id}', [JssiIssuesController::class, 'show'])->name('jssiIssue');
+    // Papers
+    Route::get('/papers/papers', [JssiPapersController::class, 'index'])->name('jssiPapers');
 });

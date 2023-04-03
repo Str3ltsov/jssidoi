@@ -11,14 +11,13 @@
         <h3 class="pb-2">Browse</h3>
         <div>
             <ul class="list-unstyled fw-bold">
-
                 <li class="right-aside-li @if (url()->current() === route('jssiIssues')) active @endif">
                     <a href="{{ route('jssiIssues') }}" class="text-decoration-none">
                         Issues
                     </a>
                 </li>
-                <li class="right-aside-li">
-                    <a href="#" class="text-decoration-none">
+                <li class="right-aside-li @if (url()->current() === route('jssiPapers')) active @endif">
+                    <a href="{{ route('jssiPapers') }}" class="text-decoration-none">
                         Papers
                     </a>
                 </li>
