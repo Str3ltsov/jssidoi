@@ -10,4 +10,10 @@ class JssiPapersController extends Controller
     {
         return view('jssi.papers.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.papers.show')
+            ->with('id', $id);
+    }
 }
