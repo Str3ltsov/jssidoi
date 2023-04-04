@@ -53,7 +53,7 @@
                     </td>
                     <td>Academy of Economic Studies of Moldova</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ rand(1, 59) }}</a>
+                        <a href="{{ route('jssiInstitution', $i) }}" class="text-decoration-none">{{ rand(1, 59) }}</a>
                     </td>
                 </tr>
             @endfor

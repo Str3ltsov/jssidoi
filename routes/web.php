@@ -44,4 +44,5 @@ Route::prefix('jssi')->group(function() {
     Route::get('/authors/{id}/papers', [JssiAuthorsController::class, 'show'])->name('jssiAuthor');
     // Institutions
     Route::get('/institutions', [JssiInstitutionsController::class, 'index'])->name('jssiInstitutions');
+    Route::get('/institutions/{id}/papers', [JssiInstitutionsController::class, 'show'])->name('jssiInstitution');
 });

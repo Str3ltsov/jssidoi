@@ -10,4 +10,10 @@ class JssiInstitutionsController extends Controller
     {
         return view('jssi.institutions.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.institutions.show')
+            ->with('id', $id);
+    }
 }
