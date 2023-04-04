@@ -31,8 +31,8 @@
                         Institutions
                     </a>
                 </li>
-                <li class="right-aside-li">
-                    <a href="#" class="text-decoration-none">
+                <li class="right-aside-li @if (url()->current() === route('jssiKeywords')) active @endif">
+                    <a href="{{ route('jssiKeywords') }}" class="text-decoration-none">
                         Keywords
                     </a>
                 </li>

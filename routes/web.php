@@ -4,6 +4,7 @@ use App\Http\Controllers\JssiIssuesController;
 use App\Http\Controllers\JssiPapersController;
 use App\Http\Controllers\JssiAuthorsController;
 use App\Http\Controllers\JssiInstitutionsController;
+use App\Http\Controllers\JssiKeywordsController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -45,4 +46,6 @@ Route::prefix('jssi')->group(function() {
     // Institutions
     Route::get('/institutions', [JssiInstitutionsController::class, 'index'])->name('jssiInstitutions');
     Route::get('/institutions/{id}/papers', [JssiInstitutionsController::class, 'show'])->name('jssiInstitution');
+    // Keywords
+    Route::get('/keywords', [JssiKeywordsController::class, 'index'])->name('jssiKeywords');
 });
