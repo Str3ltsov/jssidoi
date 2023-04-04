@@ -26,8 +26,8 @@
                         Authors
                     </a>
                 </li>
-                <li class="right-aside-li">
-                    <a href="#" class="text-decoration-none">
+                <li class="right-aside-li @if (url()->current() === route('jssiInstitutions')) active @endif">
+                    <a href="{{ route('jssiInstitutions') }}" class="text-decoration-none">
                         Institutions
                     </a>
                 </li>
