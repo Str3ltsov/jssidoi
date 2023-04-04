@@ -48,4 +48,5 @@ Route::prefix('jssi')->group(function() {
     Route::get('/institutions/{id}/papers', [JssiInstitutionsController::class, 'show'])->name('jssiInstitution');
     // Keywords
     Route::get('/keywords', [JssiKeywordsController::class, 'index'])->name('jssiKeywords');
+    Route::get('/keywords/{id}/papers', [JssiKeywordsController::class, 'show'])->name('jssiKeyword');
 });

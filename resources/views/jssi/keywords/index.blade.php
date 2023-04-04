@@ -19,7 +19,7 @@
                 <tr>
                     <td>3D modelling</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ rand(1, 66) }}</a>
+                        <a href="{{ route('jssiKeyword', $i) }}" class="text-decoration-none">{{ rand(1, 66) }}</a>
                     </td>
                 </tr>
             @endfor

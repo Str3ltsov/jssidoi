@@ -10,4 +10,10 @@ class JssiKeywordsController extends Controller
     {
         return view('jssi.keywords.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.keywords.show')
+            ->with('id', $id);
+    }
 }
