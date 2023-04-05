@@ -52,4 +52,5 @@ Route::prefix('jssi')->group(function() {
     Route::get('/keywords/{id}/articles', [JssiKeywordsController::class, 'show'])->name('jssiKeyword');
     // Countries
     Route::get('/countries', [JssiCountriesController::class, 'index'])->name('jssiCountries');
+    Route::get('/countries/{id}/articles', [JssiCountriesController::class, 'show'])->name('jssiCountry');
 });

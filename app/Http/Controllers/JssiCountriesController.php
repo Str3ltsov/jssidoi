@@ -10,4 +10,10 @@ class JssiCountriesController extends Controller
     {
         return view('jssi.countries.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.countries.show')
+            ->with('id', $id);
+    }
 }

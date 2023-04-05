@@ -23,7 +23,7 @@
                     </td>
                     <td>Moldova</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ rand(1, 194) }}</a>
+                        <a href="{{ route('jssiCountry', $i) }}" class="text-decoration-none">{{ rand(1, 194) }}</a>
                     </td>
                 </tr>
             @endfor
