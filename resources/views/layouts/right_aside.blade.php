@@ -41,6 +41,11 @@
                         Countries
                     </a>
                 </li>
+                <li class="right-aside-li @if (url()->current() === route('jssiFunders')) active @endif">
+                    <a href="{{ route('jssiFunders') }}" class="text-decoration-none">
+                        Funders
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

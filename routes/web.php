@@ -6,6 +6,7 @@ use App\Http\Controllers\JssiAuthorsController;
 use App\Http\Controllers\JssiInstitutionsController;
 use App\Http\Controllers\JssiKeywordsController;
 use App\Http\Controllers\JssiCountriesController;
+use App\Http\Controllers\JssiFundersController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,6 @@ Route::prefix('jssi')->group(function() {
     // Countries
     Route::get('/countries', [JssiCountriesController::class, 'index'])->name('jssiCountries');
     Route::get('/countries/{id}/articles', [JssiCountriesController::class, 'show'])->name('jssiCountry');
+    // Funders
+    Route::get('/funders', [JssiFundersController::class, 'index'])->name('jssiFunders');
 });
