@@ -16,9 +16,9 @@
                         Issues
                     </a>
                 </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiPapers')) active @endif">
-                    <a href="{{ route('jssiPapers') }}" class="text-decoration-none">
-                        Papers
+                <li class="right-aside-li @if (url()->current() === route('jssiArticles')) active @endif">
+                    <a href="{{ route('jssiArticles') }}" class="text-decoration-none">
+                        Articles
                     </a>
                 </li>
                 <li class="right-aside-li @if (url()->current() === route('jssiAuthors')) active @endif">

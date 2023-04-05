@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class JssiPapersController extends Controller
+class JssiArticlesController extends Controller
 {
     public function index()
     {
-        return view('jssi.papers.index');
+        return view('jssi.articles.index');
     }
 
     public function show(int $id)
     {
-        return view('jssi.papers.show')
+        return view('jssi.articles.show')
             ->with('id', $id);
     }
 }

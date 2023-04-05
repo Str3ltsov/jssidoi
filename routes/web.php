@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\JssiIssuesController;
-use App\Http\Controllers\JssiPapersController;
+use App\Http\Controllers\JssiArticlesController;
 use App\Http\Controllers\JssiAuthorsController;
 use App\Http\Controllers\JssiInstitutionsController;
 use App\Http\Controllers\JssiKeywordsController;
@@ -36,17 +36,17 @@ Route::prefix('jssi')->group(function() {
     // Issues
     Route::get('/', fn() => redirect()->route('jssiIssues'));
     Route::get('/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
-    Route::get('/issues/{id}/papers', [JssiIssuesController::class, 'show'])->name('jssiIssue');
+    Route::get('/issues/{id}/articles', [JssiIssuesController::class, 'show'])->name('jssiIssue');
     // Papers
-    Route::get('/papers', [JssiPapersController::class, 'index'])->name('jssiPapers');
-    Route::get('/papers/{id}', [JssiPapersController::class, 'show'])->name('jssiPaper');
+    Route::get('/articles', [JssiArticlesController::class, 'index'])->name('jssiArticles');
+    Route::get('/articles/{id}', [JssiArticlesController::class, 'show'])->name('jssiArticle');
     // Authors
     Route::get('/authors', [JssiAuthorsController::class, 'index'])->name('jssiAuthors');
-    Route::get('/authors/{id}/papers', [JssiAuthorsController::class, 'show'])->name('jssiAuthor');
+    Route::get('/authors/{id}/articles', [JssiAuthorsController::class, 'show'])->name('jssiAuthor');
     // Institutions
     Route::get('/institutions', [JssiInstitutionsController::class, 'index'])->name('jssiInstitutions');
-    Route::get('/institutions/{id}/papers', [JssiInstitutionsController::class, 'show'])->name('jssiInstitution');
+    Route::get('/institutions/{id}/articles', [JssiInstitutionsController::class, 'show'])->name('jssiInstitution');
     // Keywords
     Route::get('/keywords', [JssiKeywordsController::class, 'index'])->name('jssiKeywords');
-    Route::get('/keywords/{id}/papers', [JssiKeywordsController::class, 'show'])->name('jssiKeyword');
+    Route::get('/keywords/{id}/articles', [JssiKeywordsController::class, 'show'])->name('jssiKeyword');
 });
