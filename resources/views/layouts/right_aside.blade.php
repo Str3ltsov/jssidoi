@@ -16,9 +16,9 @@
                         Issues
                     </a>
                 </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiPapers')) active @endif">
-                    <a href="{{ route('jssiPapers') }}" class="text-decoration-none">
-                        Papers
+                <li class="right-aside-li @if (url()->current() === route('jssiArticles')) active @endif">
+                    <a href="{{ route('jssiArticles') }}" class="text-decoration-none">
+                        Articles
                     </a>
                 </li>
                 <li class="right-aside-li @if (url()->current() === route('jssiAuthors')) active @endif">
@@ -34,6 +34,16 @@
                 <li class="right-aside-li @if (url()->current() === route('jssiKeywords')) active @endif">
                     <a href="{{ route('jssiKeywords') }}" class="text-decoration-none">
                         Keywords
+                    </a>
+                </li>
+                <li class="right-aside-li @if (url()->current() === route('jssiCountries')) active @endif">
+                    <a href="{{ route('jssiCountries') }}" class="text-decoration-none">
+                        Countries
+                    </a>
+                </li>
+                <li class="right-aside-li @if (url()->current() === route('jssiFunders')) active @endif">
+                    <a href="{{ route('jssiFunders') }}" class="text-decoration-none">
+                        Funders
                     </a>
                 </li>
             </ul>

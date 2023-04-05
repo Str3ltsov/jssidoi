@@ -10,7 +10,7 @@
         @for ($i = 1; $i <= rand(1, 30); $i++)
             <p><b>PAPERS:</b></p>
             <p>{{ $i }}.
-                <a href="{{ route('jssiPaper', $i) }}" class="text-decoration-none">
+                <a href="{{ route('jssiArticle', $i) }}" class="text-decoration-none">
                     <b>Štěpán Kavan</b>,
                     <b>Rastislav Kazanský</b>,
                     <b>Pavel Nečas</b>.

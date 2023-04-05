@@ -41,7 +41,7 @@
                     <a href="#" class="text-decoration-none">Title</a>
                 </th>
                 <th>
-                    <a href="#" class="asc text-decoration-none">Papers</a>
+                    <a href="#" class="asc text-decoration-none">Articles</a>
                 </th>
             </tr>
             </thead>
@@ -49,7 +49,7 @@
             @for ($i = 1; $i <= 25; $i++)
                 <tr>
                     <td>
-                        <img src="{{ asset('images/flags/md.png') }}" alt="md" class="img-fluid" style="width: 25px; height: 15px">
+                        <img src="{{ asset('images/flags/md.png') }}" alt="md" class="img-fluid" style="width: 20px; height: 15px">
                     </td>
                     <td>Academy of Economic Studies of Moldova</td>
                     <td>

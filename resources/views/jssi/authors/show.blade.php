@@ -5,7 +5,7 @@
         <h2 class="mb-3">Papers</h2>
         @for ($i = 1; $i <= rand(1, 30); $i++)
             <p>{{ $i }}.
-                <a href="{{ route('jssiPaper', $i) }}" class="text-decoration-none">
+                <a href="{{ route('jssiArticle', $i) }}" class="text-decoration-none">
                     <b>Štěpán Kavan</b>,
                     <b>Rastislav Kazanský</b>,
                     <b>Pavel Nečas</b>.
