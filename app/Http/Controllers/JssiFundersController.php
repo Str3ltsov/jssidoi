@@ -10,4 +10,10 @@ class JssiFundersController extends Controller
     {
         return view('jssi.funders.index');
     }
+
+    public function show(int $id)
+    {
+        return view('jssi.funders.show')
+            ->with('id', $id);
+    }
 }

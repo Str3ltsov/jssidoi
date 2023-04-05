@@ -56,4 +56,5 @@ Route::prefix('jssi')->group(function() {
     Route::get('/countries/{id}/articles', [JssiCountriesController::class, 'show'])->name('jssiCountry');
     // Funders
     Route::get('/funders', [JssiFundersController::class, 'index'])->name('jssiFunders');
+    Route::get('/funders/{id}/articles', [JssiFundersController::class, 'show'])->name('jssiFunder');
 });

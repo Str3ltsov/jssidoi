@@ -19,7 +19,7 @@
                 <tr>
                     <td>Scientific Grant Agency VEGA</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ rand(1, 35) }}</a>
+                        <a href="{{ route('jssiFunder', $i) }}" class="text-decoration-none">{{ rand(1, 35) }}</a>
                     </td>
                 </tr>
             @endfor

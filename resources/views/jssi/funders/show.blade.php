@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="bg-white p-4 border-1 shadow-sm mt-4 rounded-1">
-        <h2 class="mb-3">Articles</h2>
+        <h2 class="mb-3">Article</h2>
         @for ($i = 1; $i <= rand(1, 10); $i++)
             <p>{{ $i }}.
                 <a href="{{ route('jssiArticle', $i) }}" class="text-decoration-none">
