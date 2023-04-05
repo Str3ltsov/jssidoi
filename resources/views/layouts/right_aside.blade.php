@@ -36,6 +36,11 @@
                         Keywords
                     </a>
                 </li>
+                <li class="right-aside-li @if (url()->current() === route('jssiCountries')) active @endif">
+                    <a href="{{ route('jssiCountries') }}" class="text-decoration-none">
+                        Countries
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
