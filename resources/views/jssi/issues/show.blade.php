@@ -7,6 +7,14 @@
             <span>Number {{ strtoupper(Str::random(1)) }}&nbsp;</span>
             <span>December 2020&nbsp;</span>
         </h2>
+        <div class="d-flex flex-column">
+            <div>
+                Issue DOI:
+                <a href="#" class="link-primary text-decoration-none">10.9700/jesi.2023.10.3</a>
+            </div>
+            <a href="#" class="link-primary text-decoration-none mt-2">Print version</a>
+        </div>
+        <hr>
         @for ($i = 1; $i <= rand(1, 30); $i++)
             <p><b>PAPERS:</b></p>
             <p>{{ $i }}.

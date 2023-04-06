@@ -5,43 +5,44 @@
         <h2 class="mb-3">Issues</h2>
         <table class="table table-striped table-responsive">
             <tbody>
-                @for ($i = 1; $i <= 20; $i++)
+                @forelse($issues as $issue)
                     <tr>
-                        <td>Volume {{ $i }}&nbsp;</td>
-                        <td>Number {{ strtoupper(Str::random(1)) }}&nbsp;</td>
-                        <td>December 2020&nbsp;</td>
+                        <td>Vol. {{ $issue->volume }}&nbsp;</td>
+                        <td>Num. {{ $issue->number }}&nbsp;</td>
+                        <td>{{ $issue->date->format('F Y') }}&nbsp;</td>
                         <td>
-                            <a href="{{ route('jssiIssue', $i) }}">Content ({{ rand(1, 50) }})</a>
+                            <a href="{{ route('jssiIssue', $issue->id) }}" class="text-decoration-none">
+                                Content ({{ rand(1, 50) }})
+                            </a>
                         </td>
                         <td>
-                            <a href="#" target="_blank">Print version</a>
+                            <a href="{{ asset("documents/issues/$issue->id/$issue->print") }}" target="_blank" class="text-decoration-none"
+                               @if (!$issue->print) style="pointer-events: none; cursor: default; color: gray;" @endif>
+                                Print version
+                            </a>
                             <br>
                         </td>
                         <td>
                             <i class="fa fa-eye" title="Views"></i>
-                            {{ rand(1, 1000) }}
+                            {{ $issue->views ?? '0' }}
                         </td>
                         <td>
                             <i class="fa fa-download" title="Downloads"></i>
-                            {{ rand(1, 100) }}
+                            {{ $issue->downloads ?? '0' }}
                         </td>
                     </tr>
-                @endfor
+                @empty
+                    <tr>
+                        <td>{{ __('No issues') }}</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
         <div class="row text-center mt-3">
             <div class="col-lg-12">
-                Page 1 of 3, showing 20 records out of 41 total
+                Page {{ $issues->currentPage() }} of {{ $issues->lastPage() }}, showing {{ $issues->perPage() }} records out of {{ $issues->total() }} total
                 <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    {{ $issues->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
