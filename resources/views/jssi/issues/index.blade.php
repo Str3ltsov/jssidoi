@@ -12,7 +12,7 @@
                         <td>{{ $issue->date->format('F Y') }}&nbsp;</td>
                         <td>
                             <a href="{{ route('jssiIssue', $issue->id) }}" class="text-decoration-none">
-                                Content ({{ rand(1, 50) }})
+                                Content ({{ count($issue->articles) }})
                             </a>
                         </td>
                         <td>

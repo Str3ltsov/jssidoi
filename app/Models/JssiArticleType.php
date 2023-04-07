@@ -12,6 +12,7 @@ class JssiArticleType extends Model
     public $timestamps = false;
 
     protected $table = 'jssi_article_types';
+
     protected $fillable = ['name'];
 
     protected $casts = ['name' => 'string'];

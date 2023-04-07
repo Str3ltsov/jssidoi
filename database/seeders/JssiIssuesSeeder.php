@@ -2,34 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Traits\SeederHelper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class JssiIssuesSeeder extends Seeder
 {
-    private function getRandomNumber(): int
-    {
-        return rand(100, 10000);
-    }
-
-    private function getRandomViewsBiggerThanDownloads(int $randomViews, int $randomDownloads): int
-    {
-        if ($randomViews < $randomDownloads) {
-            $randomViews = $this->getRandomNumber();
-            return $this->getRandomViewsBiggerThanDownloads($randomViews, $randomDownloads);
-        } else {
-            return $randomViews;
-        }
-    }
+    use SeederHelper;
 
     private function insertJssiIssues(): void
     {
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             for ($j = 1; $j <= rand(3, 4); $j++) {
                 $unformatedDate = fake()->dateTimeBetween('-10 years');
-                $randomViews = $this->getRandomNumber();
-                $randomDownloads = $this->getRandomNumber();
+                $randomViews = rand(100, 10000);
+                $randomDownloads = rand(100, 10000);
 
                 DB::table('jssi_issues')->insert([
                     'volume' => $i,

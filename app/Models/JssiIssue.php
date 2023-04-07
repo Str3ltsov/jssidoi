@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JssiIssue extends Model
 {
@@ -12,6 +13,8 @@ class JssiIssue extends Model
     public $timestamps = false;
 
     protected $table = 'jssi_issues';
+
+    protected $dateFormat = 'Y-m-d';
 
     protected $fillable = [
         'volume',
@@ -38,4 +41,9 @@ class JssiIssue extends Model
         'views' => 'integer',
         'downloads' => 'integer'
     ];
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(JssiArticle::class, 'issue_id', 'id');
+    }
 }

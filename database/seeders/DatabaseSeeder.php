@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             JssiArticleTypesSeeder::class,
-            JssiIssuesSeeder::class
+            JssiIssuesSeeder::class,
+            JssiArticlesSeeder::class
         ]);
     }
 }
