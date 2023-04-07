@@ -25,7 +25,6 @@ class JssiArticlesSeeder extends Seeder
 
             for ($j = 1; $j <= rand(3, 50); $j++) {
                 $rndArticleType = $this->getRandomArticleType();
-                $doiDate = fake()->dateTimeBetween('-10 years')->format('Y');
                 $rndHalNumber = rand(1000, 9999);
                 $randomViews = rand(100, 10000);
                 $randomDownloads = rand(100, 10000);
@@ -34,17 +33,17 @@ class JssiArticlesSeeder extends Seeder
                     'issue_id' => $i,
                     'article_type_id' => $rndArticleType,
                     'title' => fake()->text(50),
-                    'received' => $rndArticleType == ArticleTypesEnum::FOREWORD
+                    'received' => $rndArticleType == ArticleTypesEnum::FOREWORD->value
                         ? null
                         : fake()->dateTimeBetween('-10 years')->format('Y-m-d'),
-                    'accepted' => $rndArticleType == ArticleTypesEnum::FOREWORD
+                    'accepted' => $rndArticleType == ArticleTypesEnum::FOREWORD->value
                         ? null
                         : fake()->dateTimeBetween('-1 years')->format('Y-m-d'),
-                    'published' => $rndArticleType == ArticleTypesEnum::FOREWORD
+                    'published' => $rndArticleType == ArticleTypesEnum::FOREWORD->value
                         ? null
                         : fake()->dateTimeBetween('-6 months')->format('Y-m-d'),
                     'abstract' => fake()->text(300),
-                    'doi' => "10.9770/jssi.$doiDate.{$issue->volume}({$issue->number})",
+                    'doi' => "{$issue->doi}({$j})",
                     'hal' => "hal-0169{$rndHalNumber}",
                     'note' => fake()->text(100),
                     'funding' => fake()->text(100),

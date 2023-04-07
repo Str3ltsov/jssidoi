@@ -2,14 +2,11 @@
 
 @section('content')
     <div class="bg-white p-4 border-1 shadow-sm mt-4 rounded-1">
-        <h2 class="mb-3">Papers</h2>
-        @for ($i = 1; $i <= 20; $i++)
-            <p>
-                <a href="{{ route('jssiArticle', $i) }}" class="text-decoration-none">
-                    <b>Štěpán Kavan</b>,
-                    <b>Rastislav Kazanský</b>,
-                    <b>Pavel Nečas</b>.
-                    IDENTIFYING RISKS IN SELECTED SOCIAL FACILITIES WHEN EMERGENCIES ARISE
+        <h2 class="mb-3">Articles</h2>
+        @forelse($articles as $article)
+            <p class="m-0 p-0">
+                <a href="{{ route('jssiArticle', $article->id) }}" class="text-decoration-none">
+                    {{ $article->title }}
                 </a>
             </p>
             <p>
@@ -19,65 +16,50 @@
                 Kavan, �.; Kazanský, R.; Nečas, P. 2020. Identifying risks in selected social facilities when emergencies arise,
                 <i>Journal of Security and Sustainability Issues</i>
                 10(2): 379-388.
-                <a href="https://doi.org/10.9770/jssi.2020.10.2(1)" target="_blank" class="text-decoration-none">
-                    https://doi.org/10.9770/jssi.2020.10.2(1)
+                <a href="https://doi.org/{{ $article->doi }}" target="_blank" class="text-decoration-none">
+                    https://doi.org/{{ $article->doi }}
                 </a>
             </p>
             <div class="row">
-                <div id="share-buttons" class="col-lg-6 d-flex align-items-center gap-2 mb-3 mb-lg-0">
+                <div id="share-buttons" class="col-lg-5 d-flex align-items-center gap-2 mb-3 mb-lg-0">
                     Share:
                     <div class="d-flex align-items-center gap-1">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-facebook fs-5"></i>
-                        </a>
-                        <a href="https://plus.google.com/share?url=http%3A/jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-google-plus fs-5"></i>
+                            <i class="fa-brands fa-square-facebook fs-4"></i>
                         </a>
                         <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-linkedin fs-5"></i>
+                            <i class="fa-brands fa-linkedin fs-4"></i>
                         </a>
                         <a href="https://twitter.com/home?status=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-twitter fs-5"></i>
+                            <i class="fa-brands fa-square-twitter fs-4"></i>
                         </a>
                         <a href="http://www.mendeley.com/import/?url=http://jssidoi.org/jssi/papers/papers/view/625/Kavan_Identifying_risks_in_selected_social_facilities_when_emergencies_arise.pdf" target="_blank">
-                            <i class="fa-brands fa-mendeley fs-5"></i>
+                            <i class="fa-brands fa-mendeley fs-4"></i>
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex gap-4 gap-lg-0">
+                <div class="col-lg-7 d-flex gap-4 gap-lg-0">
                     <div class="col-lg-6 d-flex align-items-center gap-1">
-                        <a href="#" class="btn btn-primary">HTML</a>
+                        <a href="{{ route('jssiArticle', $article->id) }}" class="btn btn-primary">HTML</a>
                         <a href="#" class="btn btn-primary" target="_blank">PDF</a>
                     </div>
                     <div class="col-lg-6 d-flex align-items-center gap-1">
                         <i class="fa fa-eye" title="Views"></i>
-                        {{ rand(100, 1000) }}&nbsp;&nbsp;&nbsp;
+                        {{ $article->views }}&nbsp;&nbsp;&nbsp;
                         <i class="fa fa-download" title="Downloads"></i>
-                        {{ rand(1, 200) }}
+                        {{ $article->downloads }}
                     </div>
                 </div>
             </div>
             <hr>
-        @endfor
+        @empty
+            <span class="text-muted">No articles</span>
+        @endforelse
         <div class="row text-center mt-3">
             <div class="col-lg-12">
-                Page 1 of 33, showing 20 records out of 641 total
+                Page {{ $articles->currentPage() }} of {{ $articles->lastPage() }}, showing {{ $articles->perPage() }} records out of {{ $articles->total() }} total
                 <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
-                            <li class="page-item"><a class="page-link" href="#">9</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    {{ $articles->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>

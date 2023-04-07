@@ -18,11 +18,12 @@
             </a>
         </div>
         <hr>
-        @forelse($issue->articles as $key => $article)
-            <p><b>PAPERS:</b></p>
-            <h5>{{ $key + 1 }}.
+        <p><b>ARTICLES:</b></p>
+        @forelse($issue->articles->sortByDesc('article_type_id') as $article)
+            <h5>{{ $loop->index + 1 }}.
                 <a href="{{ route('jssiArticle', $article->id) }}" class="text-decoration-none">{{ $article->title }}</a>
             </h5>
+            @if ($article->article_type_id == \App\Enums\ArticleTypesEnum::PAPER->value)
             <p>
                 <b>Reference</b>
                 to this paper should be made as follows:
@@ -34,6 +35,7 @@
                     https://doi.org/{{ $article->doi }}
                 </a>
             </p>
+            @endif
             <div class="row">
                 <div class="col-lg-12 d-flex align-items-center gap-1 mb-3">
                     <i class="fa fa-eye" title="Views"></i>

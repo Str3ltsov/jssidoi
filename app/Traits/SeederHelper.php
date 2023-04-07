@@ -10,7 +10,7 @@ trait SeederHelper
     public function getRandomViewsBiggerThanDownloads(int $randomViews, int $randomDownloads): int
     {
         if ($randomViews < $randomDownloads) {
-            $randomViews = $this->getRandomNumber();
+            $randomViews = rand(100, 10000);
             return $this->getRandomViewsBiggerThanDownloads($randomViews, $randomDownloads);
         } else {
             return $randomViews;

@@ -22,7 +22,7 @@ class JssiIssuesSeeder extends Seeder
                     'volume' => $i,
                     'number' => $j,
                     'date' => $unformatedDate->format('Y-m-d'),
-                    'doi' => "10.9770/jesi.{$unformatedDate->format('Y')}.$i.$j",
+                    'doi' => "10.9770/jssi.{$unformatedDate->format('Y')}.$i.$j",
                     'visible' => true,
                     'views' => $this->getRandomViewsBiggerThanDownloads($randomViews, $randomDownloads),
                     'downloads' => $randomDownloads

@@ -63,11 +63,11 @@ class JssiArticle extends Model
 
     public function issue(): HasOne
     {
-        return $this->hasOne(JssiIssue::class, 'issue_id', 'id');
+        return $this->hasOne(JssiIssue::class, 'id', 'issue_id');
     }
 
     public function type(): HasOne
     {
-        return $this->hasOne(JssiArticleType::class, 'article_type_id', 'id');
+        return $this->hasOne(JssiArticleType::class, 'id', 'article_type_id');
     }
 }
