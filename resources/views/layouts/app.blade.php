@@ -14,6 +14,32 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ asset('fontawesome/js/all.min.js') }}"></script>
+    <script>
+        const query = window.location.search
+        let desc
+
+        const isAttrDesc = param => {
+            param[1].includes('-') ? desc = false : desc = true
+        }
+
+        const changeAttrToDescIfParamNotEqualsAttr = (attr, param) => {
+            if (param !== attr) desc = false;
+        }
+
+        const sortTableByAttribute = attr => {
+            if (query) {
+                const param = query.split('=')
+                isAttrDesc(param[1])
+                changeAttrToDescIfParamNotEqualsAttr(attr, param[1])
+            }
+
+            const mainForm = document.getElementById('mainForm')
+            const mainFormInput = document.getElementById('mainFormInput')
+
+            mainFormInput.value = `${desc ? '-' : ''}${attr}`
+            mainForm.submit()
+        }
+    </script>
     @stack('scripts')
 </head>
 <body>

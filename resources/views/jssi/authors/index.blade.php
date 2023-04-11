@@ -86,23 +86,3 @@
         <input type="text" name="sort" value="" id="mainFormInput">
     </form>
 @endsection
-
-@push('scripts')
-    <script>
-        let desc
-
-        const isAttrDesc = () => {
-            const query = window.location.search
-            const param = query.split('=')
-            param[1].includes('-') ? desc = false : desc = true
-        }
-
-        const sortTableByAttribute = attr => {
-            isAttrDesc()
-            const mainForm = document.getElementById('mainForm')
-            const mainFormInput = document.getElementById('mainFormInput')
-            mainFormInput.value = `${desc ? '-' : ''}${attr}`
-            mainForm.submit()
-        }
-    </script>
-@endpush

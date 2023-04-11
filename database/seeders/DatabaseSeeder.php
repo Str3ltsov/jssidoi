@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             JssiArticleTypesSeeder::class,
             JssiIssuesSeeder::class,
             JssiArticlesSeeder::class,
-            JssiAuthorsSeeder::class
+            JssiAuthorsSeeder::class,
+            JssiCountriesSeeder::class
         ]);
     }
 }
