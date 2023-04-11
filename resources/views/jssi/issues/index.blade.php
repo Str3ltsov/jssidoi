@@ -40,7 +40,7 @@
         </table>
         <div class="row text-center mt-3">
             <div class="col-lg-12">
-                Page {{ $issues->currentPage() }} of {{ $issues->lastPage() }}, showing {{ $issues->perPage() }} records out of {{ $issues->total() }} total
+                Page {{ $issues->currentPage() }} of {{ $issues->lastPage() }}, showing {{ count($issues) }} records out of {{ $issues->total() }} total
                 <div class="d-flex justify-content-center mt-4">
                     {{ $issues->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>

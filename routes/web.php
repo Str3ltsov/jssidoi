@@ -7,7 +7,6 @@ use App\Http\Controllers\JssiInstitutionsController;
 use App\Http\Controllers\JssiKeywordsController;
 use App\Http\Controllers\JssiCountriesController;
 use App\Http\Controllers\JssiFundersController;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

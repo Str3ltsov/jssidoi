@@ -6,111 +6,103 @@
         <fieldset class="search">
             First name begin at:&nbsp;&nbsp;
             <br>
-            <a href="#">A</a>&nbsp;
-            <a href="#">B</a>&nbsp;
-            <a href="#">C</a>&nbsp;
-            <a href="#">D</a>&nbsp;
-            <a href="#">E</a>&nbsp;
-            <a href="#">F</a>&nbsp;
-            <a href="#">G</a>&nbsp;
-            <a href="#">H</a>&nbsp;
-            <a href="#">I</a>&nbsp;
-            <a href="#">J</a>&nbsp;
-            <a href="#">K</a>&nbsp;
-            <a href="#">L</a>&nbsp;
-            <a href="#">M</a>&nbsp;
-            <a href="#">N</a>&nbsp;
-            <a href="#">O</a>&nbsp;
-            <a href="#">P</a>&nbsp;
-            <a href="#">Q</a>&nbsp;
-            <a href="#">R</a>&nbsp;
-            <a href="#">S</a>&nbsp;
-            <a href="#">T</a>&nbsp;
-            <a href="#">U</a>&nbsp;
-            <a href="#">V</a>&nbsp;
-            <a href="#">W</a>&nbsp;
-            <a href="#">X</a>&nbsp;
-            <a href="#">Y</a>&nbsp;
-            <a href="#">Z</a>&nbsp;
+            <div class="d-flex">
+                @foreach (range('A', 'Z') as $letter)
+                    <form action="{{ route('jssiAuthors') }}" method="GET">
+                        <input type="hidden" name="filter[first_name like]" value="{{ $letter }}">
+                        <button class="btn bg-transparent link-primary p-0 m-0
+                            @if (isset($filter['first_name like']) && $filter['first_name like'] == $letter) fw-bold @endif" type="submit">
+                            {{ $letter }}
+                        </button>&nbsp;
+                    </form>
+                @endforeach
+            </div>
             <br>Last name begin at:&nbsp;&nbsp;
             <br>
-            <a href="#">A</a>&nbsp;
-            <a href="#">B</a>&nbsp;
-            <a href="#">C</a>&nbsp;
-            <a href="#">D</a>&nbsp;
-            <a href="#">E</a>&nbsp;
-            <a href="#">F</a>&nbsp;
-            <a href="#">G</a>&nbsp;
-            <a href="#">H</a>&nbsp;
-            <a href="#">I</a>&nbsp;
-            <a href="#">J</a>&nbsp;
-            <a href="#">K</a>&nbsp;
-            <a href="#">L</a>&nbsp;
-            <a href="#">M</a>&nbsp;
-            <a href="#">N</a>&nbsp;
-            <a href="#">O</a>&nbsp;
-            <a href="#">P</a>&nbsp;
-            <a href="#">Q</a>&nbsp;
-            <a href="#">R</a>&nbsp;
-            <a href="#">S</a>&nbsp;
-            <a href="#">T</a>&nbsp;
-            <a href="#">U</a>&nbsp;
-            <a href="#">V</a>&nbsp;
-            <a href="#">W</a>&nbsp;
-            <a href="#">X</a>&nbsp;
-            <a href="#">Y</a>&nbsp;
-            <a href="#">Z</a>&nbsp;
+            <div class="d-flex">
+                @foreach (range('A', 'Z') as $letter)
+                    <form action="{{ route('jssiAuthors') }}" method="GET">
+                        <input type="hidden" name="filter[last_name like]" value="{{ $letter }}">
+                        <button class="btn bg-transparent link-primary p-0 m-0
+                            @if (isset($filter['last_name like']) && $filter['last_name like'] == $letter) fw-bold @endif" type="submit">
+                            {{ $letter }}
+                        </button>&nbsp;
+                    </form>
+                @endforeach
+            </div>
         </fieldset>
         <br>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>
-                    <a href="#" class="text-decoration-none">First Name</a>
+                    <a href="javascript:void(0)" class="text-decoration-none" onclick="sortTableByAttribute('first_name')">First Name</a>
                 </th>
                 <th>
-                    <a href="#" class="asc text-decoration-none">Last Name</a>
+                    <a href="javascript:void(0)" class="asc text-decoration-none" onclick="sortTableByAttribute('last_name')">Last Name</a>
                 </th>
                 <th>Institutions</th>
                 <th>
-                    <a href="#" class="text-decoration-none">Papers</a>
+                    <a href="javascript:void(0)" class="text-decoration-none">Articles</a>
                 </th>
             </tr>
             </thead>
             <tbody>
-            @for ($i = 1; $i <= 20; $i++)
+            @forelse($authors as $author)
                 <tr>
-                    <td>Windijarto</td>
-                    <td>Abrhám</td>
-                    <td>Airlangga University</td>
                     <td>
-                        <a href="{{ route('jssiAuthor', $i) }}" class="text-decoration-none">{{ rand(1, 24) }}</a>
+                        <div class="d-flex align-items-center gap-1">
+                            <a href="http://orcid.org/{{ $author->orcid }}" class="rounded-5 bg-success text-decoration-none px-1 text-center text-white" target="_blank">
+                                iD
+                            </a>
+                            {{ $author->first_name }}
+                        </div>
+                    </td>
+                    <td>{{ $author->last_name ?? '' }}</td>
+                    <td></td>
+                    <td>
+                        <a href="{{ route('jssiAuthor', $author->id) }}" class="text-decoration-none">{{ rand(1, 24) }}</a>
                     </td>
                 </tr>
-            @endfor
+            @empty
+                <tr>
+                    <td class="text-muted" colspan="4">No authors</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
-        <div class="row text-center mt-3">
-            <div class="col-lg-12">
-                Page 1 of 69, showing 20 records out of 1377 total
-                <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
-                            <li class="page-item"><a class="page-link" href="#">9</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+        @if (count($authors) > 0)
+            <div class="row text-center mt-3">
+                <div class="col-lg-12">
+                    Page {{ $authors->currentPage() }} of {{ $authors->lastPage() }}, showing {{ count($authors) }} records out of {{ $authors->total() }} total
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $authors->onEachSide(1)->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
+    <form action="{{ route('jssiAuthors') }}" method="GET" id="mainForm" class="d-none">
+        <input type="text" name="sort" value="" id="mainFormInput">
+    </form>
 @endsection
+
+@push('scripts')
+    <script>
+        let desc
+
+        const isAttrDesc = () => {
+            const query = window.location.search
+            const param = query.split('=')
+            param[1].includes('-') ? desc = false : desc = true
+        }
+
+        const sortTableByAttribute = attr => {
+            isAttrDesc()
+            const mainForm = document.getElementById('mainForm')
+            const mainFormInput = document.getElementById('mainFormInput')
+            mainFormInput.value = `${desc ? '-' : ''}${attr}`
+            mainForm.submit()
+        }
+    </script>
+@endpush

@@ -57,7 +57,7 @@
         @endforelse
         <div class="row text-center mt-3">
             <div class="col-lg-12">
-                Page {{ $articles->currentPage() }} of {{ $articles->lastPage() }}, showing {{ $articles->perPage() }} records out of {{ $articles->total() }} total
+                Page {{ $articles->currentPage() }} of {{ $articles->lastPage() }}, showing {{ count($articles) }} records out of {{ $articles->total() }} total
                 <div class="d-flex justify-content-center mt-4">
                     {{ $articles->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>

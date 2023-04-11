@@ -6,6 +6,10 @@ class HelperService
 {
     public function paginateCollection(object $collection, int $paginateNum): object
     {
-        return $collection->toQuery()->paginate($paginateNum);
+        if (count($collection) > 0) {
+            return $collection->toQuery()->paginate($paginateNum);
+        }
+
+        return $collection;
     }
 }
