@@ -13,6 +13,6 @@ class JssiInstitutionsSeeder extends Seeder
      */
     public function run(): void
     {
-        JssiInstitution::factory()->count(100)->create();
+        JssiInstitution::factory()->count(50)->create();
     }
 }

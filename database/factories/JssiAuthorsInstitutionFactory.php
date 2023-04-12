@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class JssiAuthorsInstitutionFactory extends Factory
 {
     /**
+     * @var int
+     */
+    protected static int $counter = 0;
+
+    /**
      * @var string
      */
     protected $model = JssiAuthorsInstitution::class;
@@ -22,9 +27,15 @@ class JssiAuthorsInstitutionFactory extends Factory
      */
     public function definition(): array
     {
+        self::$counter += 1;
+
+        if (self::$counter >= 100) {
+            self::$counter = rand(1, 100);
+        }
+
         return [
-            'author_id' => rand(1, 100),
-            'institution_id' => rand(1, 100)
+            'author_id' => self::$counter,
+            'institution_id' => rand(1, 50)
         ];
     }
 }

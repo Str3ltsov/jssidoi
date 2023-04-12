@@ -38,33 +38,4 @@ class JssiAuthorService extends HelperService
 
         return $author;
     }
-
-    public final function getArticleCountForeachAuthor(object $authors): array
-    {
-        $articleCounts = [];
-
-        foreach ($authors as $author) {
-            if (count($author->authorsInstitutions) == 0) {
-                $articleCounts[$author->id] = 0;
-            }
-            foreach ($author->authorsInstitutions as $authorsInstitution) {
-                $articleCounts[$author->id] = count($authorsInstitution->articleAuthorsInstitutions);
-            }
-        }
-
-        return $articleCounts;
-    }
-
-    public final function getAuthorArticles(object $author): object
-    {
-        $articles = [];
-
-        foreach ($author->authorsInstitutions as $authorsInstitution) {
-            foreach ($authorsInstitution->articleAuthorsInstitutions as $articleAuthorsInstitution) {
-                $articles[] = $articleAuthorsInstitution->article;
-            }
-        }
-
-        return collect($articles);
-    }
 }

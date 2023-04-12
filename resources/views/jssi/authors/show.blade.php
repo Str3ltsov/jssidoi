@@ -8,7 +8,7 @@
                 <a href="{{ route('jssiArticle', $article->id) }}" class="text-decoration-none">{{ $article->title }}</a>
             </h5>
             <div class="d-flex flex-wrap gap-2 mb-3" style="line-height: 16px">
-                @forelse($articlesAuthors[$article->id] as $author)
+                @forelse($authors[$article->id] as $author)
                     <div class="fw-bold d-flex gap-1">
                         <div>
                             <a href="http://orcid.org/0000-0001-9108-0525" class="rounded-5 bg-success text-decoration-none px-1 text-center text-white" target="_blank">

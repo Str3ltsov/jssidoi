@@ -42,7 +42,9 @@
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('jssiInstitution', $institution->id) }}" class="text-decoration-none">{{ rand(1, 59) }}</a>
+                        <a href="{{ route('jssiInstitution', $institution->id) }}" class="text-decoration-none">
+                            {{ $articleCounts[$institution->id] }}
+                        </a>
                     </td>
                 </tr>
             @empty

@@ -22,19 +22,19 @@ class JssiAuthorsController extends Controller
             ->with([
                 'authors' => $authors,
                 'filter' => $request->query()['filter'] ?? [],
-                'articleCounts' => $this->authorService->getArticleCountForeachAuthor($authors)
+                'articleCounts' => $this->authorService->getArticleCountForeachCollection($authors)
             ]);
     }
 
     public function show(int $id): View|Application|Factory|Foundation\Application
     {
         $author = $this->authorService->getJssiAuthorById($id);
-        $articles = $this->authorService->getAuthorArticles($author);
+        $articles = $this->authorService->getCollectionArticles($author);
 
         return view('jssi.authors.show')
             ->with([
                 'articles' => $articles,
-                'articlesAuthors' => $this->articleService->getArticlesAuthors($articles)
+                'authors' => $this->articleService->getArticlesAuthors($articles)
             ]);
     }
 }
