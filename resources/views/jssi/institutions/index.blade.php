@@ -5,32 +5,17 @@
         <h2 class="mb-3">Institutions</h2>
         <fieldset class="search">
             Institution begin at:&nbsp;
-            <a href="#">A</a>&nbsp;
-            <a href="#">B</a>&nbsp;
-            <a href="#">C</a>&nbsp;
-            <a href="#">D</a>&nbsp;
-            <a href="#">E</a>&nbsp;
-            <a href="#">F</a>&nbsp;
-            <a href="#">G</a>&nbsp;
-            <a href="#">H</a>&nbsp;
-            <a href="#">I</a>&nbsp;
-            <a href="#">J</a>&nbsp;
-            <a href="#">K</a>&nbsp;
-            <a href="#">L</a>&nbsp;
-            <a href="#">M</a>&nbsp;
-            <a href="#">N</a>&nbsp;
-            <a href="#">O</a>&nbsp;
-            <a href="#">P</a>&nbsp;
-            <a href="#">Q</a>&nbsp;
-            <a href="#">R</a>&nbsp;
-            <a href="#">S</a>&nbsp;
-            <a href="#">T</a>&nbsp;
-            <a href="#">U</a>&nbsp;
-            <a href="#">V</a>&nbsp;
-            <a href="#">W</a>&nbsp;
-            <a href="#">X</a>&nbsp;
-            <a href="#">Y</a>&nbsp;
-            <a href="#">Z</a>&nbsp;
+            <div class="d-flex">
+                @foreach (range('A', 'Z') as $letter)
+                    <form action="{{ route('jssiInstitutions') }}" method="GET">
+                        <input type="hidden" name="filter[title like]" value="{{ $letter }}">
+                        <button class="btn bg-transparent link-primary p-0 m-0
+                            @if (isset($filter['title like']) && $filter['title like'] == $letter) fw-bold @endif" type="submit">
+                            {{ $letter }}
+                        </button>&nbsp;
+                    </form>
+                @endforeach
+            </div>
         </fieldset>
         <br>
         <table class="table table-striped">
@@ -38,48 +23,45 @@
             <tr>
                 <th></th>
                 <th>
-                    <a href="#" class="text-decoration-none">Title</a>
+                    <a href="javascript:void(0)" class="text-decoration-none" onclick="sortTableByAttribute('title')">Title</a>
                 </th>
                 <th>
-                    <a href="#" class="asc text-decoration-none">Articles</a>
+                    <a href="javascript:void(0)" class="asc text-decoration-none">Articles</a>
                 </th>
             </tr>
             </thead>
             <tbody>
-            @for ($i = 1; $i <= 25; $i++)
+            @forelse($institutions as $institution)
                 <tr>
                     <td>
-                        <img src="{{ asset('images/flags/md.png') }}" alt="md" class="img-fluid" style="width: 20px; height: 15px">
+                        <img src="{{ asset("images/flags/".strtolower($institution->country->code).'.png') }}" alt="md" class="img-fluid" style="width: 20px; height: 15px">
                     </td>
-                    <td>Academy of Economic Studies of Moldova</td>
                     <td>
-                        <a href="{{ route('jssiInstitution', $i) }}" class="text-decoration-none">{{ rand(1, 59) }}</a>
+                        <a href="{{ $institution->website }}" class="link-primary text-decoration-none">
+                            {{ $institution->title }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('jssiInstitution', $institution->id) }}" class="text-decoration-none">{{ rand(1, 59) }}</a>
                     </td>
                 </tr>
-            @endfor
+            @empty
+                <tr>
+                    <td class="text-muted" colspan="3">No institutions</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
         <div class="row text-center mt-3">
             <div class="col-lg-12">
-                Page 1 of 25, showing 25 records out of 485 total
+                Page {{ $institutions->currentPage() }} of {{ $institutions->lastPage() }}, showing {{ count($institutions) }} records out of {{ $institutions->total() }} total
                 <div class="d-flex justify-content-center mt-4">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
-                            <li class="page-item"><a class="page-link" href="#">9</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                    {{ $institutions->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
     </div>
+    <form action="{{ route('jssiInstitutions') }}" method="GET" id="mainForm" class="d-none">
+        <input type="text" name="sort" value="" id="mainFormInput">
+    </form>
 @endsection
