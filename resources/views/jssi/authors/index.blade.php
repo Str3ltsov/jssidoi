@@ -59,9 +59,14 @@
                         </div>
                     </td>
                     <td>{{ $author->last_name ?? '' }}</td>
-                    <td></td>
                     <td>
-                        <a href="{{ route('jssiAuthor', $author->id) }}" class="text-decoration-none">{{ rand(1, 24) }}</a>
+                        @forelse($author->authorsInstitutions as $authorsInstitution)
+                            {{ $authorsInstitution->institution->title }}@if (!$loop->last),@endif
+                        @empty
+                        @endforelse
+                    </td>
+                    <td>
+                        <a href="{{ route('jssiAuthor', $author->id) }}" class="text-decoration-none">{{ $articleCounts[$author->id] }}</a>
                     </td>
                 </tr>
             @empty

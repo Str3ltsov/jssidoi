@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Seeders\JssiArticlesSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JssiArticle extends Model
@@ -69,5 +70,10 @@ class JssiArticle extends Model
     public function type(): HasOne
     {
         return $this->hasOne(JssiArticleType::class, 'id', 'article_type_id');
+    }
+
+    public function articlesAuthorsInstitutions(): HasMany
+    {
+        return $this->hasMany(JssiArticlesAuthorsInstitution::class, 'article_id');
     }
 }

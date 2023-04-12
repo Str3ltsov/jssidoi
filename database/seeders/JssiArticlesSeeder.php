@@ -20,7 +20,7 @@ class JssiArticlesSeeder extends Seeder
 
     private function insertJssiArticles(object $service): void
     {
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $issue = $service->getJssiIssueById($i);
 
             for ($j = 1; $j <= rand(3, 50); $j++) {

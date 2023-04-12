@@ -28,7 +28,12 @@ class JssiArticlesController extends Controller
 
     public function show(int $id): View|Application|Factory|Foundation\Application
     {
+        $article = $this->service->getJssiArticleById($id);
+
         return view('jssi.articles.show')
-            ->with('article', $this->service->getJssiArticleById($id));
+            ->with([
+                'article' => $article,
+                'authorsInstitutions' => $this->service->getArticleAuthorsInstitutions($article)
+            ]);
     }
 }

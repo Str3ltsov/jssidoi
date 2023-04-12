@@ -23,6 +23,34 @@ class JssiArticleService extends HelperService
         return $article;
     }
 
+    public final function getArticlesAuthors(object $articles): object
+    {
+        $articlesAuthors = [];
+
+        foreach ($articles as $article) {
+            $authors = [];
+
+            foreach ($article->articlesAuthorsInstitutions as $articlesAuthorsInstitution) {
+                $authors[] = $articlesAuthorsInstitution->authorsInstitution->author;
+            }
+
+            $articlesAuthors[$article->id] = $authors;
+        }
+
+        return collect($articlesAuthors);
+    }
+
+    public final function getArticleAuthorsInstitutions(object $article): object
+    {
+        $authorsInstitutions = [];
+
+        foreach ($article->articlesAuthorsInstitutions as $articlesAuthorsInstitution) {
+            $authorsInstitutions[] = $articlesAuthorsInstitution->authorsInstitution;
+        }
+
+        return collect($authorsInstitutions);
+    }
+
     public function paginateCollection(
         object $collection, int $paginateNum, string $orderVar = 'id', string $orderDir = 'asc'): object
     {

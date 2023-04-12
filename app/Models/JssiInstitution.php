@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JssiInstitution extends Model
@@ -32,6 +33,11 @@ class JssiInstitution extends Model
     public function country(): HasOne
     {
         return $this->hasOne(JssiCountry::class, 'id', 'country_id');
+    }
+
+    public function authorsInstitutions(): HasMany
+    {
+        return $this->hasMany(JssiAuthorsInstitution::class, 'institution_id');
     }
 
     public function scopeTitleLike(Builder $query, $title): Builder
