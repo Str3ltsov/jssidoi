@@ -7,6 +7,7 @@ use App\Http\Controllers\JssiInstitutionsController;
 use App\Http\Controllers\JssiKeywordsController;
 use App\Http\Controllers\JssiCountriesController;
 use App\Http\Controllers\JssiFundersController;
+use App\Http\Controllers\Admin\AdminHomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -56,4 +57,8 @@ Route::prefix('jssi')->group(function() {
     // Funders
     Route::get('/funders', [JssiFundersController::class, 'index'])->name('jssiFunders');
     Route::get('/funders/{id}/articles', [JssiFundersController::class, 'show'])->name('jssiFunder');
+    //Admin
+    Route::prefix('admin')->middleware('auth:sanctum')->group(function() {
+        Route::get('/', [AdminHomeController::class, 'index']);
+    });
 });
