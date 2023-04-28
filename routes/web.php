@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthorsController;
+use App\Http\Controllers\Admin\AdminCountriesController;
 use App\Http\Controllers\JssiIssuesController;
 use App\Http\Controllers\JssiArticlesController;
 use App\Http\Controllers\JssiAuthorsController;
@@ -8,6 +10,12 @@ use App\Http\Controllers\JssiKeywordsController;
 use App\Http\Controllers\JssiCountriesController;
 use App\Http\Controllers\JssiFundersController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminInstitutionsController;
+use App\Http\Controllers\Admin\AdminJelCodesController;
+use App\Http\Controllers\Admin\AdminJournalsController;
+use App\Http\Controllers\Admin\AdminKeywordsController;
+use App\Http\Controllers\Admin\AdminPapersController;
+use App\Http\Controllers\Admin\AdminSubmitsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +67,17 @@ Route::prefix('jssi')->group(function() {
     Route::get('/funders/{id}/articles', [JssiFundersController::class, 'show'])->name('jssiFunder');
     //Admin
     Route::prefix('admin')->middleware('auth:sanctum')->group(function() {
-        Route::get('/', [AdminHomeController::class, 'index']);
+        Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
+        Route::prefix('papers')->group(function() {
+            Route::get('/', [AdminPapersController::class, 'index'])->name('jssi.admin.papers');
+            Route::get('/journals', [AdminJournalsController::class, 'index'])->name('jssi.admin.journals');
+            Route::get('/authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
+            Route::get('/institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
+            Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
+            Route::get('/jelcodes', [AdminJelCodesController::class, 'index'])->name('jssi.admin.jelcodes');
+            Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
+            Route::get('/countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
+
+        });
     });
 });
