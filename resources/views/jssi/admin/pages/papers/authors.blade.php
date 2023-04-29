@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Authors');
+@section('title', 'Authors')
 
 @section('content')
 <div class="row">
@@ -50,9 +50,20 @@
                     </tr>
 
                      @endforeach
-
                   </tbody>
+
                 </table>
+                <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <div class="col-lg-12">
+                Page {{ $authors->currentPage() }} of {{ $authors->lastPage() }}, showing {{ count($authors) }} records out of {{ $authors->total() }} total
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $authors->onEachSide(1)->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+              </div>
+
+              {{-- {{ $authors->links()}} --}}
               </div>
               <!-- /.card-body -->
             </div>

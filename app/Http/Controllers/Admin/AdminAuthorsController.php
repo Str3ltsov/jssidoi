@@ -10,7 +10,7 @@ class AdminAuthorsController extends Controller
 {
     public function index() {
 
-        $authors = JssiAuthor::all();
+        $authors = JssiAuthor::paginate(20);
         return view('jssi.admin.pages.papers.authors', compact('authors'));
     }
 }
