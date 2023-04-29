@@ -6,8 +6,8 @@
             'icon' => 'fa-newspaper'
         ],
         [
-            'name' => 'Papers',
-            'route' => 'jssi.admin.papers',
+            'name' => 'Articles',
+            'route' => 'jssi.admin.articles',
             'icon' => 'fa-note-sticky',
         ],
         [

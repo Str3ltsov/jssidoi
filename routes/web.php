@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\AdminInstitutionsController;
 use App\Http\Controllers\Admin\AdminJelCodesController;
 use App\Http\Controllers\Admin\AdminJournalsController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
-use App\Http\Controllers\Admin\AdminPapersController;
+use App\Http\Controllers\Admin\AdminArticlesController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -69,7 +69,7 @@ Route::prefix('jssi')->group(function() {
     Route::prefix('admin')->middleware('auth:sanctum')->group(function() {
         Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
         Route::prefix('papers')->group(function() {
-            Route::get('/', [AdminPapersController::class, 'index'])->name('jssi.admin.papers');
+            Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
             Route::get('/journals', [AdminJournalsController::class, 'index'])->name('jssi.admin.journals');
             Route::get('/authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
             Route::get('/institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
