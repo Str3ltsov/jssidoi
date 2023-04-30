@@ -1,8 +1,8 @@
 @php
     $categories = [
         [
-            'name' => 'Journals',
-            'route' => 'jssi.admin.journals',
+            'name' => 'Issues',
+            'route' => 'jssi.admin.issues',
             'icon' => 'fa-newspaper'
         ],
         [

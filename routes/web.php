@@ -12,7 +12,7 @@ use App\Http\Controllers\JssiFundersController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminInstitutionsController;
 use App\Http\Controllers\Admin\AdminJelCodesController;
-use App\Http\Controllers\Admin\AdminJournalsController;
+use App\Http\Controllers\Admin\AdminIssuesController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
 use App\Http\Controllers\Admin\AdminArticlesController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
@@ -70,7 +70,7 @@ Route::prefix('jssi')->group(function() {
         Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
         Route::prefix('papers')->group(function() {
             Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
-            Route::get('/journals', [AdminJournalsController::class, 'index'])->name('jssi.admin.journals');
+            Route::get('/issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
             Route::get('/authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
             Route::get('/institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
             Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');

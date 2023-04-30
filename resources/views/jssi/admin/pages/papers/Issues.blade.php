@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Authors')
+@section('title', 'Issues')
 
 @section('content')
 <div class="row">
@@ -27,26 +27,33 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>First Name</th>
-                      <th>Middle Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
-                      <th>ORCID</th>
+                      <th>Vol.</th>
+                      <th>No.</th>
+                      <th>Date</th>
+                      <th>Print</th>
+                      <th>Online</th>
+                      <th>Visible</th>
+                      <th>Views</th>
+                      <th>Downloads</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($authors as $author)
+                    @foreach ($issues as $issue)
 
 
                     <tr>
-                      <td>{{ $author->id}}</td>
-                      <td>{{ $author->first_name }}</td>
-                      <td>{{ $author->middle_name }}</td>
-                      <td>{{ $author->last_name }} </td>
-                      <td>{{ $author->email }}</td>
-                      <td>{{ $author->orcid }}</td>
-                      <td><button type="button" class="btn btn-outline-success"><i class="fas fa-edit"></i></button>
+                      <td>{{ $issue->id}}</td>
+                      <td>{{ $issue->volume }}</td>
+                      <td>{{ $issue->number }}</td>
+                      <td>{{ date('F Y', strtotime($issue->date)) }} </td>
+                      <td>{{ $issue->print }}</td>
+                      <td>{{ $issue->online }}</td>
+                      <td>{{ $issue->visible }}</td>
+                      <td>{{$issue->views}}</td>
+                      <td>{{$issue->downloads}}</td>
+                      <td>
+              <button type="button" class="btn btn-outline-success"><i class="fas fa-edit"></i></button>
             <button type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td>
                     </tr>
 
@@ -57,9 +64,9 @@
                 <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
                    <div class="col-lg-12">
-                Page {{ $authors->currentPage() }} of {{ $authors->lastPage() }}, showing {{ count($authors) }} records out of {{ $authors->total() }} total
+                Page {{ $issues->currentPage() }} of {{ $issues->lastPage() }}, showing {{ count($issues) }} records out of {{ $issues->total() }} total
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $authors->onEachSide(1)->links('pagination::bootstrap-4') }}
+                    {{ $issues->onEachSide(1)->links('pagination::bootstrap-4') }}
                 </div>
             </div>
               </div>

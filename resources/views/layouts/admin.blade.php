@@ -263,7 +263,6 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<script src="{{ asset('admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
 </body>
