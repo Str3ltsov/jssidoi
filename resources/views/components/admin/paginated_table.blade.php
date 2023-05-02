@@ -4,14 +4,16 @@
 			<div class="card-header">
 				<h3 class="card-title">Responsive Hover Table</h3>
 				<div class="card-tools">
-					<div class="input-group input-group-sm" style="width: 150px;">
-						<input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+					{{-- <div class="input-group input-group-sm" style="width: 150px;"> --}}
+						{{-- <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-default">
 							<i class="fas fa-search"></i>
 							</button>
-						</div>
-					</div>
+						</div> --}}
+                        {{-- <button type="button" class="btn btn-block btn-success">Add new</button> --}}
+                        {{ $header_right }}
+					{{-- </div> --}}
 				</div>
 			</div>
 			<!-- /.card-header -->

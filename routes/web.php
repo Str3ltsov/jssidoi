@@ -76,7 +76,13 @@ Route::prefix('jssi')->group(function() {
             Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
             Route::get('/jelcodes', [AdminJelCodesController::class, 'index'])->name('jssi.admin.jelcodes');
             Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
+            // Countries CRUD
             Route::get('/countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
+            Route::get('/countries/{id}/edit', [AdminCountriesController::class, 'edit'])->name('jssi.admin.countries.edit');
+            Route::put('/countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
+            Route::delete('/countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
+            Route::get('/countries/add', [AdminCountriesController::class, 'create'])->name('jssi.admin.countries.create');
+            Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
 
         });
     });
