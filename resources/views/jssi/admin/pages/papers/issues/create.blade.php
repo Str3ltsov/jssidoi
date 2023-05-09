@@ -4,6 +4,8 @@
     Create new issue
 @endsection
 
+
+
 @section('content')
     <div class="card card-primary">
         <!-- form start -->
@@ -14,7 +16,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="issueVolume">Volume</label>
-                            <input type="text" class="form-control" placeholder="1" id="issueVolume" name="issueVolume" />
+                            <input type="text" class="form-control" placeholder="1" id="issueVolume"
+                                name="issueVolume" />
                         </div>
                         <div class="col">
                             <label for="issueNum">Number</label>

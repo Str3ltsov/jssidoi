@@ -8,6 +8,8 @@
     Edit issue #{{ sprintf('%s.%s', $issue->volume, $issue->number) }}
 @endsection
 
+
+
 @section('content')
     <div class="card card-primary">
         <!-- form start -->
@@ -108,7 +110,6 @@
                 '</div>'
             );
             $('#printLink').remove();
-            console.log('asd');
         });
         $('#editOnlineFile').on('click', function() {
             $('#onlineGroup').append('<div class=\"custom-file\">' +
@@ -116,7 +117,6 @@
                 '</div>'
             );
             $('#onlineLink').remove();
-            console.log('asd');
         });
     </script>
 @endsection

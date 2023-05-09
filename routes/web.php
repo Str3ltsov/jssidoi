@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 /*
  * Default
  */
-Route::get('/', fn() => view('welcome'));
+Route::get('/', fn() => redirect()->route('jssiIssues'));
 
 Auth::routes();
 
@@ -42,7 +42,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /*
  * Jssi routes
  */
-Route::prefix('jssi')->group(function() {
+Route::prefix('jssi')->group(function () {
     // Issues
     Route::get('/', fn() => redirect()->route('jssiIssues'));
     Route::get('/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
@@ -66,19 +66,26 @@ Route::prefix('jssi')->group(function() {
     Route::get('/funders', [JssiFundersController::class, 'index'])->name('jssiFunders');
     Route::get('/funders/{id}/articles', [JssiFundersController::class, 'show'])->name('jssiFunder');
     //Admin
-    Route::prefix('admin')->middleware('auth:sanctum')->group(function() {
+    Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
-        Route::prefix('papers')->group(function() {
+        Route::prefix('papers')->group(function () {
             Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
             // Issues CRUD
             Route::get('issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
-            Route::get('issues/{id}/edit', [AdminIssuesController::class,'edit'])->name('jssi.admin.issues.edit');
-            Route::put('issues/{id}', [AdminIssuesController::class, 'update'])->name('jssi.admin.issues.update');
+            Route::get('issues/{id}/edit', [AdminIssuesController::class, 'edit'])->name('jssi.admin.issues.edit');
             Route::get('issues/add', [AdminIssuesController::class, 'create'])->name('jssi.admin.issues.create');
             Route::post('issues', [AdminIssuesController::class, 'store'])->name('jssi.admin.issues.store');
+            Route::put('issues/{id}', [AdminIssuesController::class, 'update'])->name('jssi.admin.issues.update');
             Route::delete('issues/{id}', [AdminIssuesController::class, 'destroy'])->name('jssi.admin.issues.destroy');
             // Authors CRUD
             Route::get('authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
+            Route::get('authors/{id}/edit', [AdminAuthorsController::class, 'edit'])->name('jssi.admin.authors.edit');
+            ;
+            Route::get('authors/add', [AdminAuthorsController::class, 'create'])->name('jssi.admin.authors.create');
+            Route::post('authors', [AdminAuthorsController::class, 'store'])->name('jssi.admin.authors.store');
+            Route::put('authors/{id}', [AdminAuthorsController::class, 'update'])->name('jssi.admin.authors.update');
+            Route::delete('authors/{id}', [AdminAuthorsController::class, 'destroy'])->name('jssi.admin.authors.destroy');
+
             // Institutions CRUD
             Route::get('institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
             // KeyWords CRUD
@@ -90,10 +97,10 @@ Route::prefix('jssi')->group(function() {
             // Countries CRUD
             Route::get('countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
             Route::get('countries/{id}/edit', [AdminCountriesController::class, 'edit'])->name('jssi.admin.countries.edit');
-            Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
-            Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
             Route::get('countries/add', [AdminCountriesController::class, 'create'])->name('jssi.admin.countries.create');
             Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
+            Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
+            Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
 
         });
     });

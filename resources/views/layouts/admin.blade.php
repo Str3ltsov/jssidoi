@@ -20,11 +20,15 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/sass/custom.scss'])
     <script src="{{ asset('js/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ asset('fontawesome/js/all.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
+
+    @stack('scripts')
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css') }}">
 
-    @stack('scripts')
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -246,6 +250,12 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     @yield('content')
                 </div><!-- /.container-fluid -->
             </section>
@@ -268,17 +278,14 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-      @hasSection('script')
+    @hasSection('script')
         @yield('script')
     @endif
     <!-- AdminLTE App -->
-    <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
 </body>
 
 </html>

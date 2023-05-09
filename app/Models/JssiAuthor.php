@@ -49,4 +49,9 @@ class JssiAuthor extends Model
     {
         return $query->where('last_name', 'like', "$lastName%");
     }
+
+    public function fullName(): string
+    {
+        return trim("{$this->first_name} {$this->middle_name} {$this->last_name}");
+    }
 }

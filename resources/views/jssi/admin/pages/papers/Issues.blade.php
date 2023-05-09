@@ -1,13 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Issues')
 @section('content')
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <x-admin.paginated_table :paginated="$issues">
         <x-slot:header_right>
             <a href='{{ route('jssi.admin.issues.create') }}' class="btn btn-success">Add new</a>
