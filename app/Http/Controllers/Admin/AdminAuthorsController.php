@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JssiAuthor;
 use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiInstitution;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AdminAuthorsController extends Controller
@@ -71,10 +72,16 @@ class AdminAuthorsController extends Controller
 
     public function destroy(Request $req)
     {
-        $author = JssiAuthor::findOrFail($req->id);
-        $author->delete();
+        try {
+            $author = JssiAuthor::findOrFail($req->id);
+            $author->delete();
 
-        return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s deleted successfully!', $author->fullname()));
+            return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s deleted successfully!', $author->fullname()));
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000)
+                return redirect()->route('jssi.admin.authors')->with('error', 'Error: This author can not be deleted, because this author has published articles.');
+        }
+
 
     }
 
