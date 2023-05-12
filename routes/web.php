@@ -1,21 +1,21 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminArticlesController;
 use App\Http\Controllers\Admin\AdminAuthorsController;
 use App\Http\Controllers\Admin\AdminCountriesController;
-use App\Http\Controllers\JssiIssuesController;
-use App\Http\Controllers\JssiArticlesController;
-use App\Http\Controllers\JssiAuthorsController;
-use App\Http\Controllers\JssiInstitutionsController;
-use App\Http\Controllers\JssiKeywordsController;
-use App\Http\Controllers\JssiCountriesController;
-use App\Http\Controllers\JssiFundersController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminInstitutionsController;
-use App\Http\Controllers\Admin\AdminJelCodesController;
 use App\Http\Controllers\Admin\AdminIssuesController;
+use App\Http\Controllers\Admin\AdminJelCodesController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
-use App\Http\Controllers\Admin\AdminArticlesController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
+use App\Http\Controllers\JssiArticlesController;
+use App\Http\Controllers\JssiAuthorsController;
+use App\Http\Controllers\JssiCountriesController;
+use App\Http\Controllers\JssiFundersController;
+use App\Http\Controllers\JssiInstitutionsController;
+use App\Http\Controllers\JssiIssuesController;
+use App\Http\Controllers\JssiKeywordsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +70,11 @@ Route::prefix('jssi')->group(function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
         Route::prefix('papers')->group(function () {
             Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
+            Route::get('/{id}/edit', [AdminArticlesController::class, 'edit'])->name('jssi.admin.articles.edit');
+            Route::get('/add', [AdminArticlesController::class, 'create'])->name('jssi.admin.articles.create');
+            Route::post('/', [AdminArticlesController::class, 'store'])->name('jssi.admin.articles.store');
+            Route::put('/{id}', [AdminArticlesController::class, 'update'])->name('jssi.admin.articles.update');
+            Route::delete('/{id}', [AdminArticlesController::class, 'destroy'])->name('jssi.admin.articles.destroy');
             // Issues CRUD
             Route::get('issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
             Route::get('issues/{id}/edit', [AdminIssuesController::class, 'edit'])->name('jssi.admin.issues.edit');
@@ -80,7 +85,6 @@ Route::prefix('jssi')->group(function () {
             // Authors CRUD
             Route::get('authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
             Route::get('authors/{id}/edit', [AdminAuthorsController::class, 'edit'])->name('jssi.admin.authors.edit');
-            ;
             Route::get('authors/add', [AdminAuthorsController::class, 'create'])->name('jssi.admin.authors.create');
             Route::post('authors', [AdminAuthorsController::class, 'store'])->name('jssi.admin.authors.store');
             Route::put('authors/{id}', [AdminAuthorsController::class, 'update'])->name('jssi.admin.authors.update');

@@ -5,7 +5,6 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('admin/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
-    <meta charset="utf-8">
 @endpush
 @section('content')
     <div class="card card-primary">
@@ -38,7 +37,6 @@
                         </div>
                         <div class="col">
                             <label for="midName">ORCID</label>
-                            {{-- <input type="text" class="form-control" placeholder="0000-0000-0000-0000" name="orcid" /> --}}
                             <input type="text" class="form-control" placeholder="0000-0000-0000-0000" name="orcid"
                                 data-inputmask='"mask": "9999-9999-9999-9999"' data-mask>
                         </div>

@@ -255,6 +255,11 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session('errors'))
+                        <div class="alert alert-danger">
+                            {!! implode('', $errors->all('<div>:message</div>')) !!}
+                        </div>
+                    @endif
                     @if (session('error'))
                         <div class="alert alert-danger">
                             {{ session('error') }}
