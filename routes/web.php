@@ -92,6 +92,11 @@ Route::prefix('jssi')->group(function () {
 
             // Institutions CRUD
             Route::get('institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
+            Route::get('institutions/{id}/edit', [AdminInstitutionsController::class, 'edit'])->name('jssi.admin.institutions.edit');
+            Route::get('institutions/add', [AdminInstitutionsController::class, 'create'])->name('jssi.admin.institutions.create');
+            Route::post('institutions', [AdminInstitutionsController::class, 'store'])->name('jssi.admin.institutions.store');
+            Route::put('institutions/{id}', [AdminInstitutionsController::class, 'update'])->name('jssi.admin.institutions.update');
+            Route::delete('institutions/{id}', [AdminInstitutionsController::class, 'destroy'])->name('jssi.admin.institutions.destroy');
             // KeyWords CRUD
             Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
             // JEL-Codes CRUD
