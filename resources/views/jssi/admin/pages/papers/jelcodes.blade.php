@@ -1,73 +1,85 @@
 @extends('layouts.admin')
 
-@section('title', "JEL Codes")
+@section('title', 'JEL Codes')
 
 @section('content')
-<div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Responsive Hover Table</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+    <x-admin.paginated_table :paginated="$jelCodes">
+        <x-slot:header_right>
+            <a href='{{ route('jssi.admin.jel.codes.create') }}' class="btn btn-success">Add new</a>
+        </x-slot:header_right>
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
-                  </div>
+        <x-slot:thead_content>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </x-slot:thead_content>
+        <x-slot:tbody_content>
+            @forelse ($jelCodes as $jelCode)
+                <tr>
+                    <td>{{ $jelCode->id }}</td>
+                    <td>{{ $jelCode->name }}</td>
+                    <td>{{ $jelCode->description }}</td>
+                    <td><a href="{{ route('jssi.admin.jel.codes.edit', $jelCode->id) }}" class="btn btn-outline-success"><i
+                                class="fas fa-edit"></i></a>
+                        <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $country->id }}
+                            data-name="{{ $country->name }}"data-toggle="modal" data-target="#deleteCountry"><i
+                                class="far fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td>
+                        No JEL Codes Available.
+                    </td>
+                </tr>
+            @endforelse
+        </x-slot:tbody_content>
+    </x-admin.paginated_table>
+
+    <div class="modal fade" id="deleteCountry" data-backdrop="static" tabindex="-1" role="dialog"
+        aria-labelledby="deleteCategory" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">This action is not reversible!</h5>
+                    <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
+                <div class="modal-body">
+                    Are you sure you want to delete country <span id="modal-country_name"></span>?
+                    <input type="hidden" id="category" name="category_id">
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('jssi.admin.countries.destroy', 'id') }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input id="id" name="id" hidden value=''>
+
+                        <button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Yes, Delete Country</button>
+                    </form>
+                </div>
             </div>
-            <!-- /.card -->
-          </div>
         </div>
+    </div>
+
+
+    <script>
+        $(document).on('click', '.deleteBtn', function() {
+            let id = $(this).attr('data-id');
+            let countryName = $(this).attr('data-name');
+            $('#id').val(id);
+            $('#modal-country_name').text(countryName);
+            $('#deleteCountry').modal('show');
+            $('#deleteCountry').on('click', '.modalClose', () => {
+                $('#deleteCountry').modal('hide');
+            });
+        });
+    </script>
+
+
+
 @endsection

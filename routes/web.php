@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\AdminCountriesController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminInstitutionsController;
 use App\Http\Controllers\Admin\AdminIssuesController;
+use App\Http\Controllers\admin\AdminJelCategoriesController;
 use App\Http\Controllers\Admin\AdminJelCodesController;
+use App\Http\Controllers\admin\AdminJelSubcategoriesController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
 use App\Http\Controllers\JssiArticlesController;
@@ -100,7 +102,16 @@ Route::prefix('jssi')->group(function () {
             // KeyWords CRUD
             Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
             // JEL-Codes CRUD
-            Route::get('/jelcodes', [AdminJelCodesController::class, 'index'])->name('jssi.admin.jelcodes');
+            Route::prefix('/jel')->group(function () {
+                Route::get('/codes', [AdminJelCodesController::class, 'index'])->name('jssi.admin.jel.codes');
+                Route::get('codes/{id}/edit', [AdminJelCodesController::class, 'edit'])->name('jssi.admin.jel.codes.edit');
+                Route::get('codes/add', [AdminJelCodesController::class, 'create'])->name('jssi.admin.jel.codes.create');
+                Route::post('codes', [AdminJelCodesController::class, 'store'])->name('jssi.admin.jel.codes.store');
+
+                Route::get('/categories', [AdminJelCategoriesController::class, 'index'])->name('jssi.admin.jel.categories');
+                Route::get('/subcategories', [AdminJelSubcategoriesController::class, 'index'])->name('jssi.admin.jel.subcategories');
+            });
+
             // Submits CRUD
             Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
             // Countries CRUD
