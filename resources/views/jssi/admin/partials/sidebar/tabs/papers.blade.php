@@ -17,7 +17,7 @@
         ],
         [
             'name' => 'Institutions',
-            'route' => 'jssi.admin.institutions',
+            'route' => 'jssi.admin.institutions.index',
             'icon' => 'fa-building-columns',
         ],
         [
@@ -30,12 +30,12 @@
             'subtabs' => [
                 [
                     'name' => 'Categories',
-                    'route' => 'jssi.admin.jel.categories',
+                    'route' => 'jssi.admin.jel.categories.index',
                     'icon' => 'fa-bars',
                 ],
                 [
                     'name' => 'Subcategories',
-                    'route' => 'jssi.admin.jel.subcategories',
+                    'route' => 'jssi.admin.jel.subcategories.index',
                     'icon' => 'fa-bars-staggered',
                 ],
                 [
@@ -46,6 +46,7 @@
             ],
             'route' => 'jssi.admin.jel.codes',
             'icon' => 'fa-qrcode',
+            'routePrefix' => 'jssi/admin/papers/jel/*',
         ],
         [
             'name' => 'Countries',
@@ -56,9 +57,9 @@
 @endphp
 @foreach ($categories as $category)
     @if (isset($category['subtabs']))
-        <li class="nav-item {{ request()->routeIs($category['route'] . '*') ? 'menu-open' : '' }}">
+        <li class="nav-item {{ request()->is($category['routePrefix']) ? 'menu-open' : '' }}">
             <a href="{{ route($category['route']) }}"
-                class="nav-link {{ request()->routeIs($category['route'] . '*') ? 'active ' : '' }}">
+                class="nav-link {{ request()->is($category['routePrefix']) ? 'active ' : '' }}">
                 <i class="fa {{ $category['icon'] }} nav-icon"></i>
                 <p>
                     {{ $category['name'] }}

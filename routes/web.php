@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 /*
  * Default
@@ -93,12 +93,14 @@ Route::prefix('jssi')->group(function () {
             Route::delete('authors/{id}', [AdminAuthorsController::class, 'destroy'])->name('jssi.admin.authors.destroy');
 
             // Institutions CRUD
-            Route::get('institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
-            Route::get('institutions/{id}/edit', [AdminInstitutionsController::class, 'edit'])->name('jssi.admin.institutions.edit');
-            Route::get('institutions/add', [AdminInstitutionsController::class, 'create'])->name('jssi.admin.institutions.create');
-            Route::post('institutions', [AdminInstitutionsController::class, 'store'])->name('jssi.admin.institutions.store');
-            Route::put('institutions/{id}', [AdminInstitutionsController::class, 'update'])->name('jssi.admin.institutions.update');
-            Route::delete('institutions/{id}', [AdminInstitutionsController::class, 'destroy'])->name('jssi.admin.institutions.destroy');
+            // Route::get('institutions', [AdminInstitutionsController::class, 'index'])->name('jssi.admin.institutions');
+            // Route::get('institutions/{id}/edit', [AdminInstitutionsController::class, 'edit'])->name('jssi.admin.institutions.edit');
+            // Route::get('institutions/add', [AdminInstitutionsController::class, 'create'])->name('jssi.admin.institutions.create');
+            // Route::post('institutions', [AdminInstitutionsController::class, 'store'])->name('jssi.admin.institutions.store');
+            // Route::put('institutions/{id}', [AdminInstitutionsController::class, 'update'])->name('jssi.admin.institutions.update');
+            // Route::delete('institutions/{id}', [AdminInstitutionsController::class, 'destroy'])->name('jssi.admin.institutions.destroy');
+            Route::resource('institutions', AdminInstitutionsController::class,
+                ['as' => 'jssi.admin']);
             // KeyWords CRUD
             Route::get('/keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
             // JEL-Codes CRUD
@@ -107,9 +109,14 @@ Route::prefix('jssi')->group(function () {
                 Route::get('codes/{id}/edit', [AdminJelCodesController::class, 'edit'])->name('jssi.admin.jel.codes.edit');
                 Route::get('codes/add', [AdminJelCodesController::class, 'create'])->name('jssi.admin.jel.codes.create');
                 Route::post('codes', [AdminJelCodesController::class, 'store'])->name('jssi.admin.jel.codes.store');
-
-                Route::get('/categories', [AdminJelCategoriesController::class, 'index'])->name('jssi.admin.jel.categories');
-                Route::get('/subcategories', [AdminJelSubcategoriesController::class, 'index'])->name('jssi.admin.jel.subcategories');
+                Route::resource('categories', AdminJelCategoriesController::class, [
+                    'as' => 'jssi.admin.jel',
+                ]);
+                Route::resource('subcategories', AdminJelSubcategoriesController::class, [
+                    'as' => 'jssi.admin.jel',
+                ]);
+                //Route::get('/categories', [AdminJelCategoriesController::class, 'index'])->name('jssi.admin.jel.categories');
+                //Route::get('/subcategories', [AdminJelSubcategoriesController::class, 'index'])->name('jssi.admin.jel.subcategories');
             });
 
             // Submits CRUD

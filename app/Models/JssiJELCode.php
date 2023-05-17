@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -19,8 +18,10 @@ class JssiJELCode extends Model
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
-        'jel_subcategory_id' => 'integer'
+        'jel_subcategory_id' => 'integer',
     ];
+
+    public $timestamps = false;
 
     public function subcategory(): BelongsTo
     {

@@ -23,8 +23,10 @@ class JssiJELSubcategory extends Model
     protected $casts = [
         'name' => 'string',
         'description' => 'string',
-        'jel_category_id' => 'integer'
+        'jel_category_id' => 'integer',
     ];
+
+    public $timestamps = false;
 
     public function category(): BelongsTo
     {

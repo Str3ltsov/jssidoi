@@ -38,7 +38,7 @@ class AdminInstitutionsController extends Controller
             'title' => 'required|string',
             'website' => 'required|url',
             'city' => 'required|string',
-            'country' => 'required|integer'
+            'country' => 'required|integer',
         ]);
 
         $institution = JssiInstitution::findOrFail($id);
@@ -46,14 +46,14 @@ class AdminInstitutionsController extends Controller
         $institution->fill($request->only([
             'title',
             'website',
-            'city'
+            'city',
         ]));
 
         $institution->country_id = $request->input('country');
 
         $institution->update();
 
-        return redirect()->route('jssi.admin.institutions')->with('success', sprintf('Institution %s updated sucessfuly!', $institution->title));
+        return redirect()->route('jssi.admin.institutions.index')->with('success', sprintf('Institution %s updated sucessfuly!', $institution->title));
 
     }
 
@@ -63,7 +63,7 @@ class AdminInstitutionsController extends Controller
             'title' => 'required|string',
             'website' => 'required|url',
             'city' => 'required|string',
-            'country' => 'required|integer'
+            'country' => 'required|integer',
         ]);
 
         $institution = new JssiInstitution();
@@ -71,14 +71,14 @@ class AdminInstitutionsController extends Controller
         $institution->fill($request->only([
             'title',
             'website',
-            'city'
+            'city',
         ]));
 
         $institution->country_id = $request->input('country');
 
         $institution->save();
 
-        return redirect()->route('jssi.admin.institutions')->with('success', sprintf('Institution %s created successfuly', $institution->title));
+        return redirect()->route('jssi.admin.institutions.index')->with('success', sprintf('Institution %s created successfuly', $institution->title));
     }
 
     public function destroy(Request $request)
@@ -88,9 +88,9 @@ class AdminInstitutionsController extends Controller
 
             $institution->delete();
 
-            return redirect()->route('jssi.admin.institutions')->with('success', 'Institution deleted successfuly!');
+            return redirect()->route('jssi.admin.institutions.index')->with('success', 'Institution deleted successfuly!');
         } catch (Exception $e) {
-            return redirect()->route('jssi.admin.institutions')->with('error', 'Enexpected error. Institution was not deleted');
+            return redirect()->route('jssi.admin.institutions.index')->with('error', 'Enexpected error. Institution was not deleted');
         }
     }
 }

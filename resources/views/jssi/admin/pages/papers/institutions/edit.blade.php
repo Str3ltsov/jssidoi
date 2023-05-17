@@ -39,7 +39,7 @@
     <!-- /.card-body -->
     <div class="card-footer">
         <button type="submit" class="btn btn-success">Update</button>
-        <a href="{{ route('jssi.admin.institutions') }}" class="btn btn-danger">Cancel</a>
+        <a href="{{ route('jssi.admin.institutions.index') }}" class="btn btn-danger">Cancel</a>
     </div>
     </form>
     </div>
