@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JssiJELCategory;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AdminJelCategoriesController extends Controller
 {
@@ -20,21 +22,11 @@ class AdminJelCategoriesController extends Controller
         return view('jssi.admin.pages.papers.jel.categories.create');
     }
 
-    public function edit(Request $request, $category)
+    public function edit($id)
     {
-        $request->validate([
-            'name' => 'required|string|max:1',
-            'description' => 'required|string',
-        ]);
+        $jelCategory = JssiJELCategory::findOrFail($id);
 
-        $jelCategory = JssiJELCategory::findOrFail($category);
-
-        $jelCategory->fill($request->only([
-            'name',
-            'description',
-        ]));
-
-        $jelCategory->update();
+        return view('jssi.admin.pages.papers.jel.categories.edit', compact('jelCategory'));
     }
     public function store(Request $request)
     {
@@ -56,14 +48,14 @@ class AdminJelCategoriesController extends Controller
         return redirect()->route('jssi.admin.jel.categories.index')->with('success', 'JEL Code category created sucessfuly!');
     }
 
-    public function update(Request $request, $category)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:1',
             'description' => 'required|string',
         ]);
 
-        $jelCategory = JssiJELCategory::findOrFail($category);
+        $jelCategory = JssiJELCategory::findOrFail($id);
 
         $jelCategory->fill($request->only([
             'name',
@@ -76,8 +68,17 @@ class AdminJelCategoriesController extends Controller
 
     }
 
-    public function destroy($request)
+    public function destroy(Request $request)
     {
+        try {
+            $jelCategory = JssiJELCategory::findOrFail($request->id);
+            $jelCategory->delete();
+            return redirect()->route('jssi.admin.jel.categories.index')->with('success', 'JEL Category deleted successfully!');
 
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000)
+                return redirect()->route('jssi.admin.jel.categories.index')->with('error', 'Error: This category can not be deleted, because this category has linked codes. Delete linked codes first.');
+            return redirect()->route('jssi.admin.jel.categories.index')->with('error', 'Error: Category deletion failed.');
+        }
     }
 }

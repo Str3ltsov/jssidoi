@@ -11,7 +11,9 @@ use Illuminate\Contracts\Foundation;
 
 class JssiArticlesController extends Controller
 {
-    public function __construct(public JssiArticleService $service) {}
+    public function __construct(public JssiArticleService $service)
+    {
+    }
 
     public function index(): View|Application|Factory|Foundation\Application
     {
@@ -33,7 +35,8 @@ class JssiArticlesController extends Controller
         return view('jssi.articles.show')
             ->with([
                 'article' => $article,
-                'authorsInstitutions' => $this->service->getArticleAuthorsInstitutions($article)
+                'authorsInstitutions' => $this->service->getArticleAuthorsInstitutions($article),
+                'jelCodes' => $this->service->getJelCodes($article),
             ]);
     }
 }

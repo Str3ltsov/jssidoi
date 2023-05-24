@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class JssiJELCode extends Model
 {
@@ -26,5 +27,10 @@ class JssiJELCode extends Model
     public function subcategory(): BelongsTo
     {
         return $this->belongsTo(JssiJELSubcategory::class);
+    }
+
+    public function articles(): BelongsToMany
+    {
+        return $this->belongsToMany(JssiArticle::class, 'jssi_article_jel_codes', 'jel_code_id', 'article_id');
     }
 }

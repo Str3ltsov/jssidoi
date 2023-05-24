@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="name">Code name</label>
-                    <input type="text" class="form-control" id="countryName" name="name" placeholder="A" maxlength="1"
+                    <input type="text" class="form-control" id="countryName" name="name" placeholder="A" maxlength="3"
                         value="">
                 </div>
                 <div class="form-group">
@@ -19,8 +19,9 @@
                 <div class="form-group">
                     <label for="jel_subcategory_id">Subcategory</label>
                     @if ($subcategories->isEmpty())
-                        <p>No Sub-Categories available. <a href="{{ route('jssi.admin.jel.subcategories.create') }}"></a>
-                            Create one first.</p>
+                        <p>No Sub-Categories available. <a href="{{ route('jssi.admin.jel.subcategories.create') }}">Create
+                                one first.</a>
+                        </p>
                     @else
                         <select name="jel_subcategory_id" class="custom-select" id="">
                             @foreach ($subcategories as $subcategory)

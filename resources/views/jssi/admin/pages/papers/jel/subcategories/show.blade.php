@@ -21,7 +21,7 @@
                     <td>{{ $subcategory->id }}</td>
                     <td>{{ $subcategory->name }}</td>
                     <td>{{ $subcategory->description }}</td>
-                    <td><a href="{{ route('jssi.admin.jel.codes.edit', $subcategory->id) }}"
+                    <td><a href="{{ route('jssi.admin.jel.subcategories.edit', $subcategory->id) }}"
                             class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
                         <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $subcategory->id }}
                             data-name="{{ $subcategory->name }}"data-toggle="modal" data-target="#deleteCountry"><i
@@ -53,7 +53,7 @@
                     <input type="hidden" id="category" name="category_id">
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('jssi.admin.jel.categories.destroy', 'id') }}" method="post">
+                    <form action="{{ route('jssi.admin.jel.subcategories.destroy', 'id') }}" method="post">
                         @csrf
                         @method('DELETE')
                         <input id="id" name="id" hidden value=''>

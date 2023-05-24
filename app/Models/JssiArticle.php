@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Seeders\JssiArticlesSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -75,5 +76,10 @@ class JssiArticle extends Model
     public function articlesAuthorsInstitutions(): HasMany
     {
         return $this->hasMany(JssiArticlesAuthorsInstitution::class, 'article_id');
+    }
+
+    public function jelCodes(): BelongsToMany
+    {
+        return $this->belongsToMany(JssiJELCode::class, 'jssi_article_jel_codes', 'article_id', 'jel_code_id');
     }
 }

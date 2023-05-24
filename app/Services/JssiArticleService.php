@@ -52,8 +52,14 @@ class JssiArticleService extends HelperService
     }
 
     public function paginateCollection(
-        object $collection, int $paginateNum, string $orderVar = 'id', string $orderDir = 'asc'): object
-    {
+        object $collection, int $paginateNum, string $orderVar = 'id', string $orderDir = 'asc'
+    ): object {
         return $collection->toQuery()->orderBy($orderVar, $orderDir)->paginate($paginateNum);
+    }
+
+    public function getJelCodes(object $article): object
+    {
+        $jelCodes = $article->jelCodes;
+        return collect($jelCodes);
     }
 }

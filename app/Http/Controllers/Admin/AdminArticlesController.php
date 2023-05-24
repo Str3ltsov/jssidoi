@@ -7,6 +7,7 @@ use App\Models\JssiArticle;
 use App\Models\JssiArticleType;
 use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiIssue;
+use App\Models\JssiJELCode;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,9 +27,12 @@ class AdminArticlesController extends Controller
         $issues = JssiIssue::all()->reverse();
         $types = JssiArticleType::all();
         $authorsInstitutions = JssiAuthorsInstitution::with('author', 'institution')->get();
+        $jelCodes = JssiJELCode::all();
+
+        $selectedJelCodes = $article->jelCodes()->pluck('jel_code_id')->toArray();
 
         $selectedAuthorInstitutionIds = $article->articlesAuthorsInstitutions->pluck('authors_institution_id')->toArray();
-        return view('jssi.admin.pages.papers.articles.edit', compact('article', 'issues', 'types', 'authorsInstitutions', 'selectedAuthorInstitutionIds'));
+        return view('jssi.admin.pages.papers.articles.edit', compact('article', 'issues', 'types', 'authorsInstitutions', 'selectedAuthorInstitutionIds', 'jelCodes', 'selectedJelCodes'));
     }
 
     public function update(Request $request, $id)
@@ -49,6 +53,7 @@ class AdminArticlesController extends Controller
             'halCode' => 'nullable|string',
             'authorInstitutions' => 'nullable|array',
             'articleFile' => 'filled|mimes:pdf',
+            'jelCodes' => 'array'
         ]);
 
         // dd($request);
@@ -63,6 +68,8 @@ class AdminArticlesController extends Controller
         $article->end_page = $request->input('endPage');
         $article->doi = $request->input('doiCode');
         $article->hal = $request->input('halCode');
+
+        $article->jelCodes()->sync($request->input('jelCodes', []));
 
         $authorInstitutionIds = $request->input('authorInstitutions', []);
 
@@ -115,8 +122,9 @@ class AdminArticlesController extends Controller
     {
         $issues = JssiIssue::all()->reverse();
         $types = JssiArticleType::all();
+        $jelCodes = JssiJELCode::all();
         $authorsInstitutions = JssiAuthorsInstitution::with('author', 'institution')->get();
-        return view('jssi.admin.pages.papers.articles.create', compact('issues', 'types', 'authorsInstitutions'));
+        return view('jssi.admin.pages.papers.articles.create', compact('issues', 'types', 'authorsInstitutions', 'jelCodes'));
     }
 
     public function store(Request $request)
@@ -134,6 +142,7 @@ class AdminArticlesController extends Controller
             'halCode' => 'nullable|string',
             'authorInstitutions' => 'nullable|array',
             'articleFile' => 'filled|mimes:pdf',
+            'jelCodes' => 'array'
         ]);
 
         $article = new JssiArticle();
@@ -148,6 +157,8 @@ class AdminArticlesController extends Controller
         $article->end_page = $request->input('endPage');
         $article->doi = $request->input('doiCode');
         $article->hal = $request->input('halCode');
+
+        $article->jelCodes()->attach($request->input('jelCodes', []));
 
         $article->save();
 
@@ -187,8 +198,6 @@ class AdminArticlesController extends Controller
             $request->file('articleFile')->storeAs('issues', $filename, 'public');
 
             $article->file = $filename;
-
-
         }
 
         $article->visible = $request->input('articleVisibleSwitch') ? true : false;

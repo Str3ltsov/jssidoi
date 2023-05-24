@@ -40,11 +40,11 @@
                 ],
                 [
                     'name' => 'Codes',
-                    'route' => 'jssi.admin.jel.codes',
+                    'route' => 'jssi.admin.jel.codes.index',
                     'icon' => 'fa-barcode',
                 ],
             ],
-            'route' => 'jssi.admin.jel.codes',
+            'route' => 'jssi.admin.jel.codes.index',
             'icon' => 'fa-qrcode',
             'routePrefix' => 'jssi/admin/papers/jel/*',
         ],

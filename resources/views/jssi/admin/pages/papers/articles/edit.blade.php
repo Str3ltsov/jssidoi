@@ -105,6 +105,23 @@
                     </div>
                     <!-- /.col -->
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>JEL Codes</label>
+                            <select class="duallistbox" multiple="multiple" name="jelCodes[]">
+                                @foreach ($jelCodes as $jelCode)
+                                    <option value="{{ $jelCode->id }}"
+                                        {{ in_array($jelCode->id, $selectedJelCodes) ? 'selected="selected"' : '' }}>
+                                        {{ sprintf('%s | %s', $jelCode->name, $jelCode->description) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                </div>
                 <div class="form-group">
                     <label for="articleFile">Print version</label>
                     <div class="input-group" id="fileGroup">

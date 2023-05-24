@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'JEL Code categories')
+@section('title', 'JEL Code Categories')
 
 @section('content')
 
@@ -21,8 +21,8 @@
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->description }}</td>
-                    <td><a href="{{ route('jssi.admin.jel.codes.edit', $category->id) }}" class="btn btn-outline-success"><i
-                                class="fas fa-edit"></i></a>
+                    <td><a href="{{ route('jssi.admin.jel.categories.edit', $category->id) }}"
+                            class="btn btn-outline-success"><i class="fas fa-edit"></i></a>
                         <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $category->id }}
                             data-name="{{ $category->name }}"data-toggle="modal" data-target="#deleteCountry"><i
                                 class="far fa-trash-alt"></i></button>
@@ -49,7 +49,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete country <span id="modal-country_name"></span>?
+                    Are you sure you want to delete category <span id="modal-country_name"></span>?
                     <input type="hidden" id="category" name="category_id">
                 </div>
                 <div class="modal-footer">
@@ -59,7 +59,7 @@
                         <input id="id" name="id" hidden value=''>
 
                         <button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger">Yes, Delete Country</button>
+                        <button type="submit" class="btn btn-danger">Yes, Delete Category</button>
                     </form>
                 </div>
             </div>

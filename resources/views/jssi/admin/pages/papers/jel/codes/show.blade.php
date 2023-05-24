@@ -23,8 +23,8 @@
                     <td>{{ $jelCode->description }}</td>
                     <td><a href="{{ route('jssi.admin.jel.codes.edit', $jelCode->id) }}" class="btn btn-outline-success"><i
                                 class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $country->id }}
-                            data-name="{{ $country->name }}"data-toggle="modal" data-target="#deleteCountry"><i
+                        <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $jelCode->id }}
+                            data-name="{{ $jelCode->name }}"data-toggle="modal" data-target="#deleteCountry"><i
                                 class="far fa-trash-alt"></i></button>
                     </td>
                 </tr>
@@ -53,7 +53,7 @@
                     <input type="hidden" id="category" name="category_id">
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('jssi.admin.countries.destroy', 'id') }}" method="post">
+                    <form action="{{ route('jssi.admin.jel.categories.destroy', 'id') }}" method="post">
                         @csrf
                         @method('DELETE')
                         <input id="id" name="id" hidden value=''>
