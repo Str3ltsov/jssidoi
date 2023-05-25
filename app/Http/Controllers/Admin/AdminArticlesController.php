@@ -12,9 +12,18 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Services\KeywordService;
 
 class AdminArticlesController extends Controller
 {
+
+    protected $keywordService;
+
+    public function __construct(KeywordService $keywordService)
+    {
+        $this->keywordService = $keywordService;
+    }
+
     public function index()
     {
         $articles = JssiArticle::paginate(20);
@@ -28,11 +37,24 @@ class AdminArticlesController extends Controller
         $types = JssiArticleType::all();
         $authorsInstitutions = JssiAuthorsInstitution::with('author', 'institution')->get();
         $jelCodes = JssiJELCode::all();
+        $keywords = $this->keywordService->getKeywordList($id);
 
         $selectedJelCodes = $article->jelCodes()->pluck('jel_code_id')->toArray();
 
         $selectedAuthorInstitutionIds = $article->articlesAuthorsInstitutions->pluck('authors_institution_id')->toArray();
-        return view('jssi.admin.pages.papers.articles.edit', compact('article', 'issues', 'types', 'authorsInstitutions', 'selectedAuthorInstitutionIds', 'jelCodes', 'selectedJelCodes'));
+        return view(
+            'jssi.admin.pages.papers.articles.edit',
+            compact(
+                'article',
+                'issues',
+                'types',
+                'authorsInstitutions',
+                'selectedAuthorInstitutionIds',
+                'jelCodes',
+                'selectedJelCodes',
+                'keywords'
+            )
+        );
     }
 
     public function update(Request $request, $id)
@@ -53,6 +75,7 @@ class AdminArticlesController extends Controller
             'halCode' => 'nullable|string',
             'authorInstitutions' => 'nullable|array',
             'articleFile' => 'filled|mimes:pdf',
+            'keywords' => 'string',
             'jelCodes' => 'array'
         ]);
 
@@ -107,9 +130,14 @@ class AdminArticlesController extends Controller
             $request->file('articleFile')->storeAs('issues', $filename, 'public');
 
             $article->file = $filename;
-
-
         }
+
+        $keywords = $this->keywordService->handleKeywords($request->input('keywords'));
+
+        // dd($keywords);
+
+        $article->keywords()->sync($keywords);
+        // dd($article);
 
         $article->visible = $request->input('articleVisibleSwitch') ? true : false;
 
@@ -142,7 +170,8 @@ class AdminArticlesController extends Controller
             'halCode' => 'nullable|string',
             'authorInstitutions' => 'nullable|array',
             'articleFile' => 'filled|mimes:pdf',
-            'jelCodes' => 'array'
+            'jelCodes' => 'array',
+            'keywords' => 'string',
         ]);
 
         $article = new JssiArticle();
@@ -178,6 +207,10 @@ class AdminArticlesController extends Controller
             }
 
         }
+
+        $keywordsList = explode(',', $request->input('keywords'));
+
+        $article->keywords()->sync($keywordsList);
 
         if ($request->hasFile('articleFile')) {
 

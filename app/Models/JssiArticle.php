@@ -82,4 +82,9 @@ class JssiArticle extends Model
     {
         return $this->belongsToMany(JssiJELCode::class, 'jssi_article_jel_codes', 'article_id', 'jel_code_id');
     }
+
+    public function keywords(): BelongsToMany
+    {
+        return $this->belongsToMany(JssiKeyword::class, 'jssi_articles_keywords', 'article_id', 'keyword_id');
+    }
 }
