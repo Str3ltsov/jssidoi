@@ -109,6 +109,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="abstract">Keywords</label>
+                    <textarea class="form-control" rows="3" name="keywords" placeholder="Enter..." style="height: 62px;"></textarea>
+                </div>
+                <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by comma (,).</small>
                 <div class="form-group">
                     <div class="form-check form-switch custom-switch">
                         <input class="form-check-input" type="checkbox" id="articleVisibleSwitch"

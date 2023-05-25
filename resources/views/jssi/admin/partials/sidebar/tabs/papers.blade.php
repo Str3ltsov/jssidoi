@@ -22,7 +22,7 @@
         ],
         [
             'name' => 'Keywords',
-            'route' => 'jssi.admin.keywords',
+            'route' => 'jssi.admin.keywords.index',
             'icon' => 'fa-tags',
         ],
         [

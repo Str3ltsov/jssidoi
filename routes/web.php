@@ -98,7 +98,7 @@ Route::prefix('jssi')->group(function () {
                 ['as' => 'jssi.admin']
             );
             // KeyWords CRUD
-            Route::get('keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
+            // Route::get('keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
             // JEL-Codes CRUD
             Route::prefix('jel')->group(function () {
                 Route::resource('codes', AdminJelCodesController::class, [
@@ -127,6 +127,11 @@ Route::prefix('jssi')->group(function () {
             Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
             Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
             Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
+            Route::resource('keywords', AdminKeywordsController::class, [
+                'as' => 'jssi.admin',
+            ])->parameters([
+                    'keywords' => 'id',
+                ]);
 
         });
     });

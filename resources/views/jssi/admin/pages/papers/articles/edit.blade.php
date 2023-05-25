@@ -88,6 +88,11 @@
                     <label for="abstract">HAL</label>
                     <input type="text" class="form-control" name="halCode" id="" value="{{ $article->hal }}">
                 </div>
+                <div class="form-group">
+                    <label for="abstract">Keywords</label>
+                    <textarea class="form-control" rows="3" name="keywords" placeholder="Enter..." style="height: 62px;">{{ $keywords }}</textarea>
+                    <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by comma (,)</small>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
@@ -139,6 +144,7 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="form-check form-switch custom-switch">
                         <input class="form-check-input" type="checkbox" id="articleVisibleSwitch"

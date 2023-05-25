@@ -23,10 +23,11 @@ class AdminKeywordsController extends Controller
 
     public function index()
     {
-        return view('jssi.admin.pages.papers.keywords');
+        $keywords = JssiKeyword::paginate(20);
+        return view('jssi.admin.pages.papers.keywords', compact('keywords'));
     }
 
-    public function create($id)
+    public function create()
     {
         return view('jssi.admin.pages.papers.keywords.create');
     }
@@ -51,7 +52,7 @@ class AdminKeywordsController extends Controller
 
         $keyword->update();
 
-        return redirect()->route('jssi.admin.keywords')->with('success', 'Keyword updated successfuly!');
+        return redirect()->route('jssi.admin.keywords.index')->with('success', 'Keyword updated successfuly!');
     }
 
     public function store(Request $request)
