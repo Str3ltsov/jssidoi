@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\JssiArticle;
 use Error;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class JssiArticleService extends HelperService
 {
@@ -61,5 +63,66 @@ class JssiArticleService extends HelperService
     {
         $jelCodes = $article->jelCodes;
         return collect($jelCodes);
+    }
+
+    /**
+     * @param object $article Article object
+     * @param string $articleTitle Title of article
+     * @param object $file File object from request
+     *
+     * @return string Name of created file
+     */
+    public function handleFileUpload(JssiArticle $article, $file): string
+    {
+        $minSequence = $article->articlesAuthorsInstitutions()->min('sequence');
+        $authorLastName = $article->articlesAuthorsInstitutions()
+            ->where('sequence', $minSequence)
+            ->with('authorsInstitution.author')
+            ->first()
+            ->authorsInstitution
+            ->author
+            ->last_name;
+
+        $articleTitle = $article->title;
+
+        $filename = $this->sanitizeFileName($authorLastName, $articleTitle);
+
+        if (Storage::exists('papers/' . $filename)) {
+            Storage::delete('papers/' . $filename);
+        }
+        $file->storeAs('issues', $filename, 'public');
+
+        return $filename;
+
+    }
+
+    public function handleAuthors($article, $authorInstitutionIds)
+    {
+        $current_authorsInstitutions = $article->articlesAuthorsInstitutions()->pluck('authors_institution_id')->toArray();
+        $selected_authorsInstitutions = $authorInstitutionIds;
+        $authorsInstitutions_to_remove = array_diff($current_authorsInstitutions, $selected_authorsInstitutions);
+        $maxSequence = $article->articlesAuthorsInstitutions()->max('sequence') || 0;
+        $article->articlesAuthorsInstitutions()->whereIn('authors_institution_id', $authorsInstitutions_to_remove)->delete();
+
+        foreach ($selected_authorsInstitutions as $authorInstitution_id) {
+            $maxSequence++;
+            $article->articlesAuthorsInstitutions()->firstOrCreate(['authors_institution_id' => $authorInstitution_id, 'sequence' => $maxSequence]);
+        }
+
+        $article->update();
+    }
+
+    public function handleJelCodes(JssiArticle $article, array $jelCodes)
+    {
+        $article->jelCodes()->sync($jelCodes);
+    }
+
+    private function sanitizeFileName($lastName, $title): string
+    {
+        $lastName = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $lastName);
+        $title = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $title);
+        $title = rtrim($title, '.');
+
+        return sprintf('%s_%s.pdf', $lastName, Str::ucfirst(Str::snake($title)));
     }
 }

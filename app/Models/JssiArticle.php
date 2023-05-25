@@ -87,4 +87,9 @@ class JssiArticle extends Model
     {
         return $this->belongsToMany(JssiKeyword::class, 'jssi_articles_keywords', 'article_id', 'keyword_id');
     }
+
+    public function incrementViewCount()
+    {
+        $this->increment('views');
+    }
 }

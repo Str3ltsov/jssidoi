@@ -31,6 +31,7 @@ class JssiArticlesController extends Controller
     public function show(int $id): View|Application|Factory|Foundation\Application
     {
         $article = $this->service->getJssiArticleById($id);
+        $article->incrementViewCount();
 
         return view('jssi.articles.show')
             ->with([

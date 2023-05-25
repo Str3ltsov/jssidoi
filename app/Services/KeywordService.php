@@ -8,7 +8,7 @@ use App\Models\JssiKeyword;
 class KeywordService
 {
 
-    public function handleKeywords(string $keywordInput): array
+    public function handleKeywords(JssiArticle $article, string $keywordInput): void
     {
         $keywordsArray = explode(',', $keywordInput);
         $keywordsArray = array_map('trim', $keywordsArray);
@@ -16,14 +16,13 @@ class KeywordService
 
         $keywords = [];
 
-
         foreach ($keywordsArray as $keyword) {
             $keywordModel = JssiKeyword::firstOrCreate(['keyword' => $keyword]);
             $keywords[] = $keywordModel->id;
         }
         // dd($keywordInput, $keywordsArray, $keywords);
 
-        return $keywords;
+        $article->keywords()->sync($keywords);
 
     }
 
@@ -34,6 +33,8 @@ class KeywordService
 
         return $keywords;
     }
+
+
 }
 
 ?>

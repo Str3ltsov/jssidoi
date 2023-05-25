@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="issue">Issue</label>
-                    <select class="custom-select" name="issue">
+                    <select class="custom-select" name="issue_id">
                         @foreach ($issues as $issue)
                             <option value="{{ $issue->id }}">
                                 Vol. {{ $issue->volume }} Num. {{ $issue->number }}
@@ -29,8 +29,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="articleType">Article type</label>
-                    <select class="custom-select" name="articleType">
+                    <label for="article_type_id">Article type</label>
+                    <select class="custom-select" name="article_type_id">
                         @foreach ($types as $type)
                             <option value="{{ $type->id }}"> {{ $type->title }}
                             </option>
@@ -38,8 +38,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="articleTitle">Title</label>
-                    <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Enter...">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="articleTitle" name="title" placeholder="Enter...">
 
                 </div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
                     <label>Recieved:</label>
                     <div class="input-group date" id="receivedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#receivedDate"
-                            name="receivedDate" />
+                            name="received" />
                         <div class="input-group-append" data-target="#receivedDate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -60,30 +60,30 @@
                     <label>Accepted:</label>
                     <div class="input-group date" id="acceptedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#accepteddDate"
-                            name="acceptedDate" />
+                            name="accepted" />
                         <div class="input-group-append" data-target="#acceptedDate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="startPage">Pages</label>
+                    <label for="start_page">Pages</label>
                     <div class="form-group col-1">
-                        <input class="form-control" type="number" name="startPage" min='0' placeholder="0">
+                        <input class="form-control" type="number" name="start_page" min='0' placeholder="0">
                     </div>
                     -
                     <div class="form-group col-1">
-                        <input class="form-control" type="number" name="endPage" min='0' placeholder="50">
+                        <input class="form-control" type="number" name="end_page" min='0' placeholder="50">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="abstract">DOI</label>
-                    <input type="text" class="form-control" name="doiCode" id=""
+                    <input type="text" class="form-control" name="doi" id=""
                         placeholder="10.9770/jssi.2022.2.2(1)">
                 </div>
                 <div class="form-group">
                     <label for="abstract">HAL</label>
-                    <input type="text" class="form-control" name="halCode" id="" placeholder="hal-00000000">
+                    <input type="text" class="form-control" name="hal" id="" placeholder="hal-00000000">
                 </div>
                 <div class="row">
                     <div class="col-12">

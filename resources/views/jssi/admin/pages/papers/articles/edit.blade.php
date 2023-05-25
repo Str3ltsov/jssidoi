@@ -19,8 +19,8 @@
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
-                    <label for="issue">Issue</label>
-                    <select class="custom-select" name="issue">
+                    <label for="issue_id">Issue</label>
+                    <select class="custom-select" name="issue_id">
                         @foreach ($issues as $issue)
                             <option value="{{ $issue->id }}" {{ $article->issue_id == $issue->id ? 'selected' : '' }}>
                                 Vol. {{ $issue->volume }} Num. {{ $issue->number }}
@@ -29,8 +29,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="articleType">Article type</label>
-                    <select class="custom-select" name="articleType">
+                    <label for="article_type_id">Article type</label>
+                    <select class="custom-select" name="article_type_id">
                         @foreach ($types as $type)
                             <option value="{{ $type->id }}"
                                 {{ $article->article_type_id == $type->id ? 'selected' : '' }}> {{ $type->title }}
@@ -39,8 +39,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="articleTitle">Title</label>
-                    <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder=""
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="articleTitle" name="title" placeholder=""
                         value="{{ $article->title }}">
 
                 </div>
@@ -52,7 +52,7 @@
                     <label>Recieved:</label>
                     <div class="input-group date" id="receivedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#receivedDate"
-                            name="receivedDate" />
+                            name="received" />
                         <div class="input-group-append" data-target="#receivedDate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -62,31 +62,31 @@
                     <label>Accepted:</label>
                     <div class="input-group date" id="acceptedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#accepteddDate"
-                            name='acceptedDate' />
+                            name='accepted' />
                         <div class="input-group-append" data-target="#acceptedDate" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <label for="startPage">Pages</label>
+                    <label for="start_page">Pages</label>
                     <div class="form-group col-1">
                         <input class="form-control" type="number" name="startPage" min='0' placeholder="0"
                             value="{{ $article->start_page }}">
                     </div>
                     -
                     <div class="form-group col-1">
-                        <input class="form-control" type="number" name="endPage" min='0' placeholder="0"
+                        <input class="form-control" type="number" name="end_page" min='0' placeholder="0"
                             value="{{ $article->end_page }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="abstract">DOI</label>
-                    <input type="text" class="form-control" name="doiCode" id="" value="{{ $article->doi }}">
+                    <input type="text" class="form-control" name="doi" id="" value="{{ $article->doi }}">
                 </div>
                 <div class="form-group">
                     <label for="abstract">HAL</label>
-                    <input type="text" class="form-control" name="halCode" id="" value="{{ $article->hal }}">
+                    <input type="text" class="form-control" name="hal" id="" value="{{ $article->hal }}">
                 </div>
                 <div class="form-group">
                     <label for="abstract">Keywords</label>

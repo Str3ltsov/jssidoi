@@ -8,21 +8,56 @@ use App\Models\JssiArticleType;
 use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiIssue;
 use App\Models\JssiJELCode;
+use App\Services\JssiArticleService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use App\Services\KeywordService;
 
 class AdminArticlesController extends Controller
 {
 
     protected $keywordService;
+    protected $articleService;
 
-    public function __construct(KeywordService $keywordService)
+    public function __construct(KeywordService $keywordService, JssiArticleService $articleService)
     {
         $this->keywordService = $keywordService;
+        $this->articleService = $articleService;
     }
+
+    private $fields = [
+        'issue_id',
+        'article_type_id',
+        'title',
+        'abstract',
+        'received',
+        'accepted',
+        'start_page',
+        'end_page',
+        'doi',
+        'hal',
+    ];
+
+    protected function getValidationRules(): array
+    {
+        return [
+            'issue_id' => 'required|integer',
+            'article_type_id' => 'required|integer',
+            'title' => 'required|string',
+            'abstract' => 'nullable|string',
+            'received' => 'nullable|date',
+            'accepted' => 'nullable|date',
+            'start_page' => 'numeric|min:0',
+            'end_page' => 'numeric|min:0',
+            'doi' => 'nullable|string',
+            'hal' => 'nullable|string',
+            'authorInstitutions' => 'nullable|array',
+            'articleFile' => 'filled|mimes:pdf',
+            'keywords' => 'string',
+            'jelCodes' => 'array'
+        ];
+    }
+
 
     public function index()
     {
@@ -59,87 +94,21 @@ class AdminArticlesController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate($this->getValidationRules());
 
         $article = JssiArticle::findOrFail($id);
 
-        $request->validate([
-            'issue' => 'required|integer',
-            'articleType' => 'required|integer',
-            'articleTitle' => 'required|string',
-            'abstract' => 'nullable|string',
-            'receivedDate' => 'nullable|date',
-            'acceptedDate' => 'nullable|date',
-            'startPage' => 'numeric|min:0',
-            'endPage' => 'numeric|min:0',
-            'doiCode' => 'nullable|string',
-            'halCode' => 'nullable|string',
-            'authorInstitutions' => 'nullable|array',
-            'articleFile' => 'filled|mimes:pdf',
-            'keywords' => 'string',
-            'jelCodes' => 'array'
-        ]);
+        $article->fill($request->only($this->fields));
 
-        // dd($request);
-
-        $article->issue_id = $request->input('issue');
-        $article->article_type_id = $request->input('articleType');
-        $article->title = $request->input('articleTitle');
-        $article->abstract = $request->input('abstract');
-        $article->received = $request->input('receivedDate');
-        $article->accepted = $request->input('acceptedDate');
-        $article->start_page = $request->input('startPage');
-        $article->end_page = $request->input('endPage');
-        $article->doi = $request->input('doiCode');
-        $article->hal = $request->input('halCode');
-
-        $article->jelCodes()->sync($request->input('jelCodes', []));
-
-        $authorInstitutionIds = $request->input('authorInstitutions', []);
-
-        if (!empty($authorInstitutionIds)) {
-            $current_authorsInstitutions = $article->articlesAuthorsInstitutions()->pluck('authors_institution_id')->toArray();
-            $selected_authorsInstitutions = $authorInstitutionIds;
-            $authorsInstitutions_to_remove = array_diff($current_authorsInstitutions, $selected_authorsInstitutions);
-            $maxSequence = $article->articlesAuthorsInstitutions()->max('sequence');
-            // dd($authorsInstitutions_to_remove, $selected_authorsInstitutions, $current_authorsInstitutions);
-            $article->articlesAuthorsInstitutions()->whereIn('authors_institution_id', $authorsInstitutions_to_remove)->delete();
-
-            foreach ($selected_authorsInstitutions as $authorInstitution_id) {
-                $maxSequence++;
-                $article->articlesAuthorsInstitutions()->firstOrCreate(['authors_institution_id' => $authorInstitution_id, 'sequence' => $maxSequence]);
-            }
-
-        }
+        $this->articleService->handleJelCodes($article, $request->input('jelCodes', []));
+        $this->articleService->handleAuthors($article, $request->input('authorInstitutions', []));
+        $this->keywordService->handleKeywords($article, $request->input('keywords'));
 
         if ($request->hasFile('articleFile')) {
-
-            $minSequence = $article->articlesAuthorsInstitutions()->min('sequence');
-            $authorLastName = $article->articlesAuthorsInstitutions()
-                ->where('sequence', $minSequence)
-                ->with('authorsInstitution.author')
-                ->first()
-                ->authorsInstitution
-                ->author
-                ->last_name;
-
-            $filename = $this->sanitizeFileName($authorLastName, $request->input('articleTitle'));
-
-            if (Storage::exists('papers/' . $filename)) {
-                Storage::delete('papers/' . $filename);
-            }
-            $request->file('articleFile')->storeAs('issues', $filename, 'public');
-
-            $article->file = $filename;
+            $article->file = $this->articleService->handleFileUpload($article, $request->file('articleFile'));
         }
 
-        $keywords = $this->keywordService->handleKeywords($request->input('keywords'));
-
-        // dd($keywords);
-
-        $article->keywords()->sync($keywords);
-        // dd($article);
-
-        $article->visible = $request->input('articleVisibleSwitch') ? true : false;
+        $article->visible = (bool) $request->input('articleVisibleSwitch');
 
         $article->update();
 
@@ -157,85 +126,26 @@ class AdminArticlesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'issue' => 'required|integer',
-            'articleType' => 'required|integer',
-            'articleTitle' => 'required|string',
-            'abstract' => 'nullable|string',
-            'receivedDate' => 'nullable|date',
-            'acceptedDate' => 'nullable|date',
-            'startPage' => 'numeric|min:0',
-            'endPage' => 'numeric|min:0',
-            'doiCode' => 'nullable|string',
-            'halCode' => 'nullable|string',
-            'authorInstitutions' => 'nullable|array',
-            'articleFile' => 'filled|mimes:pdf',
-            'jelCodes' => 'array',
-            'keywords' => 'string',
-        ]);
+        $request->validate($this->getValidationRules());
 
         $article = new JssiArticle();
 
-        $article->issue_id = $request->input('issue');
-        $article->article_type_id = $request->input('articleType');
-        $article->title = $request->input('articleTitle');
-        $article->abstract = $request->input('abstract');
-        $article->received = $request->input('receivedDate');
-        $article->accepted = $request->input('acceptedDate');
-        $article->start_page = $request->input('startPage');
-        $article->end_page = $request->input('endPage');
-        $article->doi = $request->input('doiCode');
-        $article->hal = $request->input('halCode');
-
-        $article->jelCodes()->attach($request->input('jelCodes', []));
+        $article->fill($request->only($this->fields));
 
         $article->save();
 
-        $authorInstitutionIds = $request->input('authorInstitutions', []);
-
-        if (!empty($authorInstitutionIds)) {
-            $current_authorsInstitutions = $article->articlesAuthorsInstitutions()->pluck('authors_institution_id')->toArray();
-            $selected_authorsInstitutions = $authorInstitutionIds;
-            $authorsInstitutions_to_remove = array_diff($current_authorsInstitutions, $selected_authorsInstitutions);
-            $maxSequence = $article->articlesAuthorsInstitutions()->max('sequence');
-            // dd($authorsInstitutions_to_remove, $selected_authorsInstitutions, $current_authorsInstitutions);
-            $article->articlesAuthorsInstitutions()->whereIn('authors_institution_id', $authorsInstitutions_to_remove)->delete();
-
-            foreach ($selected_authorsInstitutions as $authorInstitution_id) {
-                $maxSequence++;
-                $article->articlesAuthorsInstitutions()->firstOrCreate(['authors_institution_id' => $authorInstitution_id, 'sequence' => $maxSequence]);
-            }
-
-        }
-
-        $keywordsList = explode(',', $request->input('keywords'));
-
-        $article->keywords()->sync($keywordsList);
+        $this->articleService->handleJelCodes($article, $request->input('jelCodes', []));
+        $this->articleService->handleAuthors($article, $request->input('authorInstitutions', []));
+        $this->keywordService->handleKeywords($article, $request->input('keywords'));
 
         if ($request->hasFile('articleFile')) {
 
-            $minSequence = $article->articlesAuthorsInstitutions()->min('sequence');
-            $authorLastName = $article->articlesAuthorsInstitutions()
-                ->where('sequence', $minSequence)
-                ->with('authorsInstitution.author')
-                ->first()
-                ->authorsInstitution
-                ->author
-                ->last_name;
-
-            $filename = $this->sanitizeFileName($authorLastName, $request->input('articleTitle'));
-
-            if (Storage::exists('papers/' . $filename)) {
-                Storage::delete('papers/' . $filename);
-            }
-            $request->file('articleFile')->storeAs('issues', $filename, 'public');
-
-            $article->file = $filename;
+            $article->file = $this->articleService->handleFileUpload($article, $request->file('articleFile'));
         }
 
-        $article->visible = $request->input('articleVisibleSwitch') ? true : false;
+        $article->visible = (bool) $request->input('articleVisibleSwitch');
 
-        $article->save();
+        $article->update();
 
         return redirect()->route('jssi.admin.articles')->with('success', sprintf('Article %s created successfully!', $article->title));
 
@@ -251,14 +161,5 @@ class AdminArticlesController extends Controller
         }
 
         return redirect()->route('jssi.admin.articles')->with('success', 'Article deleted successfuly!');
-    }
-
-    public function sanitizeFileName($lastName, $title): string
-    {
-        $lastName = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $lastName);
-        $title = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $title);
-        $title = rtrim($title, '.');
-
-        return sprintf('%s_%s.pdf', $lastName, Str::ucfirst(Str::snake($title)));
     }
 }
