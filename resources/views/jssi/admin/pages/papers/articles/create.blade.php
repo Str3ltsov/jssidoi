@@ -47,6 +47,10 @@
                     <textarea class="form-control" rows="3" name="abstract" placeholder="Enter..." style="height: 62px;"></textarea>
                 </div>
                 <div class="form-group">
+                    <label for="abstract">References</label>
+                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;"></textarea>
+                </div>
+                <div class="form-group">
                     <label>Recieved:</label>
                     <div class="input-group date" id="receivedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#receivedDate"

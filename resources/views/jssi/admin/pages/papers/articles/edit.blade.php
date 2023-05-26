@@ -49,6 +49,12 @@
                     <textarea class="form-control" rows="3" name="abstract" placeholder="Enter..." style="height: 62px;">{{ $article->abstract }}</textarea>
                 </div>
                 <div class="form-group">
+                    <label for="abstract">References</label>
+                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;"></textarea>
+                    <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by semicolon
+                        (;)</small>
+                </div>
+                <div class="form-group">
                     <label>Recieved:</label>
                     <div class="input-group date" id="receivedDate" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#receivedDate"
@@ -91,7 +97,8 @@
                 <div class="form-group">
                     <label for="abstract">Keywords</label>
                     <textarea class="form-control" rows="3" name="keywords" placeholder="Enter..." style="height: 62px;">{{ $keywords }}</textarea>
-                    <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by comma (,)</small>
+                    <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by comma
+                        (,)</small>
                 </div>
                 <div class="row">
                     <div class="col-12">

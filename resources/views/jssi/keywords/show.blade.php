@@ -3,61 +3,70 @@
 @section('content')
     <div class="bg-white p-4 border-1 shadow-sm mt-4 rounded-1">
         <h2 class="mb-3">Articles</h2>
-        @for ($i = 1; $i <= rand(1, 10); $i++)
-            <p>{{ $i }}.
-                <a href="{{ route('jssiArticle', $i) }}" class="text-decoration-none">
-                    <b>Štěpán Kavan</b>,
-                    <b>Rastislav Kazanský</b>,
-                    <b>Pavel Nečas</b>.
-                    IDENTIFYING RISKS IN SELECTED SOCIAL FACILITIES WHEN EMERGENCIES ARISE
-                </a>
-            </p>
-            <p>
-                <b>Reference</b>
-                to this paper should be made as follows:
-                <br>
-                Kavan, �.; Kazanský, R.; Nečas, P. 2020. Identifying risks in selected social facilities when emergencies arise,
-                <i>Journal of Security and Sustainability Issues</i>
-                10(2): 379-388.
-                <a href="https://doi.org/10.9770/jssi.2020.10.2(1)" target="_blank" class="text-decoration-none">
-                    https://doi.org/10.9770/jssi.2020.10.2(1)
-                </a>
-            </p>
+        @forelse($articles as $article)
+            <h5 class="mb-3">
+                <a href="{{ route('jssiArticle', $article->id) }}" class="text-decoration-none">{{ $article->title }}</a>
+            </h5>
+            <div class="d-flex flex-wrap gap-2 mb-3" style="line-height: 16px">
+                @forelse($authors[$article->id] as $author)
+                    <div class="fw-bold d-flex gap-1">
+                        <div>
+                            <a href="http://orcid.org/0000-0001-9108-0525"
+                                class="rounded-5 bg-success text-decoration-none px-1 text-center text-white"
+                                target="_blank">
+                                iD
+                            </a>
+                        </div>
+                        <div>{{ $author->first_name }}</div>
+                        <div>{{ $author->middle_name ?? '' }}</div>
+                        <div>
+                            {{ $author->last_name ?? '' }}@if (!$loop->last)
+                                ,
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                @endforelse
+            </div>
             <div class="row">
-                <div id="share-buttons" class="col-lg-6 d-flex align-items-center gap-2 mb-3 mb-lg-0">
-                    Share:
-                    <div class="d-flex align-items-center gap-1">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-facebook fs-5"></i>
-                        </a>
-                        <a href="https://plus.google.com/share?url=http%3A/jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-google-plus fs-5"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-linkedin fs-5"></i>
-                        </a>
-                        <a href="https://twitter.com/home?status=http%3A//jssidoi.org/jssi/papers/papers/view/625" target="_blank">
-                            <i class="fa-brands fa-square-twitter fs-5"></i>
-                        </a>
-                        <a href="http://www.mendeley.com/import/?url=http://jssidoi.org/jssi/papers/papers/view/625/Kavan_Identifying_risks_in_selected_social_facilities_when_emergencies_arise.pdf" target="_blank">
-                            <i class="fa-brands fa-mendeley fs-5"></i>
-                        </a>
-                    </div>
+                <div class="col-lg-12 d-flex align-items-center gap-1 mb-3">
+                    <i class="fa fa-eye" title="Views"></i>
+                    {{ $article->views }}&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-download" title="Downloads"></i>
+                    {{ $article->downloads }}
                 </div>
-                <div class="col-lg-6 d-flex gap-4 gap-lg-0">
-                    <div class="col-lg-6 d-flex align-items-center gap-1">
-                        <a href="#" class="btn btn-primary">HTML</a>
-                        <a href="#" class="btn btn-primary" target="_blank">PDF</a>
-                    </div>
-                    <div class="col-lg-6 d-flex align-items-center gap-1">
-                        <i class="fa fa-eye" title="Views"></i>
-                        {{ rand(100, 1000) }}&nbsp;&nbsp;&nbsp;
-                        <i class="fa fa-download" title="Downloads"></i>
-                        {{ rand(1, 200) }}
-                    </div>
+                <div class="col-lg-3 d-flex align-items-center gap-1 mb-2 mb-lg-0">
+                    <a href="{{ route('jssiArticle', $article->id) }}" class="btn btn-primary">HTML</a>
+                    <a href="{{ asset("documents/issues/{$article->issue->id}/articles/$article->file") }}"
+                        class="btn btn-primary" target="_blank">PDF</a>
                 </div>
+                @if ($article->doi)
+                    <div class="col-lg-5 d-flex align-items-center mb-2 mb-lg-0">
+                        <div class="d-flex align-items-center text-white">
+                            <span class="bg-warning px-2 py-1" id="doi">DOI </span>
+                            <a href="https://doi.org/{{ $article->doi }}" target="_blank"
+                                class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                                {{ $article->doi }}
+                            </a>
+                        </div>
+                    </div>
+                @endif
+                @if ($article->hal)
+                    <div class="col-lg-4 d-flex align-items-center">
+                        <div class="d-flex align-items-center text-white">
+                            <span class="bg-danger px-2 py-1 opacity-50" id="doi">HAL </span>
+                            <a href="https://hal.science/{{ $article->hal }}" target="_blank"
+                                class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                                {{ $article->hal }}
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
             <hr>
-        @endfor
+        @empty
+            <span class="text-muted">No articles</span>
+        @endforelse
+
     </div>
 @endsection

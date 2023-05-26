@@ -117,6 +117,7 @@ class JssiArticleService extends HelperService
         $article->jelCodes()->sync($jelCodes);
     }
 
+
     private function sanitizeFileName($lastName, $title): string
     {
         $lastName = iconv("UTF-8", "ISO-8859-1//TRANSLIT", $lastName);

@@ -5,8 +5,13 @@ namespace App\Services;
 use App\Models\JssiArticle;
 use App\Models\JssiKeyword;
 
-class KeywordService
+class KeywordService extends HelperService
 {
+
+    public final function getPaginatedKeywords($amount)
+    {
+        return JssiKeyword::paginate($amount);
+    }
 
     public function handleKeywords(JssiArticle $article, string $keywordInput): void
     {
@@ -34,7 +39,26 @@ class KeywordService
         return $keywords;
     }
 
+    public function getArticleCounts($keywords)
+    {
+        $articleCounts = [];
 
+        foreach ($keywords as $keyword) {
+            // dd();
+            if ($keyword->articles->count() == 0) {
+                $articleCounts[$keyword->id] = 0;
+            }
+            $articleCounts[$keyword->id] = $keyword->articles()->count();
+
+        }
+
+        return $articleCounts;
+    }
+
+    public function getArticleList($keywordId)
+    {
+        return JssiKeyword::findOrFail($keywordId)->articles;
+    }
 }
 
 ?>
