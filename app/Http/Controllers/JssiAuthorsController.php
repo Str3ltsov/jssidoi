@@ -12,7 +12,9 @@ use Illuminate\Contracts\Foundation;
 
 class JssiAuthorsController extends Controller
 {
-    public function __construct(public JssiAuthorService $authorService, public JssiArticleService $articleService) {}
+    public function __construct(public JssiAuthorService $authorService, public JssiArticleService $articleService)
+    {
+    }
 
     public function index(Request $request): View|Application|Factory|Foundation\Application
     {

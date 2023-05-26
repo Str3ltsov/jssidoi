@@ -50,7 +50,7 @@
                     <select class="duallistbox" multiple="multiple" name="institutions[]">
                         @foreach ($institutions as $institution)
                             <option value="{{ $institution->id }}"
-                                {{ $author->authorsInstitutions->contains('id', $institution->id) ? 'selected' : '' }}>
+                                {{ in_array($institution->id, $selectedInstitutions) ? 'selected' : '' }}>
                                 {{ $institution->title }}
                             </option>
                         @endforeach

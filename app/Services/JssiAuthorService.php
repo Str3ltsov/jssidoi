@@ -43,6 +43,7 @@ class JssiAuthorService extends HelperService
         return $author;
     }
 
+
     /**
      *
      * @param JssiAuthor $author instance of current author
@@ -55,7 +56,15 @@ class JssiAuthorService extends HelperService
     public function handleInstitutionAssignment($author, $selectedInstitutions)
     {
         try {
-            $author->authorsInstitutions()->sync($selectedInstitutions);
+            $current_institutions = $author->authorsInstitutions()->pluck('institution_id')->toArray();
+
+            $institutions_to_remove = array_diff($current_institutions, $selectedInstitutions);
+            $author->authorsInstitutions()->whereIn('institution_id', $institutions_to_remove)->delete();
+
+            foreach ($selectedInstitutions as $institution_id) {
+                $author->authorsInstitutions()->firstOrCreate(['institution_id' => $institution_id]);
+            }
+
         } catch (Exception $e) {
             if ($e->getCode() == 23000) {
                 return redirect()->route('jssi.admin.authors')->with('error', 'Error: Unable to remove one of author\'s institutions, because author has published articles within this institution. You have to delete this author/institution connection from associated articles first.');

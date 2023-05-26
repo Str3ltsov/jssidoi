@@ -27,23 +27,18 @@ class JssiAuthorsInstitution extends Model
         'institution_id' => 'integer'
     ];
 
-    public function author(): BelongsTo
+    public function author(): HasOne
     {
-        return $this->belongsTo(JssiAuthor::class);
+        return $this->hasOne(JssiAuthor::class, 'id', 'author_id');
     }
 
-    public function institution(): BelongsTo
+    public function institution(): HasOne
     {
-        return $this->belongsTo(JssiInstitution::class);
+        return $this->hasOne(JssiInstitution::class, 'id', 'institution_id');
     }
 
     public function articleAuthorsInstitutions(): HasMany
     {
         return $this->hasMany(JssiArticlesAuthorsInstitution::class, 'authors_institution_id', 'id');
-    }
-
-    public function articles(): BelongsToMany
-    {
-        return $this->belongsToMany(JssiAuthorsInstitution::class, 'jssi_articles_authors_instititutions', 'article_id', 'authors_institution_id');
     }
 }

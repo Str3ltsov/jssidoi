@@ -36,9 +36,9 @@ class JssiAuthor extends Model
         'subscribed_events' => 'integer'
     ];
 
-    public function authorsInstitutions(): BelongsToMany
+    public function authorsInstitutions(): HasMany
     {
-        return $this->belongsToMany(JssiInstitution::class, 'jssi_authors_institutions', 'author_id', 'institution_id');
+        return $this->hasMany(JssiAuthorsInstitution::class, 'author_id');
     }
 
     public function scopeFirstNameLike(Builder $query, $firstName): Builder

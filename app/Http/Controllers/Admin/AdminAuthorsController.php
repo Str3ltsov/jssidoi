@@ -53,7 +53,7 @@ class AdminAuthorsController extends Controller
         $author = JssiAuthor::findOrFail($id);
 
         $institutions = JssiInstitution::all();
-        $selectedInstitutions = $author->authorsInstitutions()->pluck('institution_id');
+        $selectedInstitutions = $author->authorsInstitutions()->pluck('institution_id')->toArray();
 
         return view('jssi.admin.pages.papers.authors.edit', compact('author', 'institutions', 'selectedInstitutions'));
     }
