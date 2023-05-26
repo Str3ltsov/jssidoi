@@ -57,20 +57,30 @@
                 </div>
             </div>
             <div class="row" style="margin-bottom: 20px;">
-                <div class="col-md-5 d-flex align-items-center gap-1">
-                    <a href="{{ route('jssiArticle', $id) }}" class="btn btn-primary btn-xs">HTML</a>
+                <div class="col-lg-3 d-flex align-items-center gap-1 mb-2 mb-lg-0">
+                    <a href="{{ route('jssiArticle', $article->id) }}" class="btn btn-primary btn-xs">HTML</a>
                     <a href="#" class="btn btn-primary btn-xs" target="_blank">PDF</a>
                 </div>
-                <div class="col-lg-5 d-flex align-items-center">
-                    <div class="d-flex align-items-center text-white">
-                        <span class="bg-warning px-2 py-1" id="doi">DOI </span>
-                        <a href="https://doi.org/10.9770/jesi.2023.10.3(26)" target="_blank" class="bg-secondary px-2 py-1 text-decoration-none link-light">
-                            10.9770/jesi.2023.10.3(26)
-                        </a>
+                @if ($article->doi)
+                    <div class="col-lg-5 d-flex align-items-center mb-2 mb-lg-0">
+                        <div class="d-flex align-items-center text-white">
+                            <span class="bg-warning px-2 py-1" id="doi">DOI </span>
+                            <a href="https://doi.org/{{ $article->doi }}" target="_blank" class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                                {{ $article->doi }}
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                </div>
+                @endif
+                @if ($article->hal)
+                    <div class="col-lg-4 d-flex align-items-center">
+                        <div class="d-flex align-items-center text-white">
+                            <span class="bg-danger px-2 py-1 opacity-50" id="doi">HAL </span>
+                            <a href="https://hal.science/{{ $article->hal }}" target="_blank" class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                                {{ $article->hal }}
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -80,7 +90,7 @@
                     Išoraitė, M.; Alperytė, I. 2023. Creativity in times of war and pandemics,
                     <i>Entrepreneurship and Sustainability Issues</i>
                     10(3): 399-419.
-                    <a href="https://doi.org/10.9770/jesi.2023.10.3(26)" target="_blank">https://doi.org/10.9770/jesi.2023.10.3(26)</a>
+                    <a href="https://doi.org/{{ $article->doi }}" target="_blank">{{ $article->doi }}</a>
                 </div>
             </div>
         </div>
