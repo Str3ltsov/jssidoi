@@ -61,7 +61,7 @@ class AdminArticlesController extends Controller
 
     public function index()
     {
-        $articles = JssiArticle::paginate(20);
+        $articles = JssiArticle::with('issue', 'articlesAuthorsInstitutions.authorsInstitution.author')->paginate(20);
         return view('jssi.admin.pages.papers.articles', compact('articles'));
     }
 

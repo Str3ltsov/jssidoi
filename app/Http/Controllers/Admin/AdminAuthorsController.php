@@ -6,12 +6,41 @@ use App\Http\Controllers\Controller;
 use App\Models\JssiAuthor;
 use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiInstitution;
+use App\Services\JssiAuthorService;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminAuthorsController extends Controller
 {
 
+    protected $authorService;
+
+    public function __construct(JssiAuthorService $authorService)
+    {
+        $this->authorService = $authorService;
+    }
+
+    protected $validationRules = [
+        'firstName' => 'string|required',
+        'midName' => 'nullable|string',
+        'lastName' => 'string|required',
+        'email' => 'email',
+        'orcid' => ['nullable'],
+        ['regex:/(\d{4}-){3}\d{3}(\d|X)/'],
+        'institutions' => 'nullable|array'
+    ];
+
+    protected function exctractDataFromRequest(Request $request)
+    {
+        return [
+            'first_name' => $request->input('firstName'),
+            'middle_name' => $request->input('midName'),
+            'last_name' => $request->input('lastName'),
+            'email' => $request->input('email'),
+            'orcid' => $request->input('orcid'),
+        ];
+    }
     public function index()
     {
 
@@ -22,49 +51,27 @@ class AdminAuthorsController extends Controller
     public function edit($id)
     {
         $author = JssiAuthor::findOrFail($id);
-        $institutions = JssiInstitution::all();
 
-        return view('jssi.admin.pages.papers.authors.edit', compact('author', 'institutions'));
+        $institutions = JssiInstitution::all();
+        $selectedInstitutions = $author->authorsInstitutions()->pluck('institution_id');
+
+        return view('jssi.admin.pages.papers.authors.edit', compact('author', 'institutions', 'selectedInstitutions'));
     }
 
     public function update(Request $request, $id)
     {
         $author = JssiAuthor::findOrFail($id);
 
-        $request->validate([
-            'firstName' => 'string|required',
-            'midName' => 'nullable|string',
-            'lastName' => 'string|required',
-            'email' => 'email',
-            'orcid' => ['nullable'],
-            ['regex:/(\d{4}-){3}\d{3}(\d|X)/'],
-            'institutions' => 'nullable|array'
-        ]);
-
-        $author->first_name = $request->input('firstName');
-        $author->last_name = $request->input('lastName');
-        $author->middle_name = $request->input('midName');
-        $author->email = $request->input('email');
-
-        if ($request->has('orcid')) {
-            $author->orcid = $request->input('orcid');
-        }
+        $request->validate($this->validationRules);
+        $data = $this->exctractDataFromRequest($request);
+        $author->fill($data);
 
         $institutionIds = $request->input('institutions', []);
-
-        if (!empty($institutionIds)) {
-            $current_institutions = $author->authorsInstitutions()->pluck('institution_id')->toArray();
-            $selected_institutions = $request->input('institutions');
-            $institutions_to_remove = array_diff($current_institutions, $selected_institutions);
-
-            foreach ($selected_institutions as $institution_id) {
-                $author->authorsInstitutions()->firstOrCreate(['institution_id' => $institution_id]);
-            }
-            $author->authorsInstitutions()->whereIn('institution_id', $institutions_to_remove)->delete();
+        $assignmentResult = $this->authorService->handleInstitutionAssignment($author, $institutionIds);
+        if ($assignmentResult instanceof RedirectResponse) {
+            return $assignmentResult;
         }
-
-        // dd($author);
-        $author->save();
+        $author->update();
 
         return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s updated successfully!', $author->fullname()));
 
@@ -93,39 +100,20 @@ class AdminAuthorsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'firstName' => 'string|required',
-            'midName' => 'nullable|string',
-            'lastName' => 'string|required',
-            'email' => 'email',
-            'orcid' => ['nullable'],
-            ['regex:/(\d{4}-){3}\d{3}(\d|X)/'],
-            'institutions' => 'nullable|array'
-        ]);
+        $request->validate($this->validationRules);
 
         $author = new JssiAuthor();
 
-        $author->first_name = $request->input('firstName');
-        $author->last_name = $request->input('lastName');
-        $author->middle_name = $request->input('midName');
-        $author->email = $request->input('email');
-
-        if ($request->has('orcid')) {
-            $author->orcid = $request->input('orcid');
-        }
+        $data = $this->exctractDataFromRequest($request);
+        $author->fill($data);
+        $author->saveOrFail();
 
         $institutionIds = $request->input('institutions', []);
-
-        if (!empty($institutionIds)) {
-            $author->saveOrFail();
-            $selected_institutions = $request->input('institutions');
-
-            foreach ($selected_institutions as $institution_id) {
-                $author->authorsInstitutions()->firstOrCreate(['institution_id' => $institution_id]);
-            }
+        $assignmentResult = $this->authorService->handleInstitutionAssignment($author, $institutionIds);
+        if ($assignmentResult instanceof RedirectResponse) {
+            return $assignmentResult;
         }
-
-        $author->saveOrFail();
+        $author->updateOrFail();
 
         return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s created successfully!', $author->fullname()));
     }

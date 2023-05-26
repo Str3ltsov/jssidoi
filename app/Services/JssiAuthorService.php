@@ -6,6 +6,10 @@ use App\Models\JssiArticle;
 use App\Models\JssiArticlesAuthorsInstitution;
 use App\Models\JssiAuthor;
 use Error;
+use Exception;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -19,7 +23,7 @@ class JssiAuthorService extends HelperService
 
     public final function getFilteredJssiAuthors(int $paginateNum): object
     {
-        return QueryBuilder::for(JssiAuthor::class)
+        return QueryBuilder::for (JssiAuthor::class)
             ->allowedSorts('first_name', 'last_name')
             ->allowedFilters([
                 AllowedFilter::scope('first_name like'),
@@ -38,4 +42,29 @@ class JssiAuthorService extends HelperService
 
         return $author;
     }
+
+    /**
+     *
+     * @param JssiAuthor $author instance of current author
+     * @param array $selectedInstitutions array of institutions from requrest->input
+     *
+     * This service function synchronizes list of institutions for selected author.
+     *
+     */
+
+    public function handleInstitutionAssignment($author, $selectedInstitutions)
+    {
+        try {
+            $author->authorsInstitutions()->sync($selectedInstitutions);
+        } catch (Exception $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('jssi.admin.authors')->with('error', 'Error: Unable to remove one of author\'s institutions, because author has published articles within this institution. You have to delete this author/institution connection from associated articles first.');
+            }
+
+            return redirect()->route('jssi.admin.authors')->with('error', 'Unexpected error occured.');
+        }
+
+    }
+
+
 }

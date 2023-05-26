@@ -5,6 +5,8 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('admin/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
 @endpush
 @section('content')
     <div class="card card-primary">
@@ -43,12 +45,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="institutions[]">Institutions</label>
-                    <select multiple class="form-control" name="institutions[]">
+                    <label>Institutions</label>
+                    <select class="duallistbox" multiple="multiple" name="institutions[]">
                         @foreach ($institutions as $institution)
                             <option value="{{ $institution->id }}">
-
-                                {{ $institution->title }}</option>
+                                {{ $institution->title }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -56,7 +58,7 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        <button type="submit" class="btn btn-success">Update</button>
+        <button type="submit" class="btn btn-success">Create</button>
         <a href="{{ route('jssi.admin.authors') }}" class="btn btn-danger">Cancel</a>
     </div>
     </form>
@@ -66,6 +68,7 @@
     <script>
         $(function() {
             $('[data-mask]').inputmask();
+            $('.duallistbox').bootstrapDualListbox();
         })
     </script>
 @endsection

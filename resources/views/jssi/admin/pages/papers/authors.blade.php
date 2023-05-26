@@ -2,7 +2,9 @@
 @section('title', 'Authors')
 @section('content')
     <x-admin.paginated_table :paginated="$authors">
-
+        <x-slot:header_right>
+            <a href='{{ route('jssi.admin.authors.create') }}' class="btn btn-success">Add new</a>
+        </x-slot:header_right>
         <x-slot:thead_content>
             <th>ID</th>
             <th>First Name</th>

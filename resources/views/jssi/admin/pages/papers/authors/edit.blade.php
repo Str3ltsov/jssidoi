@@ -5,7 +5,8 @@
 
 @push('scripts')
     <script src="{{ asset('admin/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
-    <meta charset="utf-8">
+    <script src="{{ asset('admin/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
 @endpush
 
 @section('content')
@@ -44,18 +45,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Institutions</label>
+                    <select class="duallistbox" multiple="multiple" name="institutions[]">
+                        @foreach ($institutions as $institution)
+                            <option value="{{ $institution->id }}"
+                                {{ $author->authorsInstitutions->contains('id', $institution->id) ? 'selected' : '' }}>
+                                {{ $institution->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="institutions[]">Institutions</label>
-                <select multiple class="form-control" name="institutions[]">
-                    @foreach ($institutions as $institution)
-                        <option value="{{ $institution->id }}"
-                            {{ $author->authorsInstitutions()->where('institution_id', $institution->id)->exists()? 'selected="selected"': '' }}>
-                            {{ $institution->title }}</option>
-                    @endforeach
-                </select>
-            </div>
-    </div>
+
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
@@ -70,6 +72,7 @@
     <script>
         $(function() {
             $('[data-mask]').inputmask();
+            $('.duallistbox').bootstrapDualListbox();
         })
     </script>
 @endsection

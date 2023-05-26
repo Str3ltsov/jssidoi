@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JssiAuthor extends Model
@@ -35,9 +36,9 @@ class JssiAuthor extends Model
         'subscribed_events' => 'integer'
     ];
 
-    public function authorsInstitutions(): HasMany
+    public function authorsInstitutions(): BelongsToMany
     {
-        return $this->hasMany(JssiAuthorsInstitution::class, 'author_id');
+        return $this->belongsToMany(JssiInstitution::class, 'jssi_authors_institutions', 'author_id', 'institution_id');
     }
 
     public function scopeFirstNameLike(Builder $query, $firstName): Builder
