@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label for="abstract">References</label>
-                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;"></textarea>
+                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;">{{ $references }}</textarea>
                     <small id="keywordsHelp" class="form-text text-muted">Keywords should be seperated by semicolon
                         (;)</small>
                 </div>

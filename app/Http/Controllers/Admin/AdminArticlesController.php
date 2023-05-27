@@ -45,6 +45,7 @@ class AdminArticlesController extends Controller
             'article_type_id' => 'required|integer',
             'title' => 'required|string',
             'abstract' => 'nullable|string',
+            'references' => 'nullable|string',
             'received' => 'nullable|date',
             'accepted' => 'nullable|date',
             'start_page' => 'numeric|min:0',
@@ -73,6 +74,7 @@ class AdminArticlesController extends Controller
         $authorsInstitutions = JssiAuthorsInstitution::with('author', 'institution')->get();
         $jelCodes = JssiJELCode::all();
         $keywords = $this->keywordService->getKeywordList($id);
+        $references = $this->articleService->getReferencesString($article);
 
         $selectedJelCodes = $article->jelCodes()->pluck('jel_code_id')->toArray();
 
@@ -87,7 +89,8 @@ class AdminArticlesController extends Controller
                 'selectedAuthorInstitutionIds',
                 'jelCodes',
                 'selectedJelCodes',
-                'keywords'
+                'keywords',
+                'references'
             )
         );
     }
@@ -103,6 +106,7 @@ class AdminArticlesController extends Controller
         $this->articleService->handleJelCodes($article, $request->input('jelCodes', []));
         $this->articleService->handleAuthors($article, $request->input('authorInstitutions', []));
         $this->keywordService->handleKeywords($article, $request->input('keywords'));
+        $this->articleService->handleReferences($article, $request->input('references'));
 
         if ($request->hasFile('articleFile')) {
             $article->file = $this->articleService->handleFileUpload($article, $request->file('articleFile'));

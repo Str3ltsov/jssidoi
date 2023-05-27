@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\JssiArticle;
+use App\Models\JssiReference;
 use Error;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -65,6 +66,11 @@ class JssiArticleService extends HelperService
         return collect($jelCodes);
     }
 
+    public function getReferences($article): object
+    {
+        return collect($article->references);
+    }
+
     /**
      * @param object $article Article object
      * @param string $articleTitle Title of article
@@ -116,6 +122,66 @@ class JssiArticleService extends HelperService
     {
         $article->jelCodes()->sync($jelCodes);
     }
+
+    public function handleReferences($article, $referenceInput)
+    {
+        $references = $this->getReferenceArray($referenceInput);
+
+        $updatedReferences = [];
+        $newReference = null;
+
+        //This function fill updatedReferences[] with id of refs, that have been found or created with firstOrCreate
+        foreach ($references as $reference) {
+            $newReference = $article->references()->firstOrCreate([
+                'reference' => $reference['reference'],
+                'link' => $reference['link'],
+            ]);
+
+            $updatedReferences[] = $newReference->id;
+        }
+
+        $unusedReferences = $article->references()->whereNotIn('id', $updatedReferences)->get();
+        $unusedReferences->each->delete();
+    }
+
+    public function getReferencesString($article)
+    {
+        $reftext = "";
+        $references = $article->references()->get();
+        foreach ($references as $reference) {
+            $reftext .= sprintf("%s %s; ", $reference->reference, $reference->link);
+        }
+
+        return $reftext;
+    }
+
+    private function getReferenceArray($references): array
+    {
+        $references = explode(';', $references);
+        $refArray = [];
+        foreach ($references as $reference) {
+            //regex to match links in text
+            preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $reference, $match);
+            $urls = $match[0];
+            $reference = str_replace("'", "''", $reference);
+            if (!empty($urls[0])) {
+                $reference = str_replace($urls[0], "", $reference);
+            } else {
+                $urls[0] = null;
+            }
+
+            $reference = rtrim($reference);
+
+
+            if (!empty($reference)) { // prevents empty references like "; ; ;" from being added to array
+                $refArray[] = ['reference' => $reference, 'link' => $urls[0]];
+            }
+
+        }
+
+        return $refArray;
+    }
+
 
 
     private function sanitizeFileName($lastName, $title): string
