@@ -38,6 +38,7 @@ class JssiArticlesController extends Controller
                 'article' => $article,
                 'authorsInstitutions' => $this->service->getArticleAuthorsInstitutions($article),
                 'jelCodes' => $this->service->getJelCodes($article),
+                'references' => $this->service->getReferences($article),
             ]);
     }
 }
