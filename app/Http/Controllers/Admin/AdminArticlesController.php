@@ -105,7 +105,7 @@ class AdminArticlesController extends Controller
 
         $this->articleService->handleJelCodes($article, $request->input('jelCodes', []));
         $this->articleService->handleAuthors($article, $request->input('authorInstitutions', []));
-        $this->keywordService->handleKeywords($article, $request->input('keywords'));
+        $this->keywordService->handleKeywords($request->input('keywords'), $article);
         $this->articleService->handleReferences($article, $request->input('references'));
 
         if ($request->hasFile('articleFile')) {
