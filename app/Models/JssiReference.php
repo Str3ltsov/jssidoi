@@ -29,10 +29,4 @@ class JssiReference extends Model
         return $this->belongsTo(JssiArticle::class);
     }
 
-
-
-
-
-
-
 }

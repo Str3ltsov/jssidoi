@@ -12,18 +12,18 @@ class paginated_table extends Component
      * Create a new component instance.
      */
 
-     public $thead_content;
-     public $tbody_content;
-     public $paginated;
-     public $header_right;
+    public $thead_content;
+    public $tbody_content;
+    public $paginated;
+    public $header_right;
 
     public function __construct($thead, $tbody, $paginated, $hr = "")
     {
         //
         $this->thead_content = $thead;
         $this->tbody_content = $tbody;
-        $this->$paginated = $paginated;
-        $this->$header_right = $hr;
+        $this->paginated = $paginated;
+        $this->header_right = $hr;
     }
 
     /**

@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JssiJELCategory extends Model
 {
-    //  $table->char('category', 2);
-    //         $table->string('description');
     protected $table = 'jssi_jel_categories';
 
     protected $fillable = [
