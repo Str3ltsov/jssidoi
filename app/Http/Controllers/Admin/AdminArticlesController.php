@@ -19,12 +19,6 @@ class AdminArticlesController extends Controller
     protected $keywordService;
     protected $articleService;
 
-    public function __construct(KeywordService $keywordService, JssiArticleService $articleService)
-    {
-        $this->keywordService = $keywordService;
-        $this->articleService = $articleService;
-    }
-
     private $fields = [
         'issue_id',
         'article_type_id',
@@ -37,6 +31,12 @@ class AdminArticlesController extends Controller
         'doi',
         'hal',
     ];
+
+    public function __construct(KeywordService $keywordService, JssiArticleService $articleService)
+    {
+        $this->keywordService = $keywordService;
+        $this->articleService = $articleService;
+    }
 
     protected function getValidationRules(): array
     {
@@ -105,7 +105,7 @@ class AdminArticlesController extends Controller
 
         $this->articleService->handleJelCodes($article, $request->input('jelCodes', []));
         $this->articleService->handleAuthors($article, $request->input('authorInstitutions', []));
-        $this->keywordService->handleKeywords($article, $request->input('keywords'));
+        $this->keywordService->handleKeywords($request->input('keywords'), $article);
         $this->articleService->handleReferences($article, $request->input('references'));
 
         if ($request->hasFile('articleFile')) {

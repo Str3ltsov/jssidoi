@@ -93,7 +93,7 @@ class JssiArticle extends Model
         return $this->hasMany(JssiReference::class, 'article_id');
     }
 
-    public function incrementViewCount()
+    public function incrementViewCount(): void
     {
         $this->increment('views');
     }

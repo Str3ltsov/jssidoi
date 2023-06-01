@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JssiKeyword;
 use Illuminate\Http\Request;
-use Nette\NotImplementedException;
 use Illuminate\Support\Str;
 use App\Services\KeywordService;
-use GuzzleHttp\Psr7\Query;
 use Illuminate\Database\QueryException;
 
 class AdminKeywordsController extends Controller
@@ -57,15 +55,17 @@ class AdminKeywordsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'keyword' => 'string|required',
-        ]);
+            $request->validate([
+                'keyword' => 'string|required',
+            ]);
 
-        $keywords = $this->keywordService->handleKeywords($request->input('keyword'));
 
-        $keywordAmount = count($keywords);
+            $keywords = $this->keywordService->handleKeywords($request->input('keyword'));
 
-        return redirect()->route('jssi.admin.keywords.index')->with('success', sprintf('%d %s created successfuly!', $keywordAmount, Str::plural('keyword', $keywordAmount)));
+            $keywordAmount = count($keywords);
+
+            return redirect()->route('jssi.admin.keywords.index')->with('success', sprintf('%d %s created successfuly!', $keywordAmount, Str::plural('keyword', $keywordAmount)));
+        //fix
     }
 
     public function destroy(Request $request)

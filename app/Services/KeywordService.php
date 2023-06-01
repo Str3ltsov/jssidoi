@@ -13,7 +13,7 @@ class KeywordService extends HelperService
         return JssiKeyword::paginate($amount);
     }
 
-    public function handleKeywords(JssiArticle $article, string $keywordInput): void
+    public function handleKeywords(string $keywordInput, JssiArticle $article = null): void
     {
         $keywordsArray = explode(',', $keywordInput);
         $keywordsArray = array_map('trim', $keywordsArray);
@@ -25,9 +25,10 @@ class KeywordService extends HelperService
             $keywordModel = JssiKeyword::firstOrCreate(['keyword' => $keyword]);
             $keywords[] = $keywordModel->id;
         }
-        // dd($keywordInput, $keywordsArray, $keywords);
 
-        $article->keywords()->sync($keywords);
+        if ($article != null) {
+            $article->keywords()->sync($keywords);
+        }
 
     }
 
