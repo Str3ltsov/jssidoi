@@ -48,15 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="abstract">References</label>
-                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;">
-                        {{-- @forelse($references as $reference)
-{{ sprintf('%s %s;', $refence->reference, $reference->link) }}
-@empty
-                        {{ sprintf('%s %s;', $refence->reference, $reference->link) }}
-@endforelse
-                        @foreach ($references as $reference)
-{{ sprintf("%s %s;\n", $reference->reference, $reference->link) }}
-@endforeach --}}
+                    <textarea class="form-control" rows="3" name="references" placeholder="Enter..." style="height: 62px;"></textarea>
 
                     </textarea>
                 </div>

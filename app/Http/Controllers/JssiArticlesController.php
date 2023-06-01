@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\JssiArticleService;
+use App\Services\KeywordService;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Foundation;
 
 class JssiArticlesController extends Controller
 {
-    public function __construct(public JssiArticleService $service)
+    public function __construct(public JssiArticleService $service, public KeywordService $keywordService)
     {
     }
 
@@ -39,6 +40,7 @@ class JssiArticlesController extends Controller
                 'authorsInstitutions' => $this->service->getArticleAuthorsInstitutions($article),
                 'jelCodes' => $this->service->getJelCodes($article),
                 'references' => $this->service->getReferences($article),
+                'keywords' => $this->keywordService->getKeywordList($id),
             ]);
     }
 }

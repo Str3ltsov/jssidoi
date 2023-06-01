@@ -13,7 +13,7 @@ class KeywordService extends HelperService
         return JssiKeyword::paginate($amount);
     }
 
-    public function handleKeywords(string $keywordInput, JssiArticle $article = null): void
+    public function handleKeywords(string $keywordInput, JssiArticle $article = null): int
     {
         $keywordsArray = explode(',', $keywordInput);
         $keywordsArray = array_map('trim', $keywordsArray);
@@ -29,6 +29,8 @@ class KeywordService extends HelperService
         if ($article != null) {
             $article->keywords()->sync($keywords);
         }
+
+        return count($keywords);
 
     }
 

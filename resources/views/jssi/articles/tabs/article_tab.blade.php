@@ -15,7 +15,7 @@
         @endif
         <h4>Keywords</h4>
         <p>
-            crisis, creativity, businesses, pandemics, war
+            {{ $keywords }}
         </p>
         <hr>
     @endif

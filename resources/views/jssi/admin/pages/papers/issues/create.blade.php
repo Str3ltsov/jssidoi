@@ -67,7 +67,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <button type="submit" class="btn btn-success">Add</button>
+                <button type="submit" class="btn btn-success">Create</button>
                 <a href="{{ route('jssi.admin.issues') }}" class="btn btn-danger">Cancel</a>
             </div>
         </form>

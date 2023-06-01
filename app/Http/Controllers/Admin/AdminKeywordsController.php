@@ -55,17 +55,13 @@ class AdminKeywordsController extends Controller
 
     public function store(Request $request)
     {
-            $request->validate([
-                'keyword' => 'string|required',
-            ]);
+        $request->validate([
+            'keyword' => 'string|required',
+        ]);
 
+        $keywordAmount = $this->keywordService->handleKeywords($request->input('keyword'));
 
-            $keywords = $this->keywordService->handleKeywords($request->input('keyword'));
-
-            $keywordAmount = count($keywords);
-
-            return redirect()->route('jssi.admin.keywords.index')->with('success', sprintf('%d %s created successfuly!', $keywordAmount, Str::plural('keyword', $keywordAmount)));
-        //fix
+        return redirect()->route('jssi.admin.keywords.index')->with('success', sprintf('%d %s created successfuly!', $keywordAmount, Str::plural('keyword', $keywordAmount)));
     }
 
     public function destroy(Request $request)
