@@ -59,6 +59,6 @@ class JssiIssueService extends HelperService
 
     private function formatFileName(int $volume, int $number, string $type): string
     {
-        return printf("Journal_of_Security_and_Sustainability_Issues_Vol%d_No%d_%s.pdf", $volume, $number, $type);
+        return "Journal_of_Security_and_Sustainability_Issues_Vol{$volume}_No{$number}_{$type}.pdf";
     }
 }

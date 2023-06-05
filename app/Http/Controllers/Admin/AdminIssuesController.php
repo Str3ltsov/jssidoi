@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Storage;
 class AdminIssuesController extends Controller
 {
 
-    private JssiIssueService $issueService;
+    private $issueService;
 
     public function __construct(JssiIssueService $issueService)
     {
-        $this->$issueService = $issueService;
+        $this->issueService = $issueService;
     }
 
     private $validationRules = [
