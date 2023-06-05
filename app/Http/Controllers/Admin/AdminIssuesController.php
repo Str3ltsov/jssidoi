@@ -4,57 +4,56 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JssiIssue;
-use DateTime;
+use App\Services\JssiIssueService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class AdminIssuesController extends Controller
 {
-     public function index() {
+
+    private JssiIssueService $issueService;
+
+    public function __construct(JssiIssueService $issueService)
+    {
+        $this->$issueService = $issueService;
+    }
+
+    private $validationRules = [
+        'issueVolume' => 'required|integer',
+        'issueNum' => 'required|integer',
+        'issueDateMonth' => 'required|string',
+        'issueDateYear' => 'required|digits:4',
+        'issueVisible' => 'nullable',
+        'issuePrintFile' => 'filled|mimes:pdf',
+        'issueOnlineFile' => 'filled|mimes:pdf',
+
+    ];
+
+    public function index()
+    {
         $issues = JssiIssue::paginate(20);
         return view('jssi.admin.pages.papers.issues', compact('issues'));
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $issue = JssiIssue::findOrFail($id);
         return view('jssi.admin.pages.papers.issues.edit', compact('issue'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
+        $request->validate($this->validationRules);
+
         $issue = JssiIssue::findOrFail($id);
 
-        $request->validate([
-            'issueVolume' => 'required|integer',
-            'issueNum' => 'required|integer',
-            'issueDateMonth' => 'required|string',
-            'issueDateYear' => 'required|digits:4',
-            'issueVisible' => 'nullable',
-            'issuePrintFile' => 'filled|mimes:application/pdf',
-            'issueOnlineFile' => 'filled|mimes:application/pdf',
-
-        ]);
-
-        $issue->volume = $request->input('issueVolume');
-        $issue->number = $request->input('issueNum');
+        $issue->fill($request->only(["issueVolume", "issueNum"]));
         $issue->date = sprintf('%s-%s-1', $request->input('issueDateYear'), $request->input('issueDateMonth'));
-        if($request->hasFile('issuePrintFile')) {
-            $filename = sprintf('Journal_of_Security_and_Sustainability_Issues_Vol%d_No%d_print.pdf', $request->input('issueVolume'), $request->input('issueNum'));
-            if(Storage::exists('issues/'.$filename)) {
-                Storage::delete('issues/'.$filename);
-            }
-            $request->file('issuePrintFile')->storeAs('issues', $filename, 'public');
 
-            $issue->print = $filename;
-        }
-        if($request->hasFile('issueOnlineFile')) {
-            $filename = sprintf('Journal_of_Security_and_Sustainability_Issues_Vol%d_No%d_on-line.pdf', $request->input('issueVolume'), $request->input('issueNum'));
+        $issue->save();
 
-             if(Storage::exists('issues/'.$filename)) {
-                Storage::delete('issues/'.$filename);
-            }
-
-            $request->file('issueOnlineFile')->storeAs('issues', $filename, 'public');
-            $issue->online = $filename;
+        if ($request->hasFile('issuePrintFile') || $request->hasFile('issueOnlineFile')) {
+            $this->issueService->handleFileUpload($issue, $request);
         }
 
         $issue->visible = ($request->input('issueVisibleSwitch')) != null ? 1 : 0;
@@ -65,45 +64,24 @@ class AdminIssuesController extends Controller
 
     }
 
-    public function create() {
+    public function create()
+    {
         return view('jssi.admin.pages.papers.issues.create');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'issueVolume' => 'required|integer',
-            'issueNum' => 'required|integer',
-            'issueDateMonth' => 'required|string',
-            'issueDateYear' => 'required|digits:4',
-            'issuePrintFile' => 'required_without:issueOnlineFile|mimes:pdf',
-            'issueOnlineFile' => 'required_without:issuePrintFile|mimes:pdf',
-            'issueVisibleSwitch' => 'required',
-        ]);
+    public function store(Request $request)
+    {
+        $request->validate($this->validationRules);
 
         $issue = new JssiIssue();
 
-        $issue->volume = $request->input('issueVolume');
-        $issue->number = $request->input('issueNum');
+        $issue->fill($request->only(["issueVolume", "issueNum"]));
         $issue->date = sprintf('%s-%s-1', $request->input('issueDateYear'), $request->input('issueDateMonth'));
 
-        if($request->hasFile('issuePrintFile')) {
-            $filename = sprintf('Journal_of_Security_and_Sustainability_Issues_Vol%d_No%d_print.pdf', $request->input('issueVolume'), $request->input('issueNum'));
-            if(Storage::exists('issues/'.$filename)) {
-                Storage::delete('issues/'.$filename);
-            }
-            $request->file('issuePrintFile')->storeAs('issues', $filename, 'public');
+        $issue->save();
 
-            $issue->print = $filename;
-        }
-        if($request->hasFile('issueOnlineFile')) {
-            $filename = sprintf('Journal_of_Security_and_Sustainability_Issues_Vol%d_No%d_on-line.pdf', $request->input('issueVolume'), $request->input('issueNum'));
-
-             if(Storage::exists('issues/'.$filename)) {
-                Storage::delete('issues/'.$filename);
-            }
-
-            $request->file('issueOnlineFile')->storeAs('issues', $filename, 'public');
-            $issue->online = $filename;
+        if ($request->hasFile('issuePrintFile') || $request->hasFile('issueOnlineFile')) {
+            $this->issueService->handleFileUpload($issue, $request);
         }
 
         $issue->visible = ($request->input('issueVisibleSwitch')) != null ? 1 : 0;
@@ -113,7 +91,8 @@ class AdminIssuesController extends Controller
         return redirect()->route('jssi.admin.issues')->with('success', 'Issue created successfully!');
     }
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
         $issue = JssiIssue::findOrFail($request->id);
         $issue->delete();
 

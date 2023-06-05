@@ -10,6 +10,20 @@ use Illuminate\Http\Request;
 
 class AdminInstitutionsController extends Controller
 {
+
+    private $validationRules = [
+        'title' => 'required|string',
+        'website' => 'required|url',
+        'city' => 'required|string',
+        'country' => 'required|integer',
+    ];
+
+    private $fields = [
+        'title',
+        'website',
+        'city',
+    ];
+
     public function index()
     {
         $institutions = JssiInstitution::paginate(20);
@@ -34,21 +48,10 @@ class AdminInstitutionsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'title' => 'required|string',
-            'website' => 'required|url',
-            'city' => 'required|string',
-            'country' => 'required|integer',
-        ]);
+        $request->validate($this->validationRules);
 
         $institution = JssiInstitution::findOrFail($id);
-
-        $institution->fill($request->only([
-            'title',
-            'website',
-            'city',
-        ]));
-
+        $institution->fill($request->only($this->fields));
         $institution->country_id = $request->input('country');
 
         $institution->update();
@@ -59,21 +62,10 @@ class AdminInstitutionsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string',
-            'website' => 'required|url',
-            'city' => 'required|string',
-            'country' => 'required|integer',
-        ]);
+        $request->validate($this->validationRules);
 
         $institution = new JssiInstitution();
-
-        $institution->fill($request->only([
-            'title',
-            'website',
-            'city',
-        ]));
-
+        $institution->fill($request->only($this->fields));
         $institution->country_id = $request->input('country');
 
         $institution->save();
@@ -85,7 +77,6 @@ class AdminInstitutionsController extends Controller
     {
         try {
             $institution = JssiInstitution::findOrFail($request->id);
-
             $institution->delete();
 
             return redirect()->route('jssi.admin.institutions.index')->with('success', 'Institution deleted successfuly!');

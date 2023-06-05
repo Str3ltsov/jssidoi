@@ -18,7 +18,6 @@ class HelperService
         $articleCounts = [];
 
         foreach ($collections as $collection) {
-            // dd($collection->authorsInstitutions);
             if (count($collection->authorsInstitutions) == 0) {
                 $articleCounts[$collection->id] = 0;
             }
