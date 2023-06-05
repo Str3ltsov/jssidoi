@@ -73,7 +73,7 @@ Route::prefix('jssi')->group(function () {
         Route::prefix('papers')->group(function () {
             //Article crud
             Route::resource(
-                'articles', AdminInstitutionsController::class,
+                'articles', AdminArticlesController::class,
                 [
                     'as' => 'jssi.admin',
                     'names' => ['index' => 'jssi.admin.articles']

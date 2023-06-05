@@ -87,6 +87,7 @@ class AdminAuthorsController extends Controller
         } catch (QueryException $e) {
             if ($e->getCode() == 23000)
                 return redirect()->route('jssi.admin.authors')->with('error', 'Error: This author can not be deleted, because this author has published articles.');
+
         }
 
 
