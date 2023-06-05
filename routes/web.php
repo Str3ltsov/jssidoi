@@ -71,68 +71,62 @@ Route::prefix('jssi')->group(function () {
     Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::get('/', [AdminHomeController::class, 'index'])->name('jssi.admin.home');
         Route::prefix('papers')->group(function () {
-            Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
-            Route::get('/{id}/edit', [AdminArticlesController::class, 'edit'])->name('jssi.admin.articles.edit');
-            Route::get('/add', [AdminArticlesController::class, 'create'])->name('jssi.admin.articles.create');
-            Route::post('/', [AdminArticlesController::class, 'store'])->name('jssi.admin.articles.store');
-            Route::put('/{id}', [AdminArticlesController::class, 'update'])->name('jssi.admin.articles.update');
-            Route::delete('/{id}', [AdminArticlesController::class, 'destroy'])->name('jssi.admin.articles.destroy');
+            //Article crud
+            Route::resource(
+                'articles', AdminInstitutionsController::class,
+                [
+                    'as' => 'jssi.admin',
+                    'names' => ['index' => 'jssi.admin.articles']
+                ],
+            )->except(['show']);
             // Issues CRUD
-            Route::get('issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
-            Route::get('issues/{id}/edit', [AdminIssuesController::class, 'edit'])->name('jssi.admin.issues.edit');
-            Route::get('issues/add', [AdminIssuesController::class, 'create'])->name('jssi.admin.issues.create');
-            Route::post('issues', [AdminIssuesController::class, 'store'])->name('jssi.admin.issues.store');
-            Route::put('issues/{id}', [AdminIssuesController::class, 'update'])->name('jssi.admin.issues.update');
-            Route::delete('issues/{id}', [AdminIssuesController::class, 'destroy'])->name('jssi.admin.issues.destroy');
+            Route::resource('issues', AdminIssuesController::class, [
+                'as' => 'jssi.admin',
+                'names' => ['index' => 'jssi.admin.issues']
+            ])->except(['show']);
             // Authors CRUD
-            Route::get('authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
-            Route::get('authors/{id}/edit', [AdminAuthorsController::class, 'edit'])->name('jssi.admin.authors.edit');
-            Route::get('authors/add', [AdminAuthorsController::class, 'create'])->name('jssi.admin.authors.create');
-            Route::post('authors', [AdminAuthorsController::class, 'store'])->name('jssi.admin.authors.store');
-            Route::put('authors/{id}', [AdminAuthorsController::class, 'update'])->name('jssi.admin.authors.update');
-            Route::delete('authors/{id}', [AdminAuthorsController::class, 'destroy'])->name('jssi.admin.authors.destroy');
+            Route::resource('authors', AdminAuthorsController::class, [
+                'as' => 'jssi.admin',
+                'names' => ['index' => 'jssi.admin.authors']
+            ])->except(['show']);
 
             // Institutions CRUD
             Route::resource(
                 'institutions', AdminInstitutionsController::class,
                 ['as' => 'jssi.admin']
-            );
-            // KeyWords CRUD
-            // Route::get('keywords', [AdminKeywordsController::class, 'index'])->name('jssi.admin.keywords');
+            )->except(['show']);
             // JEL-Codes CRUD
             Route::prefix('jel')->group(function () {
                 Route::resource('codes', AdminJelCodesController::class, [
                     'as' => 'jssi.admin.jel'
                 ])->parameters([
                         'codes' => 'id',
-                    ]);
+                    ])->except(['show']);
                 Route::resource('categories', AdminJelCategoriesController::class, [
                     'as' => 'jssi.admin.jel',
                 ])->parameters([
                         'categories' => 'id',
-                    ]);
+                    ])->except(['show']);
                 Route::resource('subcategories', AdminJelSubcategoriesController::class, [
                     'as' => 'jssi.admin.jel',
                 ])->parameters([
                         'subcategories' => 'id',
-                    ]);
+                    ])->except(['show']);
+
             });
 
-            // Submits CRUD
-            Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
             // Countries CRUD
-            Route::get('countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
-            Route::get('countries/{id}/edit', [AdminCountriesController::class, 'edit'])->name('jssi.admin.countries.edit');
-            Route::get('countries/add', [AdminCountriesController::class, 'create'])->name('jssi.admin.countries.create');
-            Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
-            Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
-            Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
+            Route::resource('countries', AdminCountriesController::class, [
+                'as' => 'jssi.admin',
+                'names' => ['index' => 'jssi.admin.countries']
+            ])->except(['show']);
+
+
             Route::resource('keywords', AdminKeywordsController::class, [
                 'as' => 'jssi.admin',
             ])->parameters([
                     'keywords' => 'id',
-                ]);
-
+                ])->except(['show']);
         });
     });
 });
