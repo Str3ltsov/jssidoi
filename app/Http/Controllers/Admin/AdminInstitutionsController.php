@@ -26,7 +26,7 @@ class AdminInstitutionsController extends Controller
 
     public function index()
     {
-        $institutions = JssiInstitution::paginate(20);
+        $institutions = JssiInstitution::with("country")->paginate(20);
         return view('jssi.admin.pages.papers.Institutions', compact('institutions'));
     }
 
