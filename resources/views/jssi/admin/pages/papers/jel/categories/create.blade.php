@@ -21,7 +21,7 @@
     <!-- /.card-body -->
     <div class="card-footer">
         <button type="submit" class="btn btn-success">Create</button>
-        <a href="{{ route('jssi.admin.jel.categories.index') }}" class="btn btn-danger">Cancel</a>
+        <a href="{{ route('jssi.admin.jel.categories') }}" class="btn btn-danger">Cancel</a>
     </div>
     </form>
     </div>

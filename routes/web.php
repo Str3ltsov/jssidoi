@@ -95,20 +95,24 @@ Route::prefix('jssi')->group(function () {
                 'institutions', AdminInstitutionsController::class,
                 ['as' => 'jssi.admin']
             )->except(['show']);
+
             // JEL-Codes CRUD
             Route::prefix('jel')->group(function () {
                 Route::resource('codes', AdminJelCodesController::class, [
-                    'as' => 'jssi.admin.jel'
+                    'as' => 'jssi.admin.jel',
+                    'names' => ['index' => 'jssi.admin.jel.codes']
                 ])->parameters([
                         'codes' => 'id',
                     ])->except(['show']);
                 Route::resource('categories', AdminJelCategoriesController::class, [
                     'as' => 'jssi.admin.jel',
+                    'names' => ['index' => 'jssi.admin.jel.categories']
                 ])->parameters([
                         'categories' => 'id',
                     ])->except(['show']);
                 Route::resource('subcategories', AdminJelSubcategoriesController::class, [
                     'as' => 'jssi.admin.jel',
+                    'names' => ['index' => 'jssi.admin.jel.subcategories']
                 ])->parameters([
                         'subcategories' => 'id',
                     ])->except(['show']);

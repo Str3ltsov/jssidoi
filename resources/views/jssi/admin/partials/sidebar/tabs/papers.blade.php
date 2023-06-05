@@ -30,21 +30,21 @@
             'subtabs' => [
                 [
                     'name' => 'Categories',
-                    'route' => 'jssi.admin.jel.categories.index',
+                    'route' => 'jssi.admin.jel.categories',
                     'icon' => 'fa-bars',
                 ],
                 [
                     'name' => 'Subcategories',
-                    'route' => 'jssi.admin.jel.subcategories.index',
+                    'route' => 'jssi.admin.jel.subcategories',
                     'icon' => 'fa-bars-staggered',
                 ],
                 [
                     'name' => 'Codes',
-                    'route' => 'jssi.admin.jel.codes.index',
+                    'route' => 'jssi.admin.jel.codes',
                     'icon' => 'fa-barcode',
                 ],
             ],
-            'route' => 'jssi.admin.jel.codes.index',
+            'route' => 'jssi.admin.jel.codes',
             'icon' => 'fa-qrcode',
             'routePrefix' => 'jssi/admin/papers/jel/*',
         ],
