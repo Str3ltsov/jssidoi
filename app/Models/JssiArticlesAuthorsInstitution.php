@@ -29,6 +29,7 @@ class JssiArticlesAuthorsInstitution extends Model
     public function article(): HasOne
     {
         return $this->hasOne(JssiArticle::class, 'id', 'article_id');
+        
     }
 
     public function authorsInstitution(): HasOne

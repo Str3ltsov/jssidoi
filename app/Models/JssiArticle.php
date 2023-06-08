@@ -98,5 +98,24 @@ class JssiArticle extends Model
         $this->increment('views');
     }
 
+    public function getAuthorList()
+    {
+        $authorInstitutionIds = $this->articlesAuthorsInstitutions()->pluck('authors_institution_id')->toArray();
+
+        $authorIds = JssiAuthorsInstitution::findMany($authorInstitutionIds)->pluck('author_id')->toArray();
+        $authors = JssiAuthor::findMany($authorIds);
+
+        $authorList = '';
+
+        $authorAmount = count($authors);
+
+
+        foreach ($authors as $key => $author) {
+            $authorList .= $author->shortName() . ($key < $authorAmount - 1 ? '; ' : '');
+        }
+
+        return $authorList;
+    }
+
 
 }

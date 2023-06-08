@@ -55,4 +55,16 @@ class JssiAuthor extends Model
     {
         return trim("{$this->first_name} {$this->middle_name} {$this->last_name}");
     }
+
+    public function shortName(): string
+    {
+        $fullName = $this->last_name . ', ' . substr($this->first_name, 0, 1) . '.';
+
+        if ($this->middle_name) {
+            $fullName .= ' ' . substr($this->middle_name, 0, 1) . '.';
+        }
+
+        return trim($fullName);
+
+    }
 }

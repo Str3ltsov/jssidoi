@@ -43,7 +43,6 @@ class AdminAuthorsController extends Controller
     }
     public function index()
     {
-
         $authors = JssiAuthor::paginate(20);
         return view('jssi.admin.pages.papers.authors', compact('authors'));
     }
@@ -60,9 +59,10 @@ class AdminAuthorsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $author = JssiAuthor::findOrFail($id);
 
         $request->validate($this->validationRules);
+
+        $author = JssiAuthor::findOrFail($id);
         $data = $this->exctractDataFromRequest($request);
         $author->fill($data);
 
@@ -87,10 +87,7 @@ class AdminAuthorsController extends Controller
         } catch (QueryException $e) {
             if ($e->getCode() == 23000)
                 return redirect()->route('jssi.admin.authors')->with('error', 'Error: This author can not be deleted, because this author has published articles.');
-
         }
-
-
     }
 
     public function create()
@@ -99,23 +96,23 @@ class AdminAuthorsController extends Controller
         return view('jssi.admin.pages.papers.authors.create', compact('institutions'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate($this->validationRules);
+        public function store(Request $request)
+        {
+            $request->validate($this->validationRules);
 
-        $author = new JssiAuthor();
+            $author = new JssiAuthor();
 
-        $data = $this->exctractDataFromRequest($request);
-        $author->fill($data);
-        $author->saveOrFail();
+            $data = $this->exctractDataFromRequest($request);
+            $author->fill($data);
+            $author->saveOrFail();
 
-        $institutionIds = $request->input('institutions', []);
-        $assignmentResult = $this->authorService->handleInstitutionAssignment($author, $institutionIds);
-        if ($assignmentResult instanceof RedirectResponse) {
-            return $assignmentResult;
+            $institutionIds = $request->input('institutions', []);
+            $assignmentResult = $this->authorService->handleInstitutionAssignment($author, $institutionIds);
+            if ($assignmentResult instanceof RedirectResponse) {
+                return $assignmentResult;
+            }
+            $author->updateOrFail();
+
+            return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s created successfully!', $author->fullname()));
         }
-        $author->updateOrFail();
-
-        return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s created successfully!', $author->fullname()));
-    }
 }

@@ -47,7 +47,7 @@ class KeywordService extends HelperService
         $articleCounts = [];
 
         foreach ($keywords as $keyword) {
-            // dd();
+
             if ($keyword->articles->count() == 0) {
                 $articleCounts[$keyword->id] = 0;
             }

@@ -77,7 +77,7 @@
                 <div class="row">
                     <label for="start_page">Pages</label>
                     <div class="form-group col-1">
-                        <input class="form-control" type="number" name="startPage" min='0' placeholder="0"
+                        <input class="form-control" type="number" name="start_page" min='0' placeholder="0"
                             value="{{ $article->start_page }}">
                     </div>
                     -

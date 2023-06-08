@@ -12,8 +12,9 @@
                 Issue DOI:
                 <a href="#" class="link-primary text-decoration-none">{{ $issue->doi ?? '' }}</a>
             </div>
-            <a href="{{ asset("documents/issues/$issue->id/$issue->print") }}" target="_blank" class="text-decoration-none mt-2"
-               @if (!$issue->print) style="pointer-events: none; cursor: default; color: gray;" @endif>
+            <a href="{{ asset("documents/issues/$issue->id/$issue->print") }}" target="_blank"
+                class="text-decoration-none mt-2"
+                @if (!$issue->print) style="pointer-events: none; cursor: default; color: gray;" @endif>
                 Print version
             </a>
         </div>
@@ -24,17 +25,18 @@
                 <a href="{{ route('jssiArticle', $article->id) }}" class="text-decoration-none">{{ $article->title }}</a>
             </h5>
             @if ($article->article_type_id == \App\Enums\ArticleTypesEnum::PAPER->value)
-            <p>
-                <b>Reference</b>
-                to this paper should be made as follows:
-                <br>
-                Kavan, �.; Kazanský, R.; Nečas, P. 2020. Identifying risks in selected social facilities when emergencies arise,
-                <i>Journal of Security and Sustainability Issues</i>
-                10(2): 379-388.
-                <a href="https://doi.org/10.9770/{{ $article->doi }}" target="_blank" class="text-decoration-none">
-                    https://doi.org/{{ $article->doi }}
-                </a>
-            </p>
+                <p>
+                    <b>Reference</b>
+                    to this paper should be made as follows:
+                    <br>
+                    {{ $article->getAuthorList() }} {{ date('Y', strtotime($issue->date)) }}. {{ $article->title }}
+                    arise,
+                    <i>Journal of Security and Sustainability Issues</i>
+                    {{ $issue->volume }}({{ $issue->number }}): {{ $article->start_page }}-{{ $article->end_page }}.
+                    <a href="https://doi.org/10.9770/{{ $article->doi }}" target="_blank" class="text-decoration-none">
+                        https://doi.org/{{ $article->doi }}
+                    </a>
+                </p>
             @endif
             <div class="row">
                 <div class="col-lg-12 d-flex align-items-center gap-1 mb-3">
@@ -45,13 +47,15 @@
                 </div>
                 <div class="col-lg-3 d-flex align-items-center gap-1 mb-2 mb-lg-0">
                     <a href="{{ route('jssiArticle', $article->id) }}" class="btn btn-primary">HTML</a>
-                    <a href="{{ asset("documents/issues/$issue->id/articles/$article->file")  }}" class="btn btn-primary" target="_blank">PDF</a>
+                    <a href="{{ asset("documents/issues/$issue->id/articles/$article->file") }}" class="btn btn-primary"
+                        target="_blank">PDF</a>
                 </div>
                 @if ($article->doi)
                     <div class="col-lg-5 d-flex align-items-center mb-2 mb-lg-0">
                         <div class="d-flex align-items-center text-white">
                             <span class="bg-warning px-2 py-1" id="doi">DOI </span>
-                            <a href="https://doi.org/{{ $article->doi }}" target="_blank" class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                            <a href="https://doi.org/{{ $article->doi }}" target="_blank"
+                                class="bg-secondary px-2 py-1 text-decoration-none link-light">
                                 {{ $article->doi }}
                             </a>
                         </div>
@@ -61,11 +65,12 @@
                     <div class="col-lg-4 d-flex align-items-center">
                         <div class="d-flex align-items-center text-white">
                             <span class="bg-danger px-2 py-1 opacity-50" id="doi">HAL </span>
-                            <a href="https://hal.science/{{ $article->hal }}" target="_blank" class="bg-secondary px-2 py-1 text-decoration-none link-light">
+                            <a href="https://hal.science/{{ $article->hal }}" target="_blank"
+                                class="bg-secondary px-2 py-1 text-decoration-none link-light">
                                 {{ $article->hal }}
                             </a>
                         </div>
-                </div>
+                    </div>
                 @endif
             </div>
             <hr>
