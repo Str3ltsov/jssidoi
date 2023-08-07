@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\AdminJelCategoriesController;
 use App\Http\Controllers\Admin\AdminJelCodesController;
 use App\Http\Controllers\admin\AdminJelSubcategoriesController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
+use App\Http\Controllers\Admin\AdminLinksController;
 use App\Http\Controllers\Admin\AdminMenusController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
 use App\Http\Controllers\JssiArticlesController;
@@ -128,7 +129,10 @@ Route::prefix('jssi')->group(function () {
          * Menu routes
          */
         Route::prefix('menus')->group(function () {
-            Route::resource('menus', AdminMenusController::class)->except(['show']);
+            // Menus
+            Route::resource('menus', AdminMenusController::class);
+            // Links
+            Route::resource('links', AdminLinksController::class)->except(['index, show']);
         });
     });
 });

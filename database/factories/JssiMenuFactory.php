@@ -27,8 +27,8 @@ class JssiMenuFactory extends Factory
      */
     public function definition(): array
     {
-        $titles = ['Main Nenu', 'Papers Menu'];
-        $aliases = ['main', 'papers'];
+        $titles = ['Main Menu', 'Articles Menu'];
+        $aliases = ['main', 'articles'];
 
         $jssiMenu = [
             'title' => $titles[self::$counter],

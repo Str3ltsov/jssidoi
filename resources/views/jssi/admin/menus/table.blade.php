@@ -29,7 +29,7 @@
                 </td>
                 <td>
                     <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-info px-2 py-1" role="button">
+                        <a href="{{ route('menus.show', $menu->id) }}" class="btn btn-info px-2 py-1" role="button">
                             <i class="fa-solid fa-eye"></i>
                         </a>
                         <a href="{{ route('menus.edit', $menu->id) }}" class="btn btn-info px-2 py-1" role="button">

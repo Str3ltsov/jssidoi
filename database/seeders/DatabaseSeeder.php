@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             JssiInstitutionsSeeder::class,
             JssiAuthorsInstitutionsSeeder::class,
             JssiArticlesAuthorsInstitutionsSeeder::class,
-            JssiMenusSeeder::class
+            JssiMenusSeeder::class,
+            JssiLinksSeeder::class
         ]);
     }
 }

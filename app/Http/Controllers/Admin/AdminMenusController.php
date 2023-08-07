@@ -27,6 +27,12 @@ class AdminMenusController extends Controller
             ->with('menus', $this->mService->getJssiMenus()->toQuery()->paginate(10));
     }
 
+    public function show(int $id): View|Application|Factory|Foundation\Application
+    {
+        return view('jssi.admin.links.index')
+            ->with('menu', $this->mService->getJssiMenuById($id));
+    }
+
     public function create(): View|Application|Factory|Foundation\Application
     {
         return view('jssi.admin.menus.create');
