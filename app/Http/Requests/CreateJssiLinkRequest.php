@@ -3,12 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
-class UpdateJssiMenuRequest extends FormRequest
+class CreateJssiLinkRequest extends FormRequest
 {
-    private int $menuId;
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,15 +22,10 @@ class UpdateJssiMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'menu_id' => 'required|integer',
             'title' => 'required|string',
-            'alias' => 'required|string|unique:jssi_menus' . ($this->menuId ? ",id,$this->menuId" : ''),
-            'visible' => 'required|boolean',
-            'menu_id' => 'required|integer'
+            'link' => 'required|string|unique:jssi_links',
+            'visible' => 'required|boolean'
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->menuId = $this->request->get('menu_id');
     }
 }

@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 
-class UpdateJssiMenuRequest extends FormRequest
+class UpdateJssiLinkRequest extends FormRequest
 {
     private int $menuId;
 
@@ -25,10 +24,10 @@ class UpdateJssiMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'menu_id' => 'required|integer',
             'title' => 'required|string',
-            'alias' => 'required|string|unique:jssi_menus' . ($this->menuId ? ",id,$this->menuId" : ''),
-            'visible' => 'required|boolean',
-            'menu_id' => 'required|integer'
+            'link' => 'required|string|unique:jssi_links' . ($this->menuId ? ",id,$this->menuId" : ''),
+            'visible' => 'required|boolean'
         ];
     }
 

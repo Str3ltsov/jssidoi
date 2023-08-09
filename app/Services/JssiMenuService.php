@@ -42,4 +42,13 @@ class JssiMenuService extends HelperService
         $jssiMenu->visible = $validated['visible'];
         $jssiMenu->save();
     }
+
+    public function paginateCollection(
+        object $collection,
+        int $paginateNum,
+        string $orderVar = 'id',
+        string $orderDir = 'asc'
+    ): object {
+        return $collection->toQuery()->orderBy($orderVar, $orderDir)->paginate($paginateNum);
+    }
 }

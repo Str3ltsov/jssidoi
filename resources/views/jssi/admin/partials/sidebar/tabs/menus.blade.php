@@ -1,6 +1,6 @@
 <li class="nav-item">
     <a href="{{ route('menus.index') }}"
-        class="nav-link {{ request()->is('jssi/admin/menus/menus*') ? 'active ' : '' }}">
+        class="nav-link {{ request()->is('jssi/admin/menus/menus') ? 'active ' : '' }}">
         <i class="nav-icon fa-solid"></i>
         <p>
             {{ __('Menus') }}
@@ -9,7 +9,8 @@
 </li>
 @foreach (\App\Models\JssiMenu::select('id', 'title', 'alias')->get() as $menuItem)
     <li class="nav-item">
-        <a href="{{ route('menus.show', $menuItem->id) }}" class="nav-link">
+        <a href="{{ route('menus.show', $menuItem->id) }}" 
+            class="nav-link {{ request()->is('jssi/admin/menus/menus/'.$menuItem->id) ? 'active ' : '' }}">
             <i class="nav-icon fa-solid"></i>
             <p>
                 {{ $menuItem->title }}

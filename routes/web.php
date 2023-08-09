@@ -132,7 +132,12 @@ Route::prefix('jssi')->group(function () {
             // Menus
             Route::resource('menus', AdminMenusController::class);
             // Links
-            Route::resource('links', AdminLinksController::class)->except(['index, show']);
+            Route::get('{menuId}/links/create', [AdminLinksController::class, 'create'])->name('links.create');
+            Route::post('{menuId}/links', [AdminLinksController::class, 'store'])->name('links.store');
+            Route::get('{menuId}/links/{linkId}/edit', [AdminLinksController::class, 'edit'])->name('links.edit');
+            Route::put('{menuId}/links/{linkId}', [AdminLinksController::class, 'update'])->name('links.update');
+            Route::put('{menuId}/links/{linkId}/queue', [AdminLinksController::class, 'updateQueue'])->name('links.updateQueue');
+            Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
         });
     });
 });
