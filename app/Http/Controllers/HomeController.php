@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\JssiLinkService;
+use App\Services\JssiMenuService;
 
 class HomeController extends Controller
 {
@@ -11,7 +12,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    public function __construct(public JssiMenuService $mService, public JssiLinkService $lService)
     {
         $this->middleware('auth');
     }
@@ -21,6 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
     {
         return view('home');

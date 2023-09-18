@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\JssiMenu;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.app', function ($view) {
+            $papersMenu = JssiMenu::find(1);
+            $view->with('papersMenuLinks', $papersMenu->menuLinks()->where('visible', true)->orderBy('queue', 'ASC')->get());
+        });
     }
 }
