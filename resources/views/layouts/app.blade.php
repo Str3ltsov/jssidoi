@@ -49,7 +49,7 @@
         @include('layouts.header')
         <div class="container">
             <div class="row">
-                @include('layouts.left_aside')
+                @include('layouts.left_aside', ['mainMenuLinks' => $mainMenuLinks])
                 <main class="col-lg-6 col-12 order-lg-1 order-md-0 order-0">
                     @yield('content')
                 </main>
@@ -57,6 +57,7 @@
                 {{-- {{ $papersMenuLinks }} --}}
             </div>
         </div>
+        {{ $mainMenuLinks }}
         @include('layouts.footer')
         {{--        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm"> --}}
         {{--            <div class="container"> --}}

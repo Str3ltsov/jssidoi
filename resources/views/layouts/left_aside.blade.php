@@ -14,56 +14,13 @@
         <h3 class="pb-2">Navigation</h3>
         <div>
             <ul class="list-unstyled fw-bold">
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Publishers &amp; International Partners
+                @foreach ($mainMenuLinks as $link)
+                    <a href="{{ url('jssi' . $link->link) }}" class="text-dark text-decoration-none">
+                        <li class="left-aside-li @if (url()->current() === url('jssi' . $link->link)) active @endif">
+                            {{ $link->title }}
+                        </li>
                     </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Aims &amp; Scope of Research
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        ISSN
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Events
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        International Editorial Board
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Instructions for Authors
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Publication Ethics &amp; Malpractice Statement
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Editorial Correspondence
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        Abstracting &amp; Indexing
-                    </a>
-                </li>
-                <li class="left-aside-li">
-                    <a href="#" class="text-dark text-decoration-none">
-                        CrossMark Policy Page
-                    </a>
-                </li>
+                @endforeach
             </ul>
         </div>
         <div class="px-4 py-3 rounded-1 shadow-sm left-aside-image-container">
@@ -72,7 +29,8 @@
             <div class="d-flex flex-column gap-3 py-2">
                 <div class="bg-white p-3 shadow-sm rounded-1">
                     <a href="https://www.crossref.org/" target="_blank">
-                        <img src="{{ asset('images/crossref-logo-landscape-200.svg') }}" class="img-fluid" alt="Crossref">
+                        <img src="{{ asset('images/crossref-logo-landscape-200.svg') }}" class="img-fluid"
+                            alt="Crossref">
                     </a>
                 </div>
                 <div class="bg-white p-3 shadow-sm rounded-1">
@@ -92,7 +50,8 @@
                     </a>
                     <div class="bg-white p-3 shadow-sm rounded-1">
                         <a href="https://www.mendeley.com/import/" target="_blank">
-                            <img class="img-fluid" src="{{ asset('images/mendeley.png') }}" alt="Mendeley" title="Mendeley">
+                            <img class="img-fluid" src="{{ asset('images/mendeley.png') }}" alt="Mendeley"
+                                title="Mendeley">
                         </a>
                     </div>
                 </div>
@@ -102,7 +61,8 @@
                     </a>
                     <div class="d-flex justify-content-center">
                         <a href="https://orcid.org/register" target="_blank">
-                            <img class="img-fluid bg-white shadow-sm rounded-1 p-3" src="{{ asset('images/orcid-logo.png') }}" alt="ORCID" title="ORCID">
+                            <img class="img-fluid bg-white shadow-sm rounded-1 p-3"
+                                src="{{ asset('images/orcid-logo.png') }}" alt="ORCID" title="ORCID">
                         </a>
                     </div>
                 </div>
@@ -118,7 +78,8 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="https://get.adobe.com/reader/" target="_blank">
-                        <img class="img-fluid" src="{{ asset('images/Get_Adobe_Acrobat_Reader.png') }}" alt="Get Adobe Acrobat Reader" title="Get Adobe Acrobat Reader">
+                        <img class="img-fluid" src="{{ asset('images/Get_Adobe_Acrobat_Reader.png') }}"
+                            alt="Get Adobe Acrobat Reader" title="Get Adobe Acrobat Reader">
                     </a>
                 </div>
             </div>
