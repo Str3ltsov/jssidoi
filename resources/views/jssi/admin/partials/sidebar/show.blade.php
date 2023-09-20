@@ -11,6 +11,19 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'menu-open' : '' }}">
+            <a href="#"
+                class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'active' : '' }}">
+                <i class="nav-icon fa-solid fa-pen-to-square"></i>
+                <p>
+                    Content
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @include('jssi.admin.partials.sidebar.tabs.content')
+            </ul>
+        </li>
         <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'menu-open' : '' }}">
             <a href="#"
                 class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'active' : '' }}">
