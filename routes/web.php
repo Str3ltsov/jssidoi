@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\AdminJelSubcategoriesController;
 use App\Http\Controllers\Admin\AdminKeywordsController;
 use App\Http\Controllers\Admin\AdminLinksController;
 use App\Http\Controllers\Admin\AdminMenusController;
+use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
 use App\Http\Controllers\JssiArticlesController;
 use App\Http\Controllers\JssiAuthorsController;
@@ -38,7 +39,7 @@ use Illuminate\Support\Facades\Route;
  * Default
  */
 
-Route::get('/', fn () => redirect()->route('jssiIssues'));
+Route::get('/', fn() => redirect()->route('jssiIssues'));
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -49,7 +50,7 @@ Auth::routes();
  */
 Route::prefix('jssi')->group(function () {
     // Issues
-    Route::get('/', fn () => redirect()->route('jssiIssues'));
+    Route::get('/', fn() => redirect()->route('jssiIssues'));
     Route::get('/issues', [JssiIssuesController::class, 'index'])->name('jssiIssues');
     Route::get('/issues/{id}/articles', [JssiIssuesController::class, 'show'])->name('jssiIssue');
     // Papers
@@ -138,6 +139,12 @@ Route::prefix('jssi')->group(function () {
             Route::put('{menuId}/links/{linkId}', [AdminLinksController::class, 'update'])->name('links.update');
             Route::put('{menuId}/links/{linkId}/queue', [AdminLinksController::class, 'updateQueue'])->name('links.updateQueue');
             Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
+        });
+        Route::prefix('content')->group(function () {
+            Route::get('pages', [AdminPageController::class, 'index'])->name('admin.pages.index');
+            Route::post('pages', [AdminPageController::class, 'store'])->name('admin.pages.store');
+            // Route::post('pages/create')
+
         });
     });
 });

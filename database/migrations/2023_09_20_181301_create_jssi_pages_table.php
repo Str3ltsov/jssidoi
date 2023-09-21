@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('jssi_pages', function (Blueprint $table) {
             $table->id();
-            $table->int('author')->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->integer('author')->references('id')->on('users')->cascadeOnUpdate()->nullOnDelete();
             $table->string('title', 255);
             $table->string('slug', 255);
             $table->text('content');
