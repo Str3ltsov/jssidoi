@@ -145,9 +145,14 @@ Route::prefix('jssi')->group(function () {
             Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
         });
         Route::prefix('content')->group(function () {
+            Route::get('tools/slugify', [AdminPageController::class, 'slugify'])->name('admin.tools.slugify');
+
             Route::get('pages', [AdminPageController::class, 'index'])->name('admin.pages.index');
             Route::post('pages', [AdminPageController::class, 'store'])->name('admin.pages.store');
+
             Route::get('pages/create', [AdminPageController::class, 'create'])->name('admin.pages.create');
+            Route::get('pages/{pageId}', [AdminPageController::class, 'edit'])->name('admin.pages.edit');
+            Route::put('pages/{id}', [AdminPageController::class, 'update'])->name('admin.pages.update');
 
         });
     });

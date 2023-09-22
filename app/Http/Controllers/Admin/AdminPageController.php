@@ -27,6 +27,13 @@ class AdminPageController extends Controller
 
     }
 
+    public function edit($pageId)
+    {
+        $page = JssiPage::find($pageId)->first();
+
+        return view('jssi.admin.content.pages.edit')->with('page', $page);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -35,19 +42,10 @@ class AdminPageController extends Controller
         ]);
 
         try {
+
+            $authorId = Auth::user()->id;
             $page = new JssiPage();
-
-            $slug = $request->input('slug');
-
-            if (empty($slug)) {
-                $slug = Str::slug($request->input('title'));
-
-            }
-            $page->slug = $slug;
-            $page->author = Auth::user()->id;
-            $page->fill($request->only(['title', 'content']));
-
-            $page->save();
+            $this->pService->setPageFields($page, $request, $authorId);
 
             return redirect(route('admin.pages.index'))
                 ->with('success', __('Sucessfuly created page'));
@@ -59,8 +57,37 @@ class AdminPageController extends Controller
 
     }
 
+    public function update(Request $request, $pageId)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required',
+        ]);
+
+        try {
+
+            $page = JssiPage::find($pageId)->first();
+            $authorId = Auth::user()->id;
+            $this->pService->setPageFields($page, $request, $authorId);
+
+            return redirect(route('admin.pages.index'))
+                ->with('success', __(`Sucessfuly updated page: $page->title`));
+
+        } catch (Exception $e) {
+            return back()->withErrors($e->getMessage());
+
+        }
+
+    }
+
     public function create()
     {
         return view('jssi.admin.content.pages.create');
+    }
+
+    public function slugify(Request $request)
+    {
+        $title = str($request->title);
+        return response()->json(['slug' => Str::slug($title)]);
     }
 }

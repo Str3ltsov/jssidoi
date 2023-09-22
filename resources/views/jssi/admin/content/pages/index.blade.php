@@ -6,7 +6,7 @@
 
     <x-admin.paginated_table :paginated="$pages">
         <x-slot:header_right>
-            <a href='{{ route('jssi.admin.articles.create') }}' class="btn btn-success">Add new</a>
+            <a href='{{ route('admin.pages.create') }}' class="btn btn-success">Add new</a>
         </x-slot:header_right>
         <x-slot:thead_content>
             <th>Id</th>
@@ -23,7 +23,7 @@
                     <td> {{ $page->title }}</td>
                     <td> {{ $page->slug }}</td>
                     <td> {{ $page->isVisible }}</td>
-                    <td><a href="{{ route('jssi.admin.articles.edit', $page->id) }}" class="btn btn-outline-success"><i
+                    <td><a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-outline-success"><i
                                 class="fas fa-edit"></i></a>
                         <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $page->id }}
                             data-name="{{ $page->title }}" data-toggle="modal" data-target="#deletePage"><i
