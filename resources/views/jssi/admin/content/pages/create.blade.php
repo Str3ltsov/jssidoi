@@ -4,7 +4,7 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <script src="/ckeditor5/build/ckeditor.js"></script>
 @endpush
 @section('content')
     <div class="card card-primary">
@@ -18,12 +18,12 @@
                     <input type="text" class="form-control" id="title" name="title" placeholder="Enter...">
                 </div>
                 <div class="form-group">
-                    <label for="website">Slug</label>
+                    <label for="slug">Slug</label>
                     <input type="text" class="form-control" id="slug" name="slug" placeholder="Enter...">
                 </div>
                 <div class="form-group">
-                    <label for="website">Slug</label>
-                    <div id="editor"></div>
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" rows='5' id='content-textarea'></textarea>
                 </div>
 
                 {{-- <div class="form-group">
@@ -44,7 +44,7 @@
     <!-- /.card-body -->
     <div class="card-footer">
         <button type="submit" class="btn btn-success">Create</button>
-        <a href="{{ route('jssi.admin.institutions') }}" class="btn btn-danger">Cancel</a>
+        <a href="{{ route('admin.pages.index') }}" class="btn btn-danger">Cancel</a>
     </div>
     </form>
     </div>
@@ -53,7 +53,7 @@
 @section('script')
     <script>
         ClassicEditor
-            .create(document.querySelector('#editor'))
+            .create(document.querySelector('#content-textarea'))
             .catch(error => {
                 console.error(error);
             });

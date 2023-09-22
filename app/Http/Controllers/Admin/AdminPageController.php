@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\JssiPageService;
+use Illuminate\Http\Request;
 
 class AdminPageController extends Controller
 {
@@ -22,8 +23,18 @@ class AdminPageController extends Controller
 
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $request->validate([
+            'title'=>'required|string',
+            'content' => 'required'
+        ]);
 
+        
+    }
+
+    public function create()
+    {
+        return view('jssi.admin.content.pages.create');
     }
 }

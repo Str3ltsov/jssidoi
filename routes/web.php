@@ -143,7 +143,7 @@ Route::prefix('jssi')->group(function () {
         Route::prefix('content')->group(function () {
             Route::get('pages', [AdminPageController::class, 'index'])->name('admin.pages.index');
             Route::post('pages', [AdminPageController::class, 'store'])->name('admin.pages.store');
-            // Route::post('pages/create')
+            Route::get('pages/create', [AdminPageController::class, 'create'])->name('admin.pages.create');
 
         });
     });
