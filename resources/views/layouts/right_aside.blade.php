@@ -21,48 +21,7 @@
             </ul>
         </div>
     </div>
-    {{-- <div class="block-nav mt-4">
-        <h3 class="pb-2">Browse</h3>
-        <div>
-            <ul class="list-unstyled fw-bold">
-                <li class="right-aside-li @if (url()->current() === route('jssiIssues')) active @endif">
-                    <a href="{{ route('jssiIssues') }}" class="text-decoration-none">
-                        Issues
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiArticles')) active @endif">
-                    <a href="{{ route('jssiArticles') }}" class="text-decoration-none">
-                        Articles
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiAuthors')) active @endif">
-                    <a href="{{ route('jssiAuthors') }}" class="text-decoration-none">
-                        Authors
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiInstitutions')) active @endif">
-                    <a href="{{ route('jssiInstitutions') }}" class="text-decoration-none">
-                        Institutions
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiKeywords')) active @endif">
-                    <a href="{{ route('jssiKeywords') }}" class="text-decoration-none">
-                        Keywords
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiCountries')) active @endif">
-                    <a href="{{ route('jssiCountries') }}" class="text-decoration-none">
-                        Countries
-                    </a>
-                </li>
-                <li class="right-aside-li @if (url()->current() === route('jssiFunders')) active @endif">
-                    <a href="{{ route('jssiFunders') }}" class="text-decoration-none">
-                        Funders
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div> --}}
+    
     <div class="block-nav mt-4">
         <span class="fs-5">RSS FEEDS</span>
         <div class="mt-1">
