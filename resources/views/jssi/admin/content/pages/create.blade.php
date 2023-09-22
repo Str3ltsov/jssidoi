@@ -20,6 +20,8 @@
                 <div class="form-group">
                     <label for="slug">Slug</label>
                     <input type="text" class="form-control" id="slug" name="slug" placeholder="Enter...">
+                    <small id="keywordsHelp" class="form-text text-muted">Slug is generated automatically, if not
+                        entered.</small>
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>

@@ -21,6 +21,7 @@ use App\Http\Controllers\JssiFundersController;
 use App\Http\Controllers\JssiInstitutionsController;
 use App\Http\Controllers\JssiIssuesController;
 use App\Http\Controllers\JssiKeywordsController;
+use App\Http\Controllers\JssiPageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +72,9 @@ Route::prefix('jssi')->group(function () {
     // Funders
     Route::get('/funders', [JssiFundersController::class, 'index'])->name('jssiFunders');
     Route::get('/funders/{id}/articles', [JssiFundersController::class, 'show'])->name('jssiFunder');
+
+    // Pages
+    Route::get('/pages/{slug}', [JssiPageController::class, 'index'])->name('jssiPage');
     /*
      * Admin routes
      */

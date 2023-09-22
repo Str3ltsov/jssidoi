@@ -25,7 +25,7 @@
                     <td> {{ $page->isVisible }}</td>
                     <td><a href="{{ route('jssi.admin.articles.edit', $page->id) }}" class="btn btn-outline-success"><i
                                 class="fas fa-edit"></i></a>
-                        <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $article->id }}
+                        <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $page->id }}
                             data-name="{{ $page->title }}" data-toggle="modal" data-target="#deletePage"><i
                                 class="far fa-trash-alt"></i></button>
                     </td>
