@@ -22,11 +22,6 @@ class AdminPageController extends Controller
         return view('jssi.admin.content.pages.index')->with('pages', $this->pService->getPaginatedPages(20));
     }
 
-    public function show($pageId)
-    {
-
-    }
-
     public function edit($pageId)
     {
         $page = JssiPage::find($pageId)->first();
@@ -83,6 +78,20 @@ class AdminPageController extends Controller
     public function create()
     {
         return view('jssi.admin.content.pages.create');
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $page = JssiPage::find($request->id);
+            $page->delete();
+
+            return redirect()->route('admin.pages.index')->with('success', __('Page deleted sucessfuly'));
+
+        } catch (Exception $e) {
+            return back()->withErrors($e->getMessage());
+
+        }
     }
 
     public function slugify(Request $request)

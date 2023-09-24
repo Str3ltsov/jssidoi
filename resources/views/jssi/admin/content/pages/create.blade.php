@@ -27,27 +27,26 @@
                     <textarea class="form-control" name="content" rows='5' id='content-textarea'></textarea>
                 </div>
 
-                {{-- <div class="form-group">
-                    <label for="website">City</label>
-                    <input type="text" class="form-control" id="сщтеуте" name="city" placeholder="Enter...">
-                </div> --}}
-                {{-- <div class="form-group">
-                    <label for="website">Country name</label>
-                    <select name="country" id="" class="custom-select">
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}">{{ $country->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div> --}}
+                <div class="input-group col-12">
+                    <div class="form-group mb-0">
+                        <label for="form-check">Visible</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="visible" value="1">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="visible" value="0" checked>
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer">
-        <button type="submit" class="btn btn-success">Create</button>
-        <a href="{{ route('admin.pages.index') }}" class="btn btn-danger">Cancel</a>
-    </div>
-    </form>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Create</button>
+                <a href="{{ route('admin.pages.index') }}" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
     </div>
 @endsection
 

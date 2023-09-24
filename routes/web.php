@@ -153,6 +153,7 @@ Route::prefix('jssi')->group(function () {
             Route::get('pages/create', [AdminPageController::class, 'create'])->name('admin.pages.create');
             Route::get('pages/{pageId}', [AdminPageController::class, 'edit'])->name('admin.pages.edit');
             Route::put('pages/{id}', [AdminPageController::class, 'update'])->name('admin.pages.update');
+            Route::delete('pages/{id}', [AdminPageController::class, 'destroy'])->name('admin.pages.destroy');
 
         });
     });

@@ -26,6 +26,21 @@
                     <label for="content">Content</label>
                     <textarea class="form-control" name="content" rows='5' id='content-textarea'>{{ $page->content }}</textarea>
                 </div>
+                <div class="input-group col-12">
+                    <div class="form-group mb-0">
+                        <label for="form-check">Visible</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="visible" value="1"
+                                @if ($page->isVisible) checked @endif>
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="visible" value="0"
+                                @if (!$page->isVisible) checked @endif>
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </div>
+                </div>
 
             </div>
     </div>

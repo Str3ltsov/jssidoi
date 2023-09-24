@@ -27,7 +27,7 @@
         <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'menu-open' : '' }}">
             <a href="#"
                 class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'active' : '' }}">
-                <i class="nav-icon fa-solid fa-list"></i>
+                <i class="nav-icon fa-solid fa-bars"></i>
                 <p>
                     Menus
                     <i class="right fas fa-angle-left"></i>

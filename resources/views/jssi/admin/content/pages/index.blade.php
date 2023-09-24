@@ -22,7 +22,17 @@
                     <td> {{ $page->id }}</td>
                     <td> {{ $page->title }}</td>
                     <td> {{ $page->slug }}</td>
-                    <td> {{ $page->isVisible }}</td>
+                    <td>
+                        @if ($page->isVisible)
+                            <button type="button" class="btn btn-outline-success px-2 py-1" disabled>
+                                <i class="fa-solid fa-check text-success fw-bold fs-5"></i>
+                            </button>
+                        @else
+                            <button type="button" class="btn btn-outline-danger px-2 py-1" disabled>
+                                <i class="fa-solid fa-xmark text-danger fw-bold fs-5"></i>
+                            </button>
+                        @endif
+                    </td>
                     <td><a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-outline-success"><i
                                 class="fas fa-edit"></i></a>
                         <button type="button" class="btn btn-outline-danger deleteBtn" data-id={{ $page->id }}
@@ -50,7 +60,7 @@
                     <input type="hidden" id="category" name="issue_id">
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('jssi.admin.articles.destroy', 'id') }}" method="post">
+                    <form action="{{ route('admin.pages.destroy', 'id') }}" method="post">
                         @csrf
                         @method('DELETE')
                         <input id="id" name="id" hidden value=''>

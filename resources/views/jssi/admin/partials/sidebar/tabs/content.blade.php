@@ -1,8 +1,9 @@
 <li class="nav-item">
-    <a href="{{ route('menus.index') }}" class="nav-link {{ request()->is('jssi/admin/content') ? 'active ' : '' }}">
-        <i class="nav-icon fa-solid"></i>
+    <a href="{{ route('admin.pages.index') }}"
+        class="nav-link {{ request()->is('jssi/admin/content/*') ? 'active ' : '' }}">
+        <i class="nav-icon fa-solid fa-file-lines"></i>
         <p>
-            {{ __('List') }}
+            {{ __('Pages') }}
         </p>
     </a>
 </li>
