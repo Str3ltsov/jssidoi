@@ -7,21 +7,22 @@ use App\Http\Requests\CreateJssiLinkRequest;
 use App\Http\Requests\UpdateJssiLinkRequest;
 use App\Services\JssiLinkService;
 use App\Services\JssiMenuService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Services\JssiPageService;
+use Exception;
+use Illuminate\Contracts\Foundation;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\Foundation;
-use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class AdminLinksController extends Controller
 {
-    public function __construct(public JssiLinkService $lService, public JssiMenuService $mService)
+    public function __construct(public JssiLinkService $lService, public JssiMenuService $mService, public JssiPageService $pService)
     {
     }
 
-    public function create(int $menuId): View|Application|Factory|Foundation\Application
+    public function create(int $menuId): View | Application | Factory | Foundation\Application
     {
         return view('jssi.admin.links.create')
             ->with('menu', $this->mService->getJssiMenuById($menuId));
@@ -44,12 +45,13 @@ class AdminLinksController extends Controller
         }
     }
 
-    public function edit(int $menuId, int $linkId): View|Application|Factory|Foundation\Application
+    public function edit(int $menuId, int $linkId): View | Application | Factory | Foundation\Application
     {
         return view('jssi.admin.links.edit')
             ->with([
                 'menu' => $this->mService->getJssiMenuById($menuId),
-                'link' => $this->lService->getJssiLinkById($linkId)
+                'link' => $this->lService->getJssiLinkById($linkId),
+                'pages' => $this->pService->getPageList(),
             ]);
     }
 
