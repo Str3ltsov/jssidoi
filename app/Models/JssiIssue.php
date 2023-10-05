@@ -26,12 +26,12 @@ class JssiIssue extends Model
         'cover',
         'visible',
         'views',
-        'downloads'
+        'downloads',
     ];
 
     protected $casts = [
         'volume' => 'integer',
-        'number' => 'integer',
+        'number' => 'string',
         'date' => 'date',
         'doi' => 'string',
         'print' => 'string',
@@ -39,7 +39,7 @@ class JssiIssue extends Model
         'cover' => 'string',
         'visible' => 'boolean',
         'views' => 'integer',
-        'downloads' => 'integer'
+        'downloads' => 'integer',
     ];
 
     public function articles(): HasMany
