@@ -27,6 +27,7 @@ class JssiPageService extends HelperService
         $page->slug = $slug;
         $page->author = $userId;
         $page->fill($request->only(['title', 'content']));
+        $page->isVisible = $request->input('visible');
 
         $page->save();
 
