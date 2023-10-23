@@ -50,4 +50,13 @@
                 @include('jssi.admin.partials.sidebar.tabs.papers')
             </ul>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.users.index') }}"
+                class="nav-link {{ request()->routeIs('jssi.admin.users') ? 'active' : '' }}">
+                <i class="nav-icon fa fa-user"></i>
+                <p>
+                    Users
+                </p>
+            </a>
+        </li>
 </nav>

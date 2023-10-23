@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminLinksController;
 use App\Http\Controllers\Admin\AdminMenusController;
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\JssiArticlesController;
 use App\Http\Controllers\JssiAuthorsController;
 use App\Http\Controllers\JssiCountriesController;
@@ -144,6 +145,7 @@ Route::prefix('jssi')->group(function () {
             Route::put('{menuId}/links/{linkId}/queue', [AdminLinksController::class, 'updateQueue'])->name('links.updateQueue');
             Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
         });
+        // Pages
         Route::prefix('content')->group(function () {
             Route::get('tools/slugify', [AdminPageController::class, 'slugify'])->name('admin.tools.slugify');
 
@@ -155,6 +157,11 @@ Route::prefix('jssi')->group(function () {
             Route::put('pages/{id}', [AdminPageController::class, 'update'])->name('admin.pages.update');
             Route::delete('pages/{id}', [AdminPageController::class, 'destroy'])->name('admin.pages.destroy');
 
+        });
+        // Users
+
+        Route::prefix('users')->group(function () {
+            Route::get('/', [AdminUserController::class, 'index'])->name('admin.users.index');
         });
     });
 });
