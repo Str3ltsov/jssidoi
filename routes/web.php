@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AdminKeywordsController;
 use App\Http\Controllers\Admin\AdminLinksController;
 use App\Http\Controllers\Admin\AdminMenusController;
 use App\Http\Controllers\Admin\AdminPageController;
+use App\Http\Controllers\Admin\AdminReviewsController;
 use App\Http\Controllers\Admin\AdminSubmitsController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\JssiArticlesController;
@@ -87,81 +88,116 @@ Route::prefix('jssi')->group(function () {
          */
         Route::prefix('papers')->group(function () {
             // Articles
-            Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
-            Route::get('/{id}/edit', [AdminArticlesController::class, 'edit'])->name('jssi.admin.articles.edit');
-            Route::get('/add', [AdminArticlesController::class, 'create'])->name('jssi.admin.articles.create');
-            Route::post('/', [AdminArticlesController::class, 'store'])->name('jssi.admin.articles.store');
-            Route::put('/{id}', [AdminArticlesController::class, 'update'])->name('jssi.admin.articles.update');
-            Route::delete('/{id}', [AdminArticlesController::class, 'destroy'])->name('jssi.admin.articles.destroy');
+            Route::group(['middleware' => ['can:articles.create']], function () {
+                Route::get('/', [AdminArticlesController::class, 'index'])->name('jssi.admin.articles');
+                Route::get('/{id}/edit', [AdminArticlesController::class, 'edit'])->name('jssi.admin.articles.edit');
+                Route::get('/add', [AdminArticlesController::class, 'create'])->name('jssi.admin.articles.create');
+                Route::post('/', [AdminArticlesController::class, 'store'])->name('jssi.admin.articles.store');
+                Route::put('/{id}', [AdminArticlesController::class, 'update'])->name('jssi.admin.articles.update');
+                Route::delete('/{id}', [AdminArticlesController::class, 'destroy'])->name('jssi.admin.articles.destroy');
+            });
             // Issues
-            Route::get('issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
-            Route::get('issues/{id}/edit', [AdminIssuesController::class, 'edit'])->name('jssi.admin.issues.edit');
-            Route::get('issues/add', [AdminIssuesController::class, 'create'])->name('jssi.admin.issues.create');
-            Route::post('issues', [AdminIssuesController::class, 'store'])->name('jssi.admin.issues.store');
-            Route::put('issues/{id}', [AdminIssuesController::class, 'update'])->name('jssi.admin.issues.update');
-            Route::delete('issues/{id}', [AdminIssuesController::class, 'destroy'])->name('jssi.admin.issues.destroy');
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::get('issues', [AdminIssuesController::class, 'index'])->name('jssi.admin.issues');
+                Route::get('issues/{id}/edit', [AdminIssuesController::class, 'edit'])->name('jssi.admin.issues.edit');
+                Route::get('issues/add', [AdminIssuesController::class, 'create'])->name('jssi.admin.issues.create');
+                Route::post('issues', [AdminIssuesController::class, 'store'])->name('jssi.admin.issues.store');
+                Route::put('issues/{id}', [AdminIssuesController::class, 'update'])->name('jssi.admin.issues.update');
+                Route::delete('issues/{id}', [AdminIssuesController::class, 'destroy'])->name('jssi.admin.issues.destroy');
+            });
             // Authors
-            Route::get('authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
-            Route::get('authors/{id}/edit', [AdminAuthorsController::class, 'edit'])->name('jssi.admin.authors.edit');
-            Route::get('authors/add', [AdminAuthorsController::class, 'create'])->name('jssi.admin.authors.create');
-            Route::post('authors', [AdminAuthorsController::class, 'store'])->name('jssi.admin.authors.store');
-            Route::put('authors/{id}', [AdminAuthorsController::class, 'update'])->name('jssi.admin.authors.update');
-            Route::delete('authors/{id}', [AdminAuthorsController::class, 'destroy'])->name('jssi.admin.authors.destroy');
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::get('authors', [AdminAuthorsController::class, 'index'])->name('jssi.admin.authors');
+                Route::get('authors/{id}/edit', [AdminAuthorsController::class, 'edit'])->name('jssi.admin.authors.edit');
+                Route::get('authors/add', [AdminAuthorsController::class, 'create'])->name('jssi.admin.authors.create');
+                Route::post('authors', [AdminAuthorsController::class, 'store'])->name('jssi.admin.authors.store');
+                Route::put('authors/{id}', [AdminAuthorsController::class, 'update'])->name('jssi.admin.authors.update');
+                Route::delete('authors/{id}', [AdminAuthorsController::class, 'destroy'])->name('jssi.admin.authors.destroy');
+            });
             // Institutions
-            Route::resource('institutions', AdminInstitutionsController::class, ['as' => 'jssi.admin']);
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::resource('institutions', AdminInstitutionsController::class, ['as' => 'jssi.admin']);
+            });
             // Keywords
-            Route::resource('keywords', AdminKeywordsController::class, ['as' => 'jssi.admin'])
-                ->parameters(['keywords' => 'id']);
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::resource('keywords', AdminKeywordsController::class, ['as' => 'jssi.admin'])
+                    ->parameters(['keywords' => 'id']);
+            });
+            //Reviews
+            Route::prefix('reviews')->group(function () {
+                Route::group(['middleware' => ['can:articles.review']], function () {
+                    Route::get('/', [AdminReviewsController::class, 'index'])->name('jssi.admin.reviews.index');
+                    Route::get('/{id}/edit', [AdminReviewsController::class, 'edit'])->name('jssi.admin.reviews.edit');
+                    Route::get('/add', [AdminReviewsController::class, 'create'])->name('jssi.admin.reviews.create');
+                    Route::post('/', [AdminReviewsController::class, 'store'])->name('jssi.admin.reviews.store');
+                    Route::put('/{id}', [AdminReviewsController::class, 'update'])->name('jssi.admin.reviews.update');
+                    Route::delete('/{id}', [AdminReviewsController::class, 'destroy'])->name('jssi.admin.reviews.destroy');
+                });
+
+            });
             // JEL-Codes
-            Route::prefix('jel')->group(function () {
-                Route::resource('codes', AdminJelCodesController::class, ['as' => 'jssi.admin.jel'])
-                    ->parameters(['codes' => 'id']);
-                Route::resource('categories', AdminJelCategoriesController::class, ['as' => 'jssi.admin.jel'])
-                    ->parameters(['categories' => 'id']);
-                Route::resource('subcategories', AdminJelSubcategoriesController::class, ['as' => 'jssi.admin.jel'])
-                    ->parameters(['subcategories' => 'id']);
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::prefix('jel')->group(function () {
+                    Route::resource('codes', AdminJelCodesController::class, ['as' => 'jssi.admin.jel'])
+                        ->parameters(['codes' => 'id']);
+                    Route::resource('categories', AdminJelCategoriesController::class, ['as' => 'jssi.admin.jel'])
+                        ->parameters(['categories' => 'id']);
+                    Route::resource('subcategories', AdminJelSubcategoriesController::class, ['as' => 'jssi.admin.jel'])
+                        ->parameters(['subcategories' => 'id']);
+                });
             });
             // Countries
-            Route::get('countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
-            Route::get('countries/{id}/edit', [AdminCountriesController::class, 'edit'])->name('jssi.admin.countries.edit');
-            Route::get('countries/add', [AdminCountriesController::class, 'create'])->name('jssi.admin.countries.create');
-            Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
-            Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
-            Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::get('countries', [AdminCountriesController::class, 'index'])->name('jssi.admin.countries');
+                Route::get('countries/{id}/edit', [AdminCountriesController::class, 'edit'])->name('jssi.admin.countries.edit');
+                Route::get('countries/add', [AdminCountriesController::class, 'create'])->name('jssi.admin.countries.create');
+                Route::post('countries', [AdminCountriesController::class, 'store'])->name('jssi.admin.countries.store');
+                Route::put('countries/{id}', [AdminCountriesController::class, 'update'])->name('jssi.admin.countries.update');
+                Route::delete('countries/{id}', [AdminCountriesController::class, 'destroy'])->name('jssi.admin.countries.destroy');
+            });
             // Submits
-            Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
+            Route::group(['middleware' => ['can:users.update']], function () {
+                Route::get('/submits', [AdminSubmitsController::class, 'index'])->name('jssi.admin.submits');
+            });
         });
         /*
          * Menu routes
          */
-        Route::prefix('menus')->group(function () {
-            // Menus
-            Route::resource('menus', AdminMenusController::class);
-            // Links
-            Route::get('{menuId}/links/create', [AdminLinksController::class, 'create'])->name('links.create');
-            Route::post('{menuId}/links', [AdminLinksController::class, 'store'])->name('links.store');
-            Route::get('{menuId}/links/{linkId}/edit', [AdminLinksController::class, 'edit'])->name('links.edit');
-            Route::put('{menuId}/links/{linkId}', [AdminLinksController::class, 'update'])->name('links.update');
-            Route::put('{menuId}/links/{linkId}/queue', [AdminLinksController::class, 'updateQueue'])->name('links.updateQueue');
-            Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
+        Route::group(['middleware' => ['can:users.update']], function () {
+            Route::prefix('menus')->group(function () {
+                // Menus
+                Route::resource('menus', AdminMenusController::class);
+                // Links
+                Route::get('{menuId}/links/create', [AdminLinksController::class, 'create'])->name('links.create');
+                Route::post('{menuId}/links', [AdminLinksController::class, 'store'])->name('links.store');
+                Route::get('{menuId}/links/{linkId}/edit', [AdminLinksController::class, 'edit'])->name('links.edit');
+                Route::put('{menuId}/links/{linkId}', [AdminLinksController::class, 'update'])->name('links.update');
+                Route::put('{menuId}/links/{linkId}/queue', [AdminLinksController::class, 'updateQueue'])->name('links.updateQueue');
+                Route::delete('{menuId}/links/{linkId}', [AdminLinksController::class, 'destroy'])->name('links.destroy');
+            });
         });
         // Pages
-        Route::prefix('content')->group(function () {
-            Route::get('tools/slugify', [AdminPageController::class, 'slugify'])->name('admin.tools.slugify');
+        Route::group(['middleware' => ['can:users.update']], function () {
+            Route::prefix('content')->group(function () {
+                Route::get('tools/slugify', [AdminPageController::class, 'slugify'])->name('admin.tools.slugify');
 
-            Route::get('pages', [AdminPageController::class, 'index'])->name('admin.pages.index');
-            Route::post('pages', [AdminPageController::class, 'store'])->name('admin.pages.store');
+                Route::get('pages', [AdminPageController::class, 'index'])->name('admin.pages.index');
+                Route::post('pages', [AdminPageController::class, 'store'])->name('admin.pages.store');
 
-            Route::get('pages/create', [AdminPageController::class, 'create'])->name('admin.pages.create');
-            Route::get('pages/{pageId}', [AdminPageController::class, 'edit'])->name('admin.pages.edit');
-            Route::put('pages/{id}', [AdminPageController::class, 'update'])->name('admin.pages.update');
-            Route::delete('pages/{id}', [AdminPageController::class, 'destroy'])->name('admin.pages.destroy');
+                Route::get('pages/create', [AdminPageController::class, 'create'])->name('admin.pages.create');
+                Route::get('pages/{pageId}', [AdminPageController::class, 'edit'])->name('admin.pages.edit');
+                Route::put('pages/{id}', [AdminPageController::class, 'update'])->name('admin.pages.update');
+                Route::delete('pages/{id}', [AdminPageController::class, 'destroy'])->name('admin.pages.destroy');
 
+            });
         });
         // Users
-
-        Route::prefix('users')->group(function () {
-            Route::get('/', [AdminUserController::class, 'index'])->name('admin.users.index');
+        Route::group(['middleware' => ['can:users.update']], function () {
+            Route::prefix('users')->group(function () {
+                Route::get('/', [AdminUserController::class, 'index'])->name('admin.users.index');
+                Route::get('/{id}', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+                Route::put('/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+            });
         });
     });
 });

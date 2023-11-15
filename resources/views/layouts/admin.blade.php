@@ -254,7 +254,6 @@
                             {{ session('error') }}
                         </div>
                     @endif
-
                     @yield('content')
                 </div><!-- /.container-fluid -->
             </section>

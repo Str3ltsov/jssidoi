@@ -11,32 +11,34 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'menu-open' : '' }}">
-            <a href="#"
-                class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'active' : '' }}">
-                <i class="nav-icon fa-solid fa-pen-to-square"></i>
-                <p>
-                    Content
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                @include('jssi.admin.partials.sidebar.tabs.content')
-            </ul>
-        </li>
-        <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'menu-open' : '' }}">
-            <a href="#"
-                class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'active' : '' }}">
-                <i class="nav-icon fa-solid fa-bars"></i>
-                <p>
-                    Menus
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                @include('jssi.admin.partials.sidebar.tabs.menus')
-            </ul>
-        </li>
+        @can('users.update')
+            <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'menu-open' : '' }}">
+                <a href="#"
+                    class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/content') ? 'active' : '' }}">
+                    <i class="nav-icon fa-solid fa-pen-to-square"></i>
+                    <p>
+                        Content
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @include('jssi.admin.partials.sidebar.tabs.content')
+                </ul>
+            </li>
+            <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'menu-open' : '' }}">
+                <a href="#"
+                    class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/menus') ? 'active' : '' }}">
+                    <i class="nav-icon fa-solid fa-bars"></i>
+                    <p>
+                        Menus
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @include('jssi.admin.partials.sidebar.tabs.menus')
+                </ul>
+            </li>
+        @endcan
         <li class="nav-item {{ str_starts_with(request()->path(), 'jssi/admin/papers') ? 'menu-open' : '' }}">
             <a href="#"
                 class="nav-link {{ str_starts_with(request()->path(), 'jssi/admin/papers') ? 'active' : '' }}">
@@ -50,13 +52,15 @@
                 @include('jssi.admin.partials.sidebar.tabs.papers')
             </ul>
         </li>
-        <li class="nav-item">
-            <a href="{{ route('admin.users.index') }}"
-                class="nav-link {{ request()->routeIs('jssi.admin.users') ? 'active' : '' }}">
-                <i class="nav-icon fa fa-user"></i>
-                <p>
-                    Users
-                </p>
-            </a>
-        </li>
+        @can('users.update')
+            <li class="nav-item">
+                <a href="{{ route('admin.users.index') }}"
+                    class="nav-link {{ request()->routeIs('jssi.admin.users') ? 'active' : '' }}">
+                    <i class="nav-icon fa fa-user"></i>
+                    <p>
+                        Users
+                    </p>
+                </a>
+            </li>
+        @endcan
 </nav>

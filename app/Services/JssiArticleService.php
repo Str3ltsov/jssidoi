@@ -3,18 +3,19 @@
 namespace App\Services;
 
 use App\Models\JssiArticle;
+use App\Models\JssiReview;
 use Error;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class JssiArticleService extends HelperService
 {
-    public final function getJssiArticles(): object
+    final public function getJssiArticles(): object
     {
         return JssiArticle::all();
     }
 
-    public final function getJssiArticleById(int $id): object
+    final public function getJssiArticleById(int $id): object
     {
         $article = JssiArticle::find($id);
 
@@ -25,7 +26,7 @@ class JssiArticleService extends HelperService
         return $article;
     }
 
-    public final function getArticlesAuthors(object $articles): object
+    final public function getArticlesAuthors(object $articles): object
     {
         $articlesAuthors = [];
 
@@ -42,7 +43,14 @@ class JssiArticleService extends HelperService
         return collect($articlesAuthors);
     }
 
-    public final function getArticleAuthorsInstitutions(object $article): object
+    final public function getReview($id)
+    {
+
+        $review = JssiReview::where('article_id', '=', $id)->first();
+
+        return $review;
+    }
+    final public function getArticleAuthorsInstitutions(object $article): object
     {
         $authorsInstitutions = [];
 
