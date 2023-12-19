@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JssiAuthor;
-use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiInstitution;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -38,7 +38,8 @@ class AdminAuthorsController extends Controller
             'email' => 'email',
             'orcid' => ['nullable'],
             ['regex:/(\d{4}-){3}\d{3}(\d|X)/'],
-            'institutions' => 'nullable|array'
+            'institutions' => 'nullable|array',
+            'userId' => 'nullable|integer',
         ]);
 
         $author->first_name = $request->input('firstName');
@@ -48,6 +49,17 @@ class AdminAuthorsController extends Controller
 
         if ($request->has('orcid')) {
             $author->orcid = $request->input('orcid');
+        }
+
+        if ($request->has('userId')) {
+            $userId = $request->input('userId');
+
+            if (User::where('id', $userId)->exists()) {
+                $author->user_id = $request->input('userId');
+            } else {
+                return redirect()->back()->with('error', 'No user with id ' . $userId);
+            }
+
         }
 
         $institutionIds = $request->input('institutions', []);
@@ -78,10 +90,11 @@ class AdminAuthorsController extends Controller
 
             return redirect()->route('jssi.admin.authors')->with('success', sprintf('Author %s deleted successfully!', $author->fullname()));
         } catch (QueryException $e) {
-            if ($e->getCode() == 23000)
+            if ($e->getCode() == 23000) {
                 return redirect()->route('jssi.admin.authors')->with('error', 'Error: This author can not be deleted, because this author has published articles.');
-        }
+            }
 
+        }
 
     }
 
@@ -100,7 +113,7 @@ class AdminAuthorsController extends Controller
             'email' => 'email',
             'orcid' => ['nullable'],
             ['regex:/(\d{4}-){3}\d{3}(\d|X)/'],
-            'institutions' => 'nullable|array'
+            'institutions' => 'nullable|array',
         ]);
 
         $author = new JssiAuthor();

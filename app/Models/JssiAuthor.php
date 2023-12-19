@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JssiAuthor extends Model
 {
@@ -22,7 +23,8 @@ class JssiAuthor extends Model
         'email',
         'orcid',
         'subscribed_journals',
-        'subscribed_events'
+        'subscribed_events',
+        'userId',
     ];
 
     protected $casts = [
@@ -32,12 +34,18 @@ class JssiAuthor extends Model
         'email' => 'string',
         'orcid' => 'string',
         'subscribed_journals' => 'integer',
-        'subscribed_events' => 'integer'
+        'subscribed_events' => 'integer',
+        'userId' => 'integer',
     ];
 
     public function authorsInstitutions(): HasMany
     {
         return $this->hasMany(JssiAuthorsInstitution::class, 'author_id');
+    }
+
+    public function userId(): HasOne
+    {
+        return $this->hasOne(User::class, 'id');
     }
 
     public function scopeFirstNameLike(Builder $query, $firstName): Builder

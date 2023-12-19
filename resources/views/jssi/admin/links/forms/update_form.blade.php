@@ -112,7 +112,7 @@
         });
 
         $('#pageLink').on('click', function() {
-            let link = '/' + $(this).attr('data-link');
+            let link = '/pages/' + $(this).attr('data-link');
             $('#linkInput').val(link);
             $('#linkModal').modal('hide');
         });

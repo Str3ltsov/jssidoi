@@ -42,18 +42,23 @@
                             <input type="text" class="form-control" value="{{ $author->orcid }}" name="orcid"
                                 data-inputmask='"mask": "9999-9999-9999-9999"' data-mask>
                         </div>
+                        <div class="col">
+                            <label for="midName">User ID</label>
+                            <input type="number" class="form-control" value="{{ $author->user_id }}" name="userId">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="institutions[]">Institutions</label>
-                <select multiple class="form-control" name="institutions[]">
-                    @foreach ($institutions as $institution)
-                        <option value="{{ $institution->id }}"
-                            {{ $author->authorsInstitutions()->where('institution_id', $institution->id)->exists()? 'selected="selected"': '' }}>
-                            {{ $institution->title }}</option>
-                    @endforeach
-                </select>
+
+                <div class="form-group">
+                    <label for="institutions[]">Institutions</label>
+                    <select multiple class="form-control" name="institutions[]">
+                        @foreach ($institutions as $institution)
+                            <option value="{{ $institution->id }}"
+                                {{ $author->authorsInstitutions()->where('institution_id', $institution->id)->exists()? 'selected="selected"': '' }}>
+                                {{ $institution->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
     </div>
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JssiReview;
 use App\Services\JssiReviewsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminReviewsController extends Controller
 {
@@ -25,20 +26,22 @@ class AdminReviewsController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'articleId' => 'required|integer',
+        $validatedData = $request->validate([
+            'article_id' => 'required|numeric',
+            'evaluation' => 'required',
+            'originality' => 'required',
+            'methodology' => 'required',
+            'structure' => 'required',
+            'language' => 'required',
+            'advice' => 'required',
+            'generalComment' => 'required',
         ]);
 
-        $review = new JssiReview();
+        $review = new JssiReview($validatedData);
+        $review->reviewer_id = Auth::user()->id;
 
-        $review->author_id = $request->user()->id;
-        $review->title = $request->input('title');
-        $review->article_id = $request->input('articleId');
-        $review->content = $request->input('content');
-        $review->isVisible = true;
-        $review->saveOrFail();
-
-        return redirect()->route('jssi.admin.countries')->with('success', sprintf('Review for %s created successfully!', $review->article->title));
+        $review->save();
+        return redirect()->route('jssi.admin.reviews.index')->with('success', sprintf('Review for %s created successfully!', $review->article->title));
     }
 
     public function edit($id)

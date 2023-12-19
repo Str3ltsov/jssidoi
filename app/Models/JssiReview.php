@@ -12,11 +12,17 @@ class JssiReview extends Model
     protected $dateFormat = 'Y-m-d';
 
     protected $fillable = [
-        'title',
         'author_id',
         'article_id',
         'content',
-        'isVisible',
+        'reviewer_id',
+        'evaluation',
+        'originality',
+        'methodology',
+        'structure',
+        'language',
+        'advice',
+        'generalComment',
     ];
 
     protected $casts = [
@@ -25,11 +31,19 @@ class JssiReview extends Model
         'content' => 'string',
         'article_id' => 'integer',
         'isVisible' => 'boolean',
+        'reviewer_id' => 'integer',
+        'evaluation' => 'integer',
+        'originality' => 'integer',
+        'methodology' => 'integer',
+        'structure' => 'integer',
+        'language' => 'integer',
+        'advice' => 'integer',
+        'generalComment' => 'string',
     ];
 
     public function author(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'author_id');
+        return $this->hasOne(User::class, 'id', 'reviewer_id');
     }
     public function article(): HasOne
     {

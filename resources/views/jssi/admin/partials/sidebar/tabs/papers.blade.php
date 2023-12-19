@@ -64,7 +64,7 @@
         [
             'name' => 'Reviews',
             'route' => 'jssi.admin.reviews.index',
-            'icon' => 'fa-flag',
+            'icon' => 'fa-arrows-rotate',
             'permission' => 'articles.review',
         ],
     ];

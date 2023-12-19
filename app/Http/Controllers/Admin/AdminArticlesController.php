@@ -9,9 +9,11 @@ use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiIssue;
 use App\Models\JssiJELCode;
 use App\Services\JssiArticleService;
+use App\Services\JssiAuthorService;
+use App\Services\KeywordService;
 use Exception;
 use Illuminate\Http\Request;
-use App\Services\KeywordService;
+use Illuminate\Support\Facades\Auth;
 
 class AdminArticlesController extends Controller
 {
@@ -19,7 +21,7 @@ class AdminArticlesController extends Controller
     protected $keywordService;
     protected $articleService;
 
-    public function __construct(KeywordService $keywordService, JssiArticleService $articleService)
+    public function __construct(KeywordService $keywordService, JssiArticleService $articleService, JssiAuthorService $authorService)
     {
         $this->keywordService = $keywordService;
         $this->articleService = $articleService;
@@ -54,15 +56,30 @@ class AdminArticlesController extends Controller
             'authorInstitutions' => 'nullable|array',
             'articleFile' => 'filled|mimes:pdf',
             'keywords' => 'string',
-            'jelCodes' => 'array'
+            'jelCodes' => 'array',
         ];
     }
 
-
     public function index()
     {
-        $articles = JssiArticle::paginate(20);
-        return view('jssi.admin.pages.papers.articles', compact('articles'));
+        $user = Auth::user();
+        // dd($user->getRoleNames());
+        if ($user->hasRole(['Admin', 'Super Admin'])) {
+            $articles = JssiArticle::paginate(20);
+            return view('jssi.admin.pages.papers.articles', compact('articles'));
+
+        } else if ($user->hasRole('Author')) {
+
+
+            // need to sync user & author
+            //     $author = $user
+            // $articles = $this->authorService->getCollectionArticles($author);
+            $articles = JssiArticle::paginate(20);
+            return view('jssi.admin.pages.papers.articles', compact('articles'));
+
+        } else {
+            return view('jssi.admin.index');
+        }
     }
 
     public function edit($id)

@@ -40,6 +40,10 @@
                             <input type="text" class="form-control" placeholder="0000-0000-0000-0000" name="orcid"
                                 data-inputmask='"mask": "9999-9999-9999-9999"' data-mask>
                         </div>
+                        <div class="col">
+                            <label for="midName">User ID</label>
+                            <input type="number" class="form-control" placeholder="-1" name="userId">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
