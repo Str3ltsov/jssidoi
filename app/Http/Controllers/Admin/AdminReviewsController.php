@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JssiReview;
 use App\Services\JssiReviewsService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,18 +53,35 @@ class AdminReviewsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'articleId' => 'required|integer',
+
+        $validatedData = $request->validate([
+            'article_id' => 'required|numeric',
+            'evaluation' => 'required',
+            'originality' => 'required',
+            'methodology' => 'required',
+            'structure' => 'required',
+            'language' => 'required',
+            'advice' => 'required',
+            'generalComment' => 'required',
         ]);
 
         $review = JssiReview::find($id);
+        $review->update($validatedData);
 
-        $review->title = $request->input('title');
-        $review->article_id = $request->input('articleId');
-        $review->content = $request->input('content');
-        $review->isVisible = true;
-        $review->saveOrFail();
+        $review->reviewer_id = Auth::user()->id;
 
-        return redirect()->route('jssi.admin.countries')->with('success', sprintf('Review for %s updated successfully!', $review->article->title));
+        $review->save();
+        return redirect()->route('jssi.admin.reviews.index')->with('success', sprintf('Review for %s created successfully!', $review->article->title));
+
+    }
+
+    public function destroy(Request $req): RedirectResponse
+    {
+        $review = JssiReview::findOrFail($req->id);
+        $review->delete();
+        // dd($review);
+
+        return redirect()->route('jssi.admin.reviews.index')->with('success', sprintf('Review deleted successfully!'));
+
     }
 }
