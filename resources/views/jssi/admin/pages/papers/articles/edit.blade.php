@@ -110,6 +110,15 @@
                     </div>
                     <!-- /.col -->
                 </div>
+
+                @can('articles.updateAll', $user)
+                                <div class="form-group">
+                    <label for="title">Reviewer</label>
+                    <input type="text" class="form-control" id="articleTitle" name="title" placeholder=""
+                        value="{{ $article->title }}">
+
+                </div>
+                @endcan
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">

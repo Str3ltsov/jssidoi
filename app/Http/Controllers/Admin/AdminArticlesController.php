@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JssiArticle;
 use App\Models\JssiArticleType;
+use App\Models\JssiAuthor;
 use App\Models\JssiAuthorsInstitution;
 use App\Models\JssiIssue;
 use App\Models\JssiJELCode;
+use App\Models\User;
 use App\Services\JssiArticleService;
 use App\Services\JssiAuthorService;
 use App\Services\KeywordService;
@@ -66,15 +68,20 @@ class AdminArticlesController extends Controller
         // dd($user->getRoleNames());
         if ($user->hasRole(['Admin', 'Super Admin'])) {
             $articles = JssiArticle::paginate(20);
+            $revievers = User::role('Reviewer')->get();
+            dd($revievers);
+
             return view('jssi.admin.pages.papers.articles', compact('articles'));
 
         } else if ($user->hasRole('Author')) {
 
-
             // need to sync user & author
-            //     $author = $user
-            // $articles = $this->authorService->getCollectionArticles($author);
-            $articles = JssiArticle::paginate(20);
+            $author = JssiAuthor::find($user->id);
+            $authorService = new JssiAuthorService();
+
+            $articles = $authorService->getCollectionArticles($author);
+            $articles = $authorService->getPaginatedArticles($articles);
+
             return view('jssi.admin.pages.papers.articles', compact('articles'));
 
         } else {

@@ -130,12 +130,6 @@
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link px-4" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                type="button" role="tab" aria-controls="metrics" aria-selected="false">
-                Review
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
             <button class="nav-link px-4" id="issue-tab" data-bs-toggle="tab" data-bs-target="#issue" type="button"
                 role="tab" aria-controls="issue" aria-selected="false">
                 Issue
@@ -163,7 +157,6 @@
     <div class="tab-content bg-white p-4" id="myTabContent">
         @include('jssi.articles.tabs.article_tab')
         @include('jssi.articles.tabs.authors_tab')
-        @include('jssi.articles.tabs.review_tab')
         @include('jssi.articles.tabs.issue_tab')
         @include('jssi.articles.tabs.refs_tab')
         @include('jssi.articles.tabs.cited_tab')

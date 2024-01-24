@@ -62,7 +62,7 @@ class JssiArticleService extends HelperService
     }
 
     public function paginateCollection(
-        object $collection, int $paginateNum, string $orderVar = 'id', string $orderDir = 'asc'
+        object $collection, int $paginateNum = 20, string $orderVar = 'id', string $orderDir = 'asc'
     ): object {
         return $collection->toQuery()->orderBy($orderVar, $orderDir)->paginate($paginateNum);
     }

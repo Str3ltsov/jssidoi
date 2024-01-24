@@ -40,11 +40,13 @@
                     <div class="card-footer clearfix">
                         <ul class="pagination pagination-sm m-0 float-right">
                             <div class="col-lg-12">
-                                Page {{ $paginated->currentPage() }} of {{ $paginated->lastPage() }}, showing
-                                {{ count($paginated) }} records out of {{ $paginated->total() }} total
-                                <div class="d-flex justify-content-center mt-4">
-                                    {{ $paginated->onEachSide(1)->links('pagination::bootstrap-4') }}
-                                </div>
+                                @if ($paginated->total() > 1)
+                                    Page {{ $paginated->currentPage() }} of {{ $paginated->lastPage() }}, showing
+                                    {{ count($paginated) }} records out of {{ $paginated->total() }} total
+                                    <div class="d-flex justify-content-center mt-4">
+                                        {{ $paginated->onEachSide(1)->links('pagination::bootstrap-4') }}
+                                    </div>
+                                @endif
                             </div>
                     </div>
                 </div>

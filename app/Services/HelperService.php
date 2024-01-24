@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\JssiArticle;
+
 class HelperService
 {
     public function paginateCollection(object $collection, int $paginateNum): object
@@ -45,5 +47,11 @@ class HelperService
         }
 
         return collect($articles)->unique();
+    }
+
+    public function getPaginatedArticles(object $collection)
+    {
+
+        return JssiArticle::whereIn('id', $collection->pluck('id'))->paginate(20);
     }
 }
