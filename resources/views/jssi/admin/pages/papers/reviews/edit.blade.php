@@ -5,26 +5,78 @@
 @endpush
 
 @section('content')
+
+    @php
+        $reviewFields = [
+            [
+                'name' => 'evaluation',
+                'title' => 'Overall Evaluation',
+                'options' => ['Accept', 'Accept with minor improvements', 'Requires revision', 'Reject'],
+            ],
+            [
+                'name' => 'originality',
+                'title' => 'Originality Assessment',
+                'options' => ['Very High', 'High', 'Average', 'Low', 'Very Low'],
+            ],
+            [
+                'name' => 'methodology',
+                'title' => 'Methodology Evaluation',
+                'options' => ['Clear and Convincing', 'Weak', 'Insufficiently Detailed', 'Insufficiently Justified', 'Unsatisfactory'],
+            ],
+            [
+                'name' => 'structure',
+                'title' => 'Structure and Formattion',
+                'options' => ['Excellent', 'Good', 'Average', 'Low', 'Very Low'],
+            ],
+            [
+                'name' => 'language',
+                'title' => 'Language and Writing Style',
+                'options' => ['Excellent', 'Good', 'Average', 'Low', 'Very Low'],
+            ],
+            [
+                'name' => 'advice',
+                'title' => 'Advice for Enhancement',
+                'options' => ['Refinement of wording', 'Additional research', 'Use of additional sources', 'Expansion of the discussion of results'],
+            ],
+        ];
+    @endphp
+
     <div class="card card-primary">
         <!-- form start -->
         <form method="post" action="{{ route('jssi.admin.reviews.update', $review->id) }}">
             @csrf
-            @method('PUT')
+            @method('POST')
             <div class="card-body">
-                <div class="form-group"><!-- very bad solution. Needs to be changed to smth better-->
+                <div class="form-group">
                     <label for="exampleInputEmail1">Article ID</label>
-                    <input type="text" class="form-control" id="articleId" name="articleId" placeholder="1"
-                        value="{{ $review->article->id }}">
+                    <input type="text" class="form-control" id="article_id" name="article_id" placeholder="1"
+                        value="{{ $review->id }}" required>
                 </div>
+
+                @foreach ($reviewFields as $field)
+                    <div class="form-group">
+                        <label for="{{ $field['name'] }}">{{ $field['title'] }}</label><br>
+                        @foreach ($field['options'] as $key => $option)
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ $field['name'] }}"
+                                    value="{{ $key }}" id="{{ $field['name'] . str_replace(' ', '_', $option) }}"
+                                    @if ($review->{$field['name']} == $key) checked @endif required>
+                                <label class="form-check-label" for="{{ $field['name'] . str_replace(' ', '_', $option) }}">
+                                    {{ $option }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+
+
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Review title</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ $review->title }}">
-                </div>
-                <div class="form-group">
-                    <label for="content">Review text</label>
-                    <textarea class="form-control" name="content" rows='5' id='content-textarea'>{{ $review->content }}</textarea>
+                    <label for="content">Overall comment</label>
+                    <textarea class="form-control" name="generalComment" rows='5' id='content-textarea'>{{ $review->generalComment }}</textarea>
                 </div>
             </div>
+
+
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
